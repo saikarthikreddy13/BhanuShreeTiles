@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sales Reports - Bhanu Shree Tiles ERP</title>
+<style>
+:root{--bg:#07111f;--panel:rgba(255,255,255,.055);--border:rgba(255,255,255,.10);--text:#f8fafc;--muted:#94a3b8;--accent:#f59e0b;--cyan:#06b6d4;--green:#22c55e;--red:#ef4444;--blue:#60a5fa}
+*{box-sizing:border-box;margin:0;padding:0}
+body{min-height:100vh;font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;color:var(--text);background:radial-gradient(circle at 85% 5%,rgba(245,158,11,.12),transparent 25%),radial-gradient(circle at 5% 90%,rgba(6,182,212,.08),transparent 28%),linear-gradient(135deg,#050b14,#0b1728 55%,#07111f)}
+a{text-decoration:none;color:inherit}button,input,select{font:inherit}
+.app{min-height:100vh;display:flex}
+.sidebar{width:270px;position:fixed;inset:0 auto 0 0;z-index:1000;display:flex;flex-direction:column;background:rgba(5,13,25,.97);border-right:1px solid var(--border);backdrop-filter:blur(20px);transition:transform .3s ease}
+.brand{padding:24px 20px;border-bottom:1px solid var(--border)}
+.brand-title{font-size:21px;font-weight:800}.brand-title span{color:var(--accent)}
+.brand-subtitle{margin-top:4px;font-size:10px;letter-spacing:.2em;color:var(--muted);text-transform:uppercase}
+.role-badge{display:inline-flex;margin-top:15px;padding:7px 11px;border:1px solid rgba(245,158,11,.25);border-radius:999px;background:rgba(245,158,11,.08);color:#fbbf24;font-size:11px;font-weight:700}
+.nav{flex:1;overflow-y:auto;padding:16px 12px}
+.nav-section{margin:15px 10px 8px;color:#64748b;font-size:10px;font-weight:700;letter-spacing:.16em;text-transform:uppercase}
+.nav-link{display:flex;align-items:center;gap:12px;padding:11px 13px;margin:3px 0;border:1px solid transparent;border-radius:11px;color:#cbd5e1;font-size:14px;transition:.2s}
+.nav-link:hover{background:rgba(255,255,255,.05);color:#fff}
+.nav-link.active{background:linear-gradient(90deg,rgba(245,158,11,.16),rgba(6,182,212,.04));border-color:rgba(245,158,11,.22);color:#fff}
+.nav-icon{width:24px;text-align:center;font-size:17px}
+.sidebar-bottom{padding:14px;border-top:1px solid var(--border)}.logout{color:#fca5a5}
+.main{width:calc(100% - 270px);margin-left:270px;min-width:0}
+.topbar{height:76px;position:sticky;top:0;z-index:900;display:flex;align-items:center;justify-content:space-between;gap:20px;padding:0 28px;background:rgba(5,13,25,.8);border-bottom:1px solid var(--border);backdrop-filter:blur(20px)}
+.mobile-menu{display:none;width:42px;height:42px;border:1px solid var(--border);border-radius:10px;background:rgba(255,255,255,.05);color:#fff;cursor:pointer;font-size:20px}
+.title h1{font-size:22px;letter-spacing:-.03em}.title p{margin-top:3px;color:var(--muted);font-size:12px}
+.top-actions{display:flex;align-items:center;gap:10px}.icon-btn{width:40px;height:40px;border:1px solid var(--border);border-radius:10px;background:rgba(255,255,255,.04);color:#cbd5e1;cursor:pointer}
+.profile{display:flex;align-items:center;gap:10px;margin-left:5px;padding-left:12px;border-left:1px solid var(--border)}
+.avatar{width:38px;height:38px;display:grid;place-items:center;border-radius:11px;background:linear-gradient(135deg,#f59e0b,#06b6d4);color:#111827;font-weight:900}
+.profile-name{font-size:13px;font-weight:700}.profile-role{margin-top:2px;color:var(--muted);font-size:11px}
+.content{padding:28px}
+.page-head{display:flex;align-items:center;justify-content:space-between;gap:18px;margin-bottom:18px;padding:22px 24px;border:1px solid var(--border);border-radius:18px;background:linear-gradient(135deg,rgba(245,158,11,.11),rgba(6,182,212,.04));position:relative;overflow:hidden}
+.page-head:after{content:"";position:absolute;width:190px;height:190px;right:-80px;top:-90px;border-radius:50%;background:rgba(245,158,11,.07)}
+.kicker{color:#fbbf24;font-size:10px;font-weight:800;letter-spacing:.18em;text-transform:uppercase}
+.page-head h2{margin-top:7px;font-size:28px;letter-spacing:-.04em}.page-head p{margin-top:6px;color:var(--muted);font-size:12px}
+.head-actions{display:flex;gap:8px;position:relative;z-index:1;flex-wrap:wrap}
+.btn{border:0;border-radius:10px;padding:10px 14px;cursor:pointer;font-weight:750;font-size:10px;transition:.2s}
+.btn:hover{transform:translateY(-1px)}.primary{background:linear-gradient(135deg,#f59e0b,#06b6d4);color:#07111f;box-shadow:0 10px 25px rgba(245,158,11,.16)}
+.secondary{background:rgba(255,255,255,.05);border:1px solid var(--border);color:#e2e8f0}
+.filters{display:flex;align-items:end;justify-content:space-between;gap:12px;margin-bottom:18px;padding:16px;border:1px solid var(--border);border-radius:15px;background:var(--panel)}
+.filter-group{display:flex;flex-direction:column;gap:6px;min-width:150px}.filter-label{font-size:9px;color:#64748b;text-transform:uppercase;letter-spacing:.08em}
+.select,.date-input{padding:10px 11px;border:1px solid var(--border);border-radius:10px;background:#0b1728;color:#cbd5e1;font-size:10px;outline:none}
+.filter-actions{display:flex;gap:8px}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:18px}
+.stat{padding:18px;border:1px solid var(--border);border-radius:16px;background:var(--panel)}
+.stat-top{display:flex;justify-content:space-between;align-items:center}.stat-label{color:var(--muted);font-size:11px}
+.stat-icon{width:38px;height:38px;display:grid;place-items:center;border-radius:11px;background:rgba(245,158,11,.10)}
+.stat-value{margin-top:8px;font-size:24px;font-weight:800}.stat-note{margin-top:5px;color:#86efac;font-size:10px}
+.grid{display:grid;grid-template-columns:1.2fr .8fr;gap:18px}.grid2{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:18px}
+.panel{border:1px solid var(--border);border-radius:17px;background:var(--panel);overflow:hidden}
+.panel-head{display:flex;align-items:center;justify-content:space-between;padding:17px 19px;border-bottom:1px solid var(--border);gap:12px}
+.panel-title{font-size:15px;font-weight:750}.panel-sub{margin-top:3px;color:var(--muted);font-size:11px}.panel-body{padding:18px}
+.chart{height:260px;display:flex;align-items:flex-end;gap:12px;padding:12px 8px 0}
+.bar-wrap{height:100%;flex:1;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;gap:6px}
+.bar{width:100%;max-width:42px;border-radius:8px 8px 3px 3px;background:linear-gradient(180deg,#06b6d4,#f59e0b);min-height:8px}
+.bar-label,.bar-value{font-size:8px;color:#94a3b8}
+.legend{display:flex;gap:14px;align-items:center;font-size:9px;color:var(--muted)}.legend-item{display:flex;align-items:center;gap:5px}.dot{width:7px;height:7px;border-radius:50%;background:var(--accent)}
+.data-table{width:100%;border-collapse:collapse}.table-wrap{overflow-x:auto}
+.data-table th,.data-table td{padding:12px 14px;border-bottom:1px solid rgba(255,255,255,.06);text-align:left;white-space:nowrap}
+.data-table th{font-size:9px;color:#64748b;text-transform:uppercase;letter-spacing:.1em}.data-table td{font-size:11px;color:#dbe4ef}
+.badge{display:inline-flex;padding:5px 9px;border-radius:99px;font-size:9px;font-weight:750}
+.green{background:rgba(34,197,94,.1);color:#86efac}.amber{background:rgba(245,158,11,.1);color:#fcd34d}.red{background:rgba(239,68,68,.1);color:#fca5a5}.cyan{background:rgba(6,182,212,.1);color:#67e8f9}.blue{background:rgba(96,165,250,.1);color:#93c5fd}
+.rank{display:flex;align-items:center;gap:10px}.rank-no{width:25px;height:25px;display:grid;place-items:center;border-radius:8px;background:rgba(245,158,11,.09);font-size:10px;font-weight:800}.rank-name{font-size:11px;font-weight:700}.rank-sales{margin-top:2px;color:var(--muted);font-size:9px}
+.progress{width:110px;height:7px;border-radius:99px;background:rgba(255,255,255,.06);overflow:hidden}.progress span{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,#f59e0b,#06b6d4)}
+.mini-stat{display:flex;justify-content:space-between;gap:12px;padding:12px 0;border-bottom:1px solid rgba(255,255,255,.06);font-size:10px}.mini-stat:last-child{border-bottom:0}.mini-stat span:first-child{color:var(--muted)}
+.quick-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.quick{display:block;padding:14px;border:1px solid var(--border);border-radius:12px;background:rgba(255,255,255,.025);transition:.2s}.quick:hover{border-color:rgba(245,158,11,.3);transform:translateY(-1px)}.quick-icon{font-size:18px}.quick-title{margin-top:8px;font-size:11px;font-weight:750}.quick-desc{margin-top:3px;color:var(--muted);font-size:9px}
+.overlay{display:none;position:fixed;inset:0;z-index:999;background:rgba(0,0,0,.55)}.overlay.show{display:block}
+.toast{display:none;position:fixed;right:22px;bottom:22px;z-index:3000;padding:13px 16px;border:1px solid rgba(34,197,94,.25);border-radius:12px;background:#0b1b18;color:#bbf7d0;font-size:12px}.toast.show{display:block}
+@media(max-width:1100px){.stats{grid-template-columns:repeat(2,1fr)}.grid,.grid2{grid-template-columns:1fr}}
+@media(max-width:991px){.sidebar{transform:translateX(-100%)}.sidebar.open{transform:translateX(0)}.main{width:100%;margin-left:0}.mobile-menu{display:grid;place-items:center}.topbar{padding:0 16px}.content{padding:18px}.profile-text{display:none}.filters{align-items:stretch;flex-direction:column}.filter-group{width:100%}.filter-actions{width:100%}.filter-actions .btn{flex:1}}
+@media(max-width:650px){.stats{grid-template-columns:1fr 1fr}.page-head{align-items:flex-start;flex-direction:column}.head-actions{width:100%}.head-actions .btn{flex:1}.quick-grid{grid-template-columns:1fr 1fr}.chart{gap:5px}}
+@media(max-width:430px){.stats{grid-template-columns:1fr}.quick-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="app">
+
+<aside class="sidebar" id="sidebar">
+<div class="brand">
+<div class="brand-title">Bhanu Shree <span>Tiles</span></div>
+<div class="brand-subtitle">Tiles & Taps ERP</div>
+<div class="role-badge">📊 Sales Reports</div>
+</div>
+<nav class="nav">
+<div class="nav-section">Sales</div>
+<a class="nav-link" href="dashboard.html"><span class="nav-icon">▦</span>Dashboard</a>
+<a class="nav-link" href="sales-team.html"><span class="nav-icon">👥</span>Sales Team</a>
+<a class="nav-link" href="sales.html"><span class="nav-icon">₹</span>Sales</a>
+<a class="nav-link" href="new-sale.html"><span class="nav-icon">＋</span>New Sale</a>
+<a class="nav-link" href="customers.html"><span class="nav-icon">👤</span>Customers</a>
+<a class="nav-link" href="invoice.html"><span class="nav-icon">▤</span>Invoices</a>
+<div class="nav-section">Reports</div>
+<a class="nav-link active" href="sales-reports.html"><span class="nav-icon">📊</span>Sales Reports</a>
+<a class="nav-link" href="reports.html"><span class="nav-icon">▥</span>All Reports</a>
+<div class="nav-section">Inventory</div>
+<a class="nav-link" href="products.html"><span class="nav-icon">▧</span>Products</a>
+<a class="nav-link" href="stock.html"><span class="nav-icon">📦</span>Stock</a>
+<a class="nav-link" href="godown.html"><span class="nav-icon">🏭</span>Godowns</a>
+<div class="nav-section">System</div>
+<a class="nav-link" href="settings.html"><span class="nav-icon">⚙</span>Settings</a>
+</nav>
+<div class="sidebar-bottom"><a class="nav-link logout" href="login.html"><span class="nav-icon">↪</span>Logout</a></div>
+</aside>
+
+<div class="overlay" id="overlay"></div>
+
+<main class="main">
+<header class="topbar">
+<div style="display:flex;align-items:center;gap:12px">
+<button class="mobile-menu" id="mobileMenu">☰</button>
+<div class="title"><h1>Sales Reports</h1><p>Analyze sales, revenue, customers and team performance</p></div>
+</div>
+<div class="top-actions">
+<button class="icon-btn" id="notify">🔔</button>
+<div class="profile"><div class="avatar">AD</div><div class="profile-text"><div class="profile-name">Admin User</div><div class="profile-role">Sales Reports</div></div></div>
+</div>
+</header>
+
+<section class="content">
+
+<div class="page-head">
+<div>
+<div class="kicker">Business Intelligence</div>
+<h2>Sales Reports</h2>
+<p>Track revenue, sales volume, customer performance, products and sales team results.</p>
+</div>
+<div class="head-actions">
+<button class="btn primary" id="generateBtn">↻ Generate Report</button>
+<button class="btn secondary" id="printBtn">🖨 Print</button>
+<button class="btn secondary" id="exportBtn">↓ Export CSV</button>
+</div>
+</div>
+
+<div class="filters">
+<div class="filter-group"><label class="filter-label">From Date</label><input class="date-input" id="fromDate" type="date" value="2026-08-01"></div>
+<div class="filter-group"><label class="filter-label">To Date</label><input class="date-input" id="toDate" type="date" value="2026-08-09"></div>
+<div class="filter-group"><label class="filter-label">Sales Staff</label><select class="select" id="staffFilter"><option>All Staff</option><option>Rahul Kumar</option><option>Priya Sharma</option><option>Arjun Reddy</option><option>Sneha Patel</option><option>Vikram Singh</option><option>Kiran Rao</option></select></div>
+<div class="filter-group"><label class="filter-label">Payment Type</label><select class="select" id="paymentFilter"><option>All Payments</option><option>Cash</option><option>UPI</option><option>Bank</option><option>Credit</option></select></div>
+<div class="filter-actions"><button class="btn primary" id="applyBtn">Apply Filters</button><button class="btn secondary" id="resetBtn">Reset</button></div>
+</div>
+
+<div class="stats">
+<div class="stat"><div class="stat-top"><span class="stat-label">Total Sales</span><span class="stat-icon">₹</span></div><div class="stat-value">₹48.62L</div><div class="stat-note">↑ 12.8% vs previous period</div></div>
+<div class="stat"><div class="stat-top"><span class="stat-label">Total Orders</span><span class="stat-icon">🧾</span></div><div class="stat-value">286</div><div class="stat-note">↑ 18.4% order volume</div></div>
+<div class="stat"><div class="stat-top"><span class="stat-label">Average Order</span><span class="stat-icon">📈</span></div><div class="stat-value">₹17,000</div><div class="stat-note">↑ 4.7% average value</div></div>
+<div class="stat"><div class="stat-top"><span class="stat-label">Outstanding</span><span class="stat-icon">⚠</span></div><div class="stat-value" style="color:#fcd34d">₹8.42L</div><div class="stat-note" style="color:#fcd34d">42 pending invoices</div></div>
+</div>
+
+<div class="grid">
+<div class="panel">
+<div class="panel-head">
+<div><div class="panel-title">Sales Revenue Trend</div><div class="panel-sub">Daily revenue for the selected period.</div></div>
+<div class="legend"><span class="legend-item"><span class="dot"></span>Revenue</span><span class="badge cyan">August 2026</span></div>
+</div>
+<div class="panel-body"><div class="chart" id="chart"></div></div>
+</div>
+
+<div class="panel">
+<div class="panel-head"><div><div class="panel-title">Sales Summary</div><div class="panel-sub">Key financial indicators.</div></div></div>
+<div class="panel-body">
+<div class="mini-stat"><span>Gross Sales</span><strong>₹48,62,000</strong></div>
+<div class="mini-stat"><span>Discounts</span><strong style="color:#fcd34d">₹1,24,500</strong></div>
+<div class="mini-stat"><span>Tax Collected</span><strong>₹8,75,160</strong></div>
+<div class="mini-stat"><span>Net Sales</span><strong style="color:#86efac">₹47,37,500</strong></div>
+<div class="mini-stat"><span>Paid Amount</span><strong style="color:#86efac">₹39,20,000</strong></div>
+<div class="mini-stat"><span>Outstanding</span><strong style="color:#fcd34d">₹8,42,000</strong></div>
+</div>
+</div>
+</div>
+
+<div class="grid2">
+<div class="panel">
+<div class="panel-head"><div><div class="panel-title">Top Sales Staff</div><div class="panel-sub">Best performing representatives by revenue.</div></div><a class="btn secondary" href="sales-team.html">Sales Team</a></div>
+<div class="table-wrap"><table class="data-table"><thead><tr><th>Rank</th><th>Sales Staff</th><th>Sales</th><th>Target</th><th>Achievement</th></tr></thead><tbody>
+<tr><td><div class="rank"><div class="rank-no">1</div><div>🥇</div></div></td><td><div class="rank-name">Arjun Reddy</div><div class="rank-sales">51 customers</div></td><td>₹9.24L</td><td>₹9.35L</td><td><span class="badge green">99%</span></td></tr>
+<tr><td><div class="rank"><div class="rank-no">2</div><div>🥈</div></div></td><td><div class="rank-name">Rahul Kumar</div><div class="rank-sales">48 customers</div></td><td>₹8.92L</td><td>₹9.30L</td><td><span class="badge green">96%</span></td></tr>
+<tr><td><div class="rank"><div class="rank-no">3</div><div>🥉</div></div></td><td><div class="rank-name">Priya Sharma</div><div class="rank-sales">42 customers</div></td><td>₹7.85L</td><td>₹8.90L</td><td><span class="badge blue">88%</span></td></tr>
+<tr><td><div class="rank"><div class="rank-no">4</div></div></td><td><div class="rank-name">Kiran Rao</div><div class="rank-sales">39 customers</div></td><td>₹7.18L</td><td>₹8.75L</td><td><span class="badge blue">82%</span></td></tr>
+<tr><td><div class="rank"><div class="rank-no">5</div></div></td><td><div class="rank-name">Sneha Patel</div><div class="rank-sales">35 customers</div></td><td>₹6.42L</td><td>₹8.40L</td><td><span class="badge amber">76%</span></td></tr>
+</tbody></table></div>
+</div>
+
+<div class="panel">
+<div class="panel-head"><div><div class="panel-title">Payment Breakdown</div><div class="panel-sub">Sales collected by payment method.</div></div></div>
+<div class="panel-body">
+<div class="mini-stat"><span>UPI</span><strong>₹14.82L · 30.5%</strong></div>
+<div class="mini-stat"><span>Bank Transfer</span><strong>₹13.64L · 28.1%</strong></div>
+<div class="mini-stat"><span>Cash</span><strong>₹10.26L · 21.1%</strong></div>
+<div class="mini-stat"><span>Credit</span><strong style="color:#fcd34d">₹9.90L · 20.3%</strong></div>
+<div style="margin-top:14px;height:10px;border-radius:99px;overflow:hidden;display:flex;background:#162235"><span style="width:30.5%;background:#06b6d4"></span><span style="width:28.1%;background:#60a5fa"></span><span style="width:21.1%;background:#22c55e"></span><span style="width:20.3%;background:#f59e0b"></span></div>
+</div>
+</div>
+</div>
+
+<div class="panel" style="margin-top:18px">
+<div class="panel-head"><div><div class="panel-title">Top Selling Products</div><div class="panel-sub">Products generating the highest sales value.</div></div><a class="btn secondary" href="products.html">Products</a></div>
+<div class="table-wrap"><table class="data-table"><thead><tr><th>Product</th><th>Category</th><th>Quantity</th><th>Sales Value</th><th>Share</th><th>Trend</th></tr></thead><tbody>
+<tr><td>Premium Grey Marble 600x600</td><td>Floor Tiles</td><td>1,240 boxes</td><td>₹8.46L</td><td><span class="badge cyan">17.4%</span></td><td><span class="badge green">↑ 14%</span></td></tr>
+<tr><td>Urban White Glossy 600x1200</td><td>Floor Tiles</td><td>985 boxes</td><td>₹6.92L</td><td><span class="badge cyan">14.2%</span></td><td><span class="badge green">↑ 9%</span></td></tr>
+<tr><td>Royal Beige 300x600</td><td>Wall Tiles</td><td>1,180 boxes</td><td>₹5.48L</td><td><span class="badge cyan">11.3%</span></td><td><span class="badge green">↑ 7%</span></td></tr>
+<tr><td>Black Stone 400x400</td><td>Parking Tiles</td><td>820 boxes</td><td>₹4.86L</td><td><span class="badge cyan">10.0%</span></td><td><span class="badge amber">↓ 2%</span></td></tr>
+<tr><td>Elegant Marble 800x1600</td><td>Premium Tiles</td><td>540 boxes</td><td>₹4.42L</td><td><span class="badge cyan">9.1%</span></td><td><span class="badge green">↑ 11%</span></td></tr>
+</tbody></table></div>
+</div>
+
+<div class="grid2">
+<div class="panel">
+<div class="panel-head"><div><div class="panel-title">Sales by Category</div><div class="panel-sub">Revenue contribution from product categories.</div></div></div>
+<div class="panel-body">
+<div class="mini-stat"><span>Floor Tiles</span><strong>₹21.84L · 44.9%</strong></div>
+<div class="mini-stat"><span>Wall Tiles</span><strong>₹10.62L · 21.8%</strong></div>
+<div class="mini-stat"><span>Bathroom Tiles</span><strong>₹6.48L · 13.3%</strong></div>
+<div class="mini-stat"><span>Parking Tiles</span><strong>₹5.86L · 12.1%</strong></div>
+<div class="mini-stat"><span>Outdoor / Others</span><strong>₹3.82L · 7.9%</strong></div>
+</div>
+</div>
+
+<div class="panel">
+<div class="panel-head"><div><div class="panel-title">Customer Sales</div><div class="panel-sub">Top customers by purchase value.</div></div><a class="btn secondary" href="customers.html">Customers</a></div>
+<div class="table-wrap"><table class="data-table"><thead><tr><th>Customer</th><th>Orders</th><th>Total Sales</th><th>Outstanding</th></tr></thead><tbody>
+<tr><td>Srinivas Constructions</td><td>8</td><td>₹4.62L</td><td><span class="badge amber">₹84,300</span></td></tr>
+<tr><td>Ravi Constructions</td><td>6</td><td>₹3.28L</td><td><span class="badge green">₹0</span></td></tr>
+<tr><td>SV Interiors</td><td>5</td><td>₹2.84L</td><td><span class="badge amber">₹62,500</span></td></tr>
+<tr><td>Vijaya Builders</td><td>4</td><td>₹1.96L</td><td><span class="badge green">₹0</span></td></tr>
+</tbody></table></div>
+</div>
+</div>
+
+<div class="panel" style="margin-top:18px">
+<div class="panel-head"><div><div class="panel-title">Quick Report Actions</div><div class="panel-sub">Open related ERP reports and records.</div></div></div>
+<div class="panel-body"><div class="quick-grid">
+<a class="quick" href="sales.html"><div class="quick-icon">₹</div><div class="quick-title">Sales Register</div><div class="quick-desc">All sales records</div></a>
+<a class="quick" href="sales-team.html"><div class="quick-icon">👥</div><div class="quick-title">Sales Team</div><div class="quick-desc">Team performance</div></a>
+<a class="quick" href="customers.html"><div class="quick-icon">👤</div><div class="quick-title">Customers</div><div class="quick-desc">Customer sales</div></a>
+<a class="quick" href="invoice.html"><div class="quick-icon">🧾</div><div class="quick-title">Invoices</div><div class="quick-desc">Invoice records</div></a>
+<a class="quick" href="payments.html"><div class="quick-icon">💳</div><div class="quick-title">Payments</div><div class="quick-desc">Collections</div></a>
+<a class="quick" href="reports.html"><div class="quick-icon">📊</div><div class="quick-title">All Reports</div><div class="quick-desc">ERP reports</div></a>
+</div></div>
+</div>
+
+</section>
+</main>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const $=id=>document.getElementById(id);
+
+const values=[3.8,4.6,5.2,4.1,6.3,5.8,7.1,6.7,8.2];
+const labels=["01","02","03","04","05","06","07","08","09"];
+const max=Math.max(...values);
+$("chart").innerHTML=values.map((v,i)=>`
+<div class="bar-wrap">
+<div class="bar-value">₹${v.toFixed(1)}L</div>
+<div class="bar" style="height:${Math.max(15,v/max*190)}px"></div>
+<div class="bar-label">${labels[i]} Aug</div>
+</div>`).join("");
+
+$("mobileMenu").onclick=()=>{
+ $("sidebar").classList.toggle("open");
+ $("overlay").classList.toggle("show");
+};
+$("overlay").onclick=()=>{
+ $("sidebar").classList.remove("open");
+ $("overlay").classList.remove("show");
+};
+document.querySelectorAll(".sidebar .nav-link").forEach(a=>{
+ a.addEventListener("click",()=>{
+  if(innerWidth<=991){
+   $("sidebar").classList.remove("open");
+   $("overlay").classList.remove("show");
+  }
+ });
+});
+
+$("applyBtn").onclick=()=>{
+ toast("Sales report filters applied successfully.");
+};
+$("resetBtn").onclick=()=>{
+ $("fromDate").value="2026-08-01";
+ $("toDate").value="2026-08-09";
+ $("staffFilter").selectedIndex=0;
+ $("paymentFilter").selectedIndex=0;
+ toast("Report filters reset.");
+};
+$("generateBtn").onclick=()=>{
+ toast("Sales report generated for the selected period.");
+};
+$("printBtn").onclick=()=>window.print();
+$("exportBtn").onclick=()=>{
+ const csv=[
+ ["Sales Reports - Bhanu Shree Tiles ERP"],
+ ["Period","01 Aug 2026 - 09 Aug 2026"],
+ [],
+ ["Sales Staff","Monthly Sales","Target","Achievement"],
+ ["Arjun Reddy","924000","935000","99%"],
+ ["Rahul Kumar","892000","930000","96%"],
+ ["Priya Sharma","785000","890000","88%"],
+ ["Kiran Rao","718000","875000","82%"],
+ ["Sneha Patel","642000","840000","76%"]
+ ];
+ const blob=new Blob([csv.map(r=>r.join(",")).join("\n")],{type:"text/csv"});
+ const url=URL.createObjectURL(blob);
+ const a=document.createElement("a");
+ a.href=url;a.download="sales-report.csv";a.click();
+ URL.revokeObjectURL(url);
+ toast("Sales report CSV exported.");
+};
+$("notify").onclick=()=>alert("Sales Report Alerts: 42 invoices are pending and ₹8.42L is outstanding.");
+function toast(msg){
+ $("toast").textContent=msg;
+ $("toast").classList.add("show");
+ setTimeout(()=>$("toast").classList.remove("show"),2200);
+}
+</script>
+</body>
+</html>

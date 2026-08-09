@@ -1,89 +1,238 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Products | Bhanu Shree Tiles & Taps</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="css/app.css">
-  <script src="js/api.js" defer></script>
-  <script src="js/catalog.js" defer></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Products - Bhanu Shree Tiles ERP</title>
+<style>
+:root{--bg:#07111f;--panel:rgba(255,255,255,.055);--border:rgba(255,255,255,.10);--text:#f8fafc;--muted:#94a3b8;--accent:#f59e0b;--cyan:#06b6d4;--green:#22c55e;--red:#ef4444;--blue:#3b82f6}
+*{box-sizing:border-box;margin:0;padding:0}
+body{min-height:100vh;font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;color:var(--text);background:radial-gradient(circle at 85% 5%,rgba(245,158,11,.12),transparent 25%),radial-gradient(circle at 5% 90%,rgba(6,182,212,.10),transparent 28%),linear-gradient(135deg,#050b14,#0b1728 55%,#07111f)}
+a{text-decoration:none;color:inherit}button,input,select{font:inherit}.app{min-height:100vh;display:flex}
+.sidebar{width:270px;position:fixed;inset:0 auto 0 0;z-index:1000;display:flex;flex-direction:column;background:rgba(5,13,25,.97);border-right:1px solid var(--border);backdrop-filter:blur(20px);transition:transform .3s}
+.brand{padding:24px 20px;border-bottom:1px solid var(--border)}.brand-title{font-size:21px;font-weight:800}.brand-title span{color:var(--accent)}.brand-subtitle{margin-top:4px;font-size:10px;letter-spacing:.2em;color:var(--muted);text-transform:uppercase}.role-badge{display:inline-flex;margin-top:15px;padding:7px 11px;border:1px solid rgba(245,158,11,.25);border-radius:999px;background:rgba(245,158,11,.08);color:#fbbf24;font-size:11px;font-weight:700}
+.nav{flex:1;overflow-y:auto;padding:16px 12px}.nav-section{margin:15px 10px 8px;color:#64748b;font-size:10px;font-weight:700;letter-spacing:.16em;text-transform:uppercase}.nav-link{display:flex;align-items:center;gap:12px;padding:11px 13px;margin:3px 0;border:1px solid transparent;border-radius:11px;color:#cbd5e1;font-size:14px;transition:.2s}.nav-link:hover{background:rgba(255,255,255,.05);color:#fff}.nav-link.active{background:linear-gradient(90deg,rgba(245,158,11,.16),rgba(245,158,11,.04));border-color:rgba(245,158,11,.2);color:#fff}.nav-icon{width:24px;text-align:center;font-size:17px}.sidebar-bottom{padding:14px;border-top:1px solid var(--border)}.logout{color:#fca5a5}
+.main{width:calc(100% - 270px);margin-left:270px;min-width:0}.topbar{height:76px;position:sticky;top:0;z-index:900;display:flex;align-items:center;justify-content:space-between;gap:20px;padding:0 28px;background:rgba(5,13,25,.8);border-bottom:1px solid var(--border);backdrop-filter:blur(20px)}.mobile-menu{display:none;width:42px;height:42px;border:1px solid var(--border);border-radius:10px;background:rgba(255,255,255,.05);color:#fff;cursor:pointer;font-size:20px}.title h1{font-size:22px;letter-spacing:-.03em}.title p{margin-top:3px;color:var(--muted);font-size:12px}.top-actions{display:flex;align-items:center;gap:10px}.icon-btn{width:40px;height:40px;border:1px solid var(--border);border-radius:10px;background:rgba(255,255,255,.04);color:#cbd5e1;cursor:pointer}.profile{display:flex;align-items:center;gap:10px;margin-left:5px;padding-left:12px;border-left:1px solid var(--border)}.avatar{width:38px;height:38px;display:grid;place-items:center;border-radius:11px;background:linear-gradient(135deg,#f59e0b,#fb7185);color:#111827;font-weight:900}.profile-name{font-size:13px;font-weight:700}.profile-role{margin-top:2px;color:var(--muted);font-size:11px}.content{padding:28px}
+.page-head{display:flex;align-items:flex-end;justify-content:space-between;gap:20px;margin-bottom:20px}.kicker{color:#fbbf24;font-size:10px;font-weight:800;letter-spacing:.18em;text-transform:uppercase}.page-head h2{margin-top:6px;font-size:30px;letter-spacing:-.04em}.page-head p{margin-top:6px;color:var(--muted);font-size:13px}
+.btn{border:0;border-radius:11px;padding:11px 16px;cursor:pointer;font-weight:750;font-size:12px;transition:.2s}.btn:hover{transform:translateY(-1px)}.primary{background:linear-gradient(135deg,#f59e0b,#f97316);color:#111827;box-shadow:0 10px 25px rgba(245,158,11,.18)}.secondary{background:rgba(255,255,255,.05);border:1px solid var(--border);color:#e2e8f0}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:18px}.stat{padding:17px;border:1px solid var(--border);border-radius:15px;background:var(--panel)}.stat-label{color:var(--muted);font-size:11px}.stat-value{margin-top:8px;font-size:25px;font-weight:800}.stat-note{margin-top:5px;font-size:10px;color:var(--green)}
+.toolbar{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;padding:15px;border:1px solid var(--border);border-radius:16px;background:var(--panel);margin-bottom:18px}.search{flex:1;min-width:260px}.search input,.toolbar select,.field input,.field select{width:100%;padding:11px 13px;border:1px solid var(--border);border-radius:10px;background:rgba(255,255,255,.035);color:#fff;outline:none}.toolbar select,.field select{background:#0b1728}.search input::placeholder,.field input::placeholder{color:#64748b}.search input:focus,.toolbar select:focus,.field input:focus,.field select:focus{border-color:rgba(245,158,11,.55);box-shadow:0 0 0 .2rem rgba(245,158,11,.1)}.filters{display:flex;gap:9px;min-width:330px}.filters select{min-width:150px}
+.panel{border:1px solid var(--border);border-radius:17px;background:var(--panel);overflow:hidden}.panel-head{display:flex;align-items:center;justify-content:space-between;gap:15px;padding:17px 19px;border-bottom:1px solid var(--border)}.panel-title{font-size:15px;font-weight:750}.panel-sub{margin-top:3px;color:var(--muted);font-size:11px}.table-wrap{overflow-x:auto}table{width:100%;border-collapse:collapse}th,td{padding:14px 16px;border-bottom:1px solid rgba(255,255,255,.06);text-align:left;white-space:nowrap}th{color:#64748b;font-size:9px;letter-spacing:.1em;text-transform:uppercase}td{color:#dbe4ef;font-size:12px}tbody tr:hover{background:rgba(255,255,255,.025)}
+.product{display:flex;align-items:center;gap:10px}.product-img{width:45px;height:45px;display:grid;place-items:center;border-radius:11px;background:linear-gradient(135deg,rgba(245,158,11,.18),rgba(6,182,212,.13));font-size:21px}.product-name{font-weight:750;color:#fff}.product-code{margin-top:3px;color:var(--muted);font-size:9px}.badge{display:inline-flex;padding:5px 9px;border-radius:999px;font-size:10px;font-weight:750}.tile{color:#fcd34d;background:rgba(245,158,11,.1)}.tap{color:#67e8f9;background:rgba(6,182,212,.1)}.active{color:#86efac;background:rgba(34,197,94,.1)}.inactive{color:#fca5a5;background:rgba(239,68,68,.1)}.stock-good{color:#86efac}.stock-low{color:#fca5a5}.actions{display:flex;gap:6px}.action{width:32px;height:32px;border:1px solid var(--border);border-radius:8px;background:rgba(255,255,255,.035);color:#cbd5e1;cursor:pointer}.action:hover{background:rgba(255,255,255,.08);color:#fff}
+.pagination{display:flex;align-items:center;justify-content:space-between;padding:14px 18px;color:var(--muted);font-size:11px}.pages{display:flex;gap:5px}.page{min-width:32px;height:30px;border:1px solid var(--border);border-radius:8px;background:rgba(255,255,255,.035);color:#cbd5e1;cursor:pointer}.page.current{background:rgba(245,158,11,.15);border-color:rgba(245,158,11,.3);color:#fbbf24}
+.modal{display:none;position:fixed;inset:0;z-index:2000;align-items:center;justify-content:center;padding:20px;background:rgba(0,0,0,.65);backdrop-filter:blur(7px)}.modal.show{display:flex}.modal-card{width:min(700px,100%);max-height:92vh;overflow:auto;border:1px solid var(--border);border-radius:20px;background:#0a1626;box-shadow:0 30px 100px rgba(0,0,0,.5)}.modal-head{display:flex;align-items:center;justify-content:space-between;padding:20px;border-bottom:1px solid var(--border)}.modal-head h3{font-size:18px}.close{border:0;background:none;color:#94a3b8;font-size:25px;cursor:pointer}.form{padding:20px}.form-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}.field label{display:block;margin-bottom:7px;color:#cbd5e1;font-size:11px;font-weight:650}.form-actions{display:flex;justify-content:flex-end;gap:9px;margin-top:20px}.toast{display:none;position:fixed;right:22px;bottom:22px;z-index:3000;padding:13px 16px;border:1px solid rgba(34,197,94,.25);border-radius:12px;background:#0b1b18;color:#bbf7d0;box-shadow:0 15px 45px rgba(0,0,0,.35);font-size:12px}.toast.show{display:block}
+.overlay{display:none;position:fixed;inset:0;z-index:999;background:rgba(0,0,0,.55)}.overlay.show{display:block}
+@media(max-width:1200px){.stats{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:991px){.sidebar{transform:translateX(-100%)}.sidebar.open{transform:translateX(0)}.main{width:100%;margin-left:0}.mobile-menu{display:grid;place-items:center}.topbar{padding:0 16px}.content{padding:18px}.profile-text{display:none}.page-head{align-items:flex-start;flex-direction:column}.filters{min-width:100%}}
+@media(max-width:600px){.stats{grid-template-columns:1fr}.form-grid{grid-template-columns:1fr}.search{min-width:100%}.filters{display:grid;grid-template-columns:1fr}.page-head h2{font-size:26px}}
+</style>
 </head>
-<body class="app-shell">
-  <nav class="navbar navbar-dark nav-frost sticky-top">
-    <div class="container-fluid px-4">
-      <a class="navbar-brand fw-bold" href="dashboard.html">Bhanu Shree Tiles & Taps</a>
-      <div class="d-flex gap-2 flex-wrap">
-        <a class="btn btn-sm btn-outline-light" href="categories.html">Categories</a>
-        <a class="btn btn-sm btn-outline-light" href="brands.html">Brands</a>
-        <a class="btn btn-sm btn-outline-light" href="reports.html">Reports</a>
-      </div>
-    </div>
-  </nav>
+<body>
+<div class="app">
 
-  <main class="container-fluid px-4 py-4">
-    <div class="glass-card rounded-4 p-4 mb-4 d-flex flex-wrap justify-content-between align-items-end gap-3">
-      <div>
-        <div class="section-label">Catalog</div>
-        <h1 class="h2 mb-1">Product management</h1>
-        <p class="muted-text mb-0">Manage product masters, pricing, GST, stock, and catalogue filters.</p>
-      </div>
-      <div id="productStatus" class="muted-text">Ready</div>
-    </div>
+<aside class="sidebar" id="sidebar">
+<div class="brand">
+<div class="brand-title">Bhanu Shree <span>Tiles</span></div>
+<div class="brand-subtitle">Tiles & Taps ERP</div>
+<div class="role-badge">👑 Super Admin</div>
+</div>
+<nav class="nav">
+<div class="nav-section">Main</div>
+<a class="nav-link" href="super-admin-dashboard.html"><span class="nav-icon">▦</span>Dashboard</a>
+<a class="nav-link" href="users.html"><span class="nav-icon">👥</span>Users</a>
+<a class="nav-link" href="roles-permissions.html"><span class="nav-icon">🛡</span>Roles & Permissions</a>
+<div class="nav-section">Inventory</div>
+<a class="nav-link active" href="products.html"><span class="nav-icon">▧</span>Products</a>
+<a class="nav-link" href="stock.html"><span class="nav-icon">▤</span>Stock</a>
+<a class="nav-link" href="stock-in.html"><span class="nav-icon">↓</span>Stock In</a>
+<a class="nav-link" href="stock-out.html"><span class="nav-icon">↑</span>Stock Out</a>
+<a class="nav-link" href="stock-transfer.html"><span class="nav-icon">⇄</span>Stock Transfer</a>
+<a class="nav-link" href="godown.html"><span class="nav-icon">🏭</span>Godowns</a>
+<div class="nav-section">Business</div>
+<a class="nav-link" href="sales.html"><span class="nav-icon">₹</span>Sales</a>
+<a class="nav-link" href="new-sale.html"><span class="nav-icon">＋</span>New Sale</a>
+<a class="nav-link" href="invoice.html"><span class="nav-icon">▤</span>Invoices</a>
+<a class="nav-link" href="purchase.html"><span class="nav-icon">🛒</span>Purchases</a>
+<a class="nav-link" href="new-purchase.html"><span class="nav-icon">＋</span>New Purchase</a>
+<a class="nav-link" href="customers.html"><span class="nav-icon">👤</span>Customers</a>
+<a class="nav-link" href="suppliers.html"><span class="nav-icon">🚚</span>Suppliers</a>
+<div class="nav-section">Finance</div>
+<a class="nav-link" href="payments.html"><span class="nav-icon">💳</span>Payments</a>
+<a class="nav-link" href="expenses.html"><span class="nav-icon">₹</span>Expenses</a>
+<a class="nav-link" href="reports.html"><span class="nav-icon">▥</span>Reports</a>
+<div class="nav-section">System</div>
+<a class="nav-link" href="employees.html"><span class="nav-icon">♙</span>Employees</a>
+<a class="nav-link" href="settings.html"><span class="nav-icon">⚙</span>Settings</a>
+</nav>
+<div class="sidebar-bottom"><a class="nav-link logout" href="login.html"><span class="nav-icon">↪</span>Logout</a></div>
+</aside>
 
-    <div class="row g-4 mb-4">
-      <div class="col-xl-4">
-        <div class="glass-card rounded-4 p-4 h-100">
-          <h2 class="h5 mb-3">Product Form</h2>
-          <form id="productForm">
-            <input type="hidden" name="id">
-            <div class="mb-3"><label class="form-label">SKU</label><input class="form-control" name="sku"></div>
-            <div class="mb-3"><label class="form-label">Name</label><input class="form-control" name="name" required></div>
-            <div class="mb-3"><label class="form-label">Category</label><input class="form-control" list="categoryOptions" name="category" id="productCategory" required></div>
-            <datalist id="categoryOptions"></datalist>
-            <div class="mb-3"><label class="form-label">Brand</label><input class="form-control" list="brandOptions" name="brand" id="productBrand"></div>
-            <datalist id="brandOptions"></datalist>
-            <div class="row g-2">
-              <div class="col-6 mb-3"><label class="form-label">Finish</label><input class="form-control" name="finish"></div>
-              <div class="col-6 mb-3"><label class="form-label">Size</label><input class="form-control" name="size"></div>
-              <div class="col-6 mb-3"><label class="form-label">Color</label><input class="form-control" name="color"></div>
-              <div class="col-6 mb-3"><label class="form-label">Thickness</label><input class="form-control" name="thickness"></div>
-            </div>
-            <div class="row g-2">
-              <div class="col-6 mb-3"><label class="form-label">Price</label><input class="form-control" type="number" min="0" step="0.01" name="price" required></div>
-              <div class="col-6 mb-3"><label class="form-label">MRP</label><input class="form-control" type="number" min="0" step="0.01" name="mrp"></div>
-              <div class="col-6 mb-3"><label class="form-label">GST %</label><input class="form-control" type="number" min="0" step="0.01" name="gstRate" value="18"></div>
-              <div class="col-6 mb-3"><label class="form-label">Stock</label><input class="form-control" type="number" min="0" name="stock" value="0"></div>
-              <div class="col-6 mb-3"><label class="form-label">Low Stock Threshold</label><input class="form-control" type="number" min="0" name="lowStockThreshold" value="10"></div>
-              <div class="col-6 mb-3"><label class="form-label">Unit</label><input class="form-control" name="unit" value="box"></div>
-            </div>
-            <div class="mb-3"><label class="form-label">Description</label><textarea class="form-control" name="description" rows="3"></textarea></div>
-            <div class="mb-3"><label class="form-label">Active</label><select class="form-select" name="isActive"><option value="true">Active</option><option value="false">Inactive</option></select></div>
-            <div class="d-grid gap-2"><button class="btn btn-accent" type="submit">Save Product</button><button id="productFormReset" class="btn btn-outline-light" type="button">Reset</button></div>
-          </form>
-        </div>
-      </div>
+<div class="overlay" id="overlay"></div>
 
-      <div class="col-xl-8">
-        <div class="glass-card rounded-4 p-4 h-100">
-          <div class="d-flex flex-wrap gap-2 justify-content-between align-items-center mb-3">
-            <h2 class="h5 mb-0">Product List</h2>
-            <div class="d-flex gap-2 flex-wrap">
-              <input id="productSearch" class="form-control form-control-sm" placeholder="Search">
-              <select id="productCategoryFilter" class="form-select form-select-sm"><option value="">All Categories</option></select>
-              <select id="productBrandFilter" class="form-select form-select-sm"><option value="">All Brands</option></select>
-              <button id="productSearchButton" class="btn btn-sm btn-outline-light" type="button">Search</button>
-            </div>
-          </div>
-          <div class="table-responsive">
-            <table class="table table-darkish align-middle">
-              <thead><tr><th>SKU</th><th>Name</th><th>Category</th><th>Brand</th><th>Price</th><th>Stock</th><th>Action</th></tr></thead>
-              <tbody id="productTable"></tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-    </div>
-  </main>
+<main class="main">
+<header class="topbar">
+<div style="display:flex;align-items:center;gap:12px">
+<button class="mobile-menu" id="mobileMenu">☰</button>
+<div class="title"><h1>Products</h1><p>Manage tiles, taps, brands, pricing and inventory items</p></div>
+</div>
+<div class="top-actions">
+<button class="icon-btn" id="notify">🔔</button>
+<div class="profile"><div class="avatar">SA</div><div class="profile-text"><div class="profile-name">Super Admin</div><div class="profile-role">Full System Access</div></div></div>
+</div>
+</header>
+
+<section class="content">
+<div class="page-head">
+<div><div class="kicker">Inventory Management</div><h2>Products</h2><p>Maintain your complete tile and bathroom product catalogue.</p></div>
+<button class="btn primary" id="addBtn">＋ Add Product</button>
+</div>
+
+<div class="stats">
+<div class="stat"><div class="stat-label">Total Products</div><div class="stat-value" id="total">0</div><div class="stat-note">All catalogue items</div></div>
+<div class="stat"><div class="stat-label">Tile Products</div><div class="stat-value" id="tiles">0</div><div class="stat-note">Floor & wall tiles</div></div>
+<div class="stat"><div class="stat-label">Tap Products</div><div class="stat-value" id="taps">0</div><div class="stat-note">Bathroom fittings</div></div>
+<div class="stat"><div class="stat-label">Low Stock</div><div class="stat-value" id="low">0</div><div class="stat-note" style="color:#fca5a5">Needs purchase</div></div>
+</div>
+
+<div class="toolbar">
+<div class="search"><input id="search" type="search" placeholder="Search product name, code, brand or category..."></div>
+<div class="filters">
+<select id="typeFilter"><option value="">All Types</option><option value="Tile">Tiles</option><option value="Tap">Taps</option></select>
+<select id="brandFilter"><option value="">All Brands</option></select>
+</div>
+</div>
+
+<div class="panel">
+<div class="panel-head">
+<div><div class="panel-title">Product Catalogue</div><div class="panel-sub">Products available across your ERP</div></div>
+<button class="btn secondary" id="exportBtn">Export CSV</button>
+</div>
+
+<div class="table-wrap">
+<table>
+<thead><tr><th>Product</th><th>Type</th><th>Brand</th><th>Category</th><th>Size</th><th>Unit</th><th>Price</th><th>Stock</th><th>Status</th><th>Actions</th></tr></thead>
+<tbody id="body"></tbody>
+</table>
+</div>
+
+<div class="pagination"><span id="count"></span><div class="pages"><button class="page current">1</button><button class="page">2</button><button class="page">›</button></div></div>
+</div>
+</section>
+</main>
+</div>
+
+<div class="modal" id="modal">
+<div class="modal-card">
+<div class="modal-head"><div><h3 id="modalTitle">Add Product</h3><div style="margin-top:4px;color:var(--muted);font-size:11px">Create or update a catalogue product.</div></div><button class="close" id="close">×</button></div>
+<form class="form" id="form">
+<input type="hidden" id="editId">
+<div class="form-grid">
+<div class="field"><label>Product Name *</label><input id="name" required placeholder="Example: Urban Marble 4×2"></div>
+<div class="field"><label>Product Code *</label><input id="code" required placeholder="BST-TIL-001"></div>
+<div class="field"><label>Type *</label><select id="type" required><option value="">Select Type</option><option>Tile</option><option>Tap</option></select></div>
+<div class="field"><label>Brand *</label><input id="brand" required placeholder="Example: Kajaria"></div>
+<div class="field"><label>Category *</label><input id="category" required placeholder="Floor Tiles / Wall Tiles"></div>
+<div class="field"><label>Size</label><input id="size" placeholder="4 × 2 ft"></div>
+<div class="field"><label>Unit</label><select id="unit"><option>Box</option><option>Piece</option><option>Set</option><option>Carton</option></select></div>
+<div class="field"><label>Selling Price (₹) *</label><input id="price" type="number" min="0" step=".01" required></div>
+<div class="field"><label>Current Stock</label><input id="stock" type="number" min="0" value="0"></div>
+<div class="field"><label>Minimum Stock Alert</label><input id="minimum" type="number" min="0" value="20"></div>
+<div class="field"><label>GST %</label><select id="gst"><option>5</option><option selected>18</option><option>28</option></select></div>
+<div class="field"><label>Status</label><select id="status"><option>Active</option><option>Inactive</option></select></div>
+</div>
+<div class="form-actions"><button type="button" class="btn secondary" id="cancel">Cancel</button><button class="btn primary" type="submit">Save Product</button></div>
+</form>
+</div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const products=[
+{id:1,name:"Urban Marble 4×2",code:"BST-TIL-001",type:"Tile",brand:"Kajaria",category:"Floor Tiles",size:"4 × 2 ft",unit:"Box",price:1250,stock:520,minimum:30,status:"Active"},
+{id:2,name:"Glossy White Wall 2×4",code:"BST-TIL-002",type:"Tile",brand:"Somany",category:"Wall Tiles",size:"2 × 4 ft",unit:"Box",price:890,stock:185,minimum:25,status:"Active"},
+{id:3,name:"Anti-Skid Stone Grey",code:"BST-TIL-003",type:"Tile",brand:"Johnson",category:"Floor Tiles",size:"2 × 2 ft",unit:"Box",price:760,stock:18,minimum:25,status:"Active"},
+{id:4,name:"Bathroom Décor Series",code:"BST-TIL-004",type:"Tile",brand:"Kajaria",category:"Bathroom Tiles",size:"1 × 2 ft",unit:"Box",price:680,stock:9,minimum:20,status:"Active"},
+{id:5,name:"Premium Gold Basin Tap",code:"BST-TAP-001",type:"Tap",brand:"Jaquar",category:"Basin Taps",size:"Standard",unit:"Piece",price:3850,stock:46,minimum:10,status:"Active"},
+{id:6,name:"Chrome Pillar Tap",code:"BST-TAP-002",type:"Tap",brand:"Hindware",category:"Basin Taps",size:"Standard",unit:"Piece",price:1450,stock:74,minimum:15,status:"Active"},
+{id:7,name:"Wooden Finish Floor Tile",code:"BST-TIL-005",type:"Tile",brand:"Simpolo",category:"Wood Finish",size:"2 × 4 ft",unit:"Box",price:1180,stock:96,minimum:20,status:"Active"},
+{id:8,name:"Rain Shower Set",code:"BST-TAP-003",type:"Tap",brand:"Cera",category:"Shower",size:"Set",unit:"Set",price:4650,stock:12,minimum:8,status:"Active"},
+{id:9,name:"Matt Black Shower Mixer",code:"BST-TAP-004",type:"Tap",brand:"Jaquar",category:"Shower",size:"Standard",unit:"Piece",price:5200,stock:0,minimum:8,status:"Inactive"}
+];
+
+const $=id=>document.getElementById(id);
+function renderBrands(){
+ const brands=[...new Set(products.map(p=>p.brand))].sort();
+ $("brandFilter").innerHTML='<option value="">All Brands</option>'+brands.map(b=>`<option>${b}</option>`).join("");
+}
+function render(){
+ const q=$("search").value.toLowerCase().trim(), type=$("typeFilter").value, brand=$("brandFilter").value;
+ const list=products.filter(p=>
+  (!q||[p.name,p.code,p.brand,p.category].join(" ").toLowerCase().includes(q))&&
+  (!type||p.type===type)&&(!brand||p.brand===brand)
+ );
+ $("body").innerHTML=list.map(p=>`
+ <tr>
+ <td><div class="product"><div class="product-img">${p.type==="Tile"?"▧":"🚿"}</div><div><div class="product-name">${p.name}</div><div class="product-code">${p.code}</div></div></div></td>
+ <td><span class="badge ${p.type==="Tile"?"tile":"tap"}">${p.type}</span></td>
+ <td>${p.brand}</td><td>${p.category}</td><td>${p.size}</td><td>${p.unit}</td>
+ <td>₹${Number(p.price).toLocaleString("en-IN")}</td>
+ <td class="${p.stock<=p.minimum?"stock-low":"stock-good"}">${p.stock}</td>
+ <td><span class="badge ${p.status==="Active"?"active":"inactive"}">${p.status}</span></td>
+ <td><div class="actions"><button class="action" title="Edit" onclick="editProduct(${p.id})">✎</button><button class="action" title="Toggle status" onclick="toggleProduct(${p.id})">${p.status==="Active"?"⏸":"▶"}</button><button class="action" title="Delete" onclick="deleteProduct(${p.id})">🗑</button></div></td>
+ </tr>`).join("");
+ $("count").textContent=`Showing ${list.length} of ${products.length} products`;
+ $("total").textContent=products.length;
+ $("tiles").textContent=products.filter(p=>p.type==="Tile").length;
+ $("taps").textContent=products.filter(p=>p.type==="Tap").length;
+ $("low").textContent=products.filter(p=>p.stock<=p.minimum).length;
+}
+["search","typeFilter","brandFilter"].forEach(id=>$(id).addEventListener("input",render));
+
+const modal=$("modal");
+function openModal(){modal.classList.add("show")}
+function closeModal(){modal.classList.remove("show");$("form").reset();$("editId").value="";$("modalTitle").textContent="Add Product";$("stock").value=0;$("minimum").value=20}
+$("addBtn").onclick=()=>{closeModal();openModal()};
+$("close").onclick=closeModal;$("cancel").onclick=closeModal;
+modal.onclick=e=>{if(e.target===modal)closeModal()};
+
+window.editProduct=id=>{
+ const p=products.find(x=>x.id===id);if(!p)return;
+ $("modalTitle").textContent="Edit Product";$("editId").value=p.id;
+ $("name").value=p.name;$("code").value=p.code;$("type").value=p.type;$("brand").value=p.brand;
+ $("category").value=p.category;$("size").value=p.size;$("unit").value=p.unit;$("price").value=p.price;
+ $("stock").value=p.stock;$("minimum").value=p.minimum;$("gst").value=p.gst||18;$("status").value=p.status;openModal();
+};
+window.toggleProduct=id=>{const p=products.find(x=>x.id===id);p.status=p.status==="Active"?"Inactive":"Active";toast(`${p.name} is now ${p.status}.`);render()};
+window.deleteProduct=id=>{const i=products.findIndex(x=>x.id===id);if(i>=0&&confirm(`Delete "${products[i].name}"?`)){products.splice(i,1);toast("Product deleted.");renderBrands();render()}};
+
+$("form").onsubmit=e=>{
+ e.preventDefault();
+ const id=$("editId").value, data={
+  name:$("name").value.trim(),code:$("code").value.trim(),type:$("type").value,brand:$("brand").value.trim(),
+  category:$("category").value.trim(),size:$("size").value.trim(),unit:$("unit").value,price:Number($("price").value),
+  stock:Number($("stock").value)||0,minimum:Number($("minimum").value)||0,gst:Number($("gst").value),status:$("status").value
+ };
+ if(id){Object.assign(products.find(p=>p.id===Number(id)),data);toast("Product updated successfully.");}
+ else{products.push({id:Date.now(),...data});toast("Product added successfully.");}
+ closeModal();renderBrands();render();
+};
+
+$("exportBtn").onclick=()=>{
+ const rows=[["Product","Code","Type","Brand","Category","Size","Unit","Price","Stock","Status"],...products.map(p=>[p.name,p.code,p.type,p.brand,p.category,p.size,p.unit,p.price,p.stock,p.status])];
+ const csv=rows.map(r=>r.map(v=>`"${String(v).replace(/"/g,'""')}"`).join(",")).join("\n");
+ const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([csv],{type:"text/csv"}));a.download="bhanu-shree-products.csv";a.click();toast("Products exported successfully.");
+};
+$("notify").onclick=()=>alert(`${products.filter(p=>p.stock<=p.minimum).length} products are at or below minimum stock.`);
+
+function toast(msg){$("toast").textContent=msg;$("toast").classList.add("show");setTimeout(()=>$("toast").classList.remove("show"),2400)}
+
+const sidebar=$("sidebar"),overlay=$("overlay");
+$("mobileMenu").onclick=()=>{sidebar.classList.toggle("open");overlay.classList.toggle("show")};
+overlay.onclick=()=>{sidebar.classList.remove("open");overlay.classList.remove("show")};
+document.querySelectorAll(".sidebar .nav-link").forEach(a=>a.onclick=()=>{if(innerWidth<=991){sidebar.classList.remove("open");overlay.classList.remove("show")}});
+
+renderBrands();render();
+</script>
 </body>
 </html>

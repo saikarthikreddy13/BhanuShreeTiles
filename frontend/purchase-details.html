@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Purchase Details | Bhanu Shree Tiles ERP</title>
+<style>
+:root{
+  --bg:#07111f;--panel:rgba(255,255,255,.055);--panel2:rgba(255,255,255,.035);
+  --border:rgba(255,255,255,.10);--text:#f8fafc;--muted:#94a3b8;
+  --accent:#f59e0b;--cyan:#06b6d4;--green:#22c55e;--red:#ef4444;--blue:#60a5fa
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  min-height:100vh;font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+  color:var(--text);
+  background:radial-gradient(circle at 85% 5%,rgba(245,158,11,.13),transparent 25%),
+  radial-gradient(circle at 5% 90%,rgba(6,182,212,.09),transparent 28%),
+  linear-gradient(135deg,#050b14,#0b1728 55%,#07111f)
+}
+a{text-decoration:none;color:inherit}button,input,select,textarea{font:inherit}
+.app{min-height:100vh;display:flex}
+.sidebar{
+  width:275px;position:fixed;inset:0 auto 0 0;z-index:1000;display:flex;flex-direction:column;
+  background:rgba(5,13,25,.98);border-right:1px solid var(--border);backdrop-filter:blur(20px);
+  transition:transform .3s ease
+}
+.brand{padding:24px 20px;border-bottom:1px solid var(--border)}
+.brand-title{font-size:21px;font-weight:800}.brand-title span{color:var(--accent)}
+.brand-subtitle{margin-top:4px;font-size:10px;letter-spacing:.2em;color:var(--muted);text-transform:uppercase}
+.role-badge{
+  display:inline-flex;margin-top:15px;padding:7px 11px;border:1px solid rgba(245,158,11,.25);
+  border-radius:999px;background:rgba(245,158,11,.08);color:#fbbf24;font-size:11px;font-weight:700
+}
+.nav{flex:1;overflow-y:auto;padding:15px 12px}
+.nav-title{margin:4px 10px 9px;color:#64748b;font-size:10px;font-weight:700;letter-spacing:.16em;text-transform:uppercase}
+.nav-link{
+  display:flex;align-items:center;gap:12px;padding:11px 13px;margin:3px 0;border:1px solid transparent;
+  border-radius:11px;color:#cbd5e1;font-size:14px;transition:.2s
+}
+.nav-link:hover{background:rgba(255,255,255,.05);color:#fff}
+.nav-link.active{
+  background:linear-gradient(90deg,rgba(245,158,11,.16),rgba(6,182,212,.04));
+  border-color:rgba(245,158,11,.24);color:#fff
+}
+.nav-icon{width:25px;text-align:center;font-size:17px}
+.sidebar-bottom{padding:14px;border-top:1px solid var(--border)}.logout{color:#fca5a5}
+.main{width:calc(100% - 275px);margin-left:275px;min-width:0}
+.topbar{
+  height:76px;position:sticky;top:0;z-index:900;display:flex;align-items:center;justify-content:space-between;
+  gap:20px;padding:0 28px;background:rgba(5,13,25,.84);border-bottom:1px solid var(--border);
+  backdrop-filter:blur(20px)
+}
+.left-top{display:flex;align-items:center;gap:12px}
+.mobile-menu{
+  display:none;width:42px;height:42px;border:1px solid var(--border);border-radius:10px;
+  background:rgba(255,255,255,.05);color:#fff;cursor:pointer;font-size:20px
+}
+.title h1{font-size:22px;letter-spacing:-.03em}.title p{margin-top:3px;color:var(--muted);font-size:12px}
+.top-actions{display:flex;align-items:center;gap:10px}
+.icon-btn{
+  width:40px;height:40px;border:1px solid var(--border);border-radius:10px;
+  background:rgba(255,255,255,.04);color:#cbd5e1;cursor:pointer
+}
+.profile{display:flex;align-items:center;gap:10px;margin-left:5px;padding-left:12px;border-left:1px solid var(--border)}
+.avatar{
+  width:38px;height:38px;display:grid;place-items:center;border-radius:11px;
+  background:linear-gradient(135deg,#f59e0b,#06b6d4);color:#111827;font-weight:900
+}
+.profile-name{font-size:13px;font-weight:700}.profile-role{margin-top:2px;color:var(--muted);font-size:11px}
+.content{padding:28px}
+.page-head{
+  display:flex;align-items:center;justify-content:space-between;gap:18px;margin-bottom:18px;padding:24px;
+  border:1px solid var(--border);border-radius:18px;
+  background:linear-gradient(135deg,rgba(245,158,11,.11),rgba(6,182,212,.04))
+}
+.kicker{color:#fbbf24;font-size:10px;font-weight:800;letter-spacing:.18em;text-transform:uppercase}
+.page-head h2{margin-top:7px;font-size:29px;letter-spacing:-.04em}
+.page-head p{margin-top:7px;color:var(--muted);font-size:12px}
+.actions{display:flex;gap:8px;flex-wrap:wrap}
+.btn{border:0;border-radius:10px;padding:10px 14px;cursor:pointer;font-size:10px;font-weight:750}
+.primary{background:linear-gradient(135deg,#f59e0b,#06b6d4);color:#07111f}
+.secondary{background:rgba(255,255,255,.05);border:1px solid var(--border);color:#e2e8f0}
+.danger{background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.2);color:#fca5a5}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:18px}
+.stat{padding:18px;border:1px solid var(--border);border-radius:16px;background:var(--panel)}
+.stat-top{display:flex;justify-content:space-between;align-items:center}.stat-label{color:var(--muted);font-size:11px}
+.stat-icon{width:38px;height:38px;display:grid;place-items:center;border-radius:11px;background:rgba(245,158,11,.10)}
+.stat-value{margin-top:8px;font-size:24px;font-weight:800}.stat-note{margin-top:5px;color:var(--muted);font-size:10px}
+.panel{border:1px solid var(--border);border-radius:17px;background:var(--panel);overflow:hidden;margin-top:18px}
+.panel-head{
+  display:flex;align-items:center;justify-content:space-between;gap:12px;padding:17px 19px;border-bottom:1px solid var(--border)
+}
+.panel-title{font-size:15px;font-weight:750}.panel-sub{margin-top:3px;color:var(--muted);font-size:11px}
+.panel-body{padding:18px}
+.form-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:13px}
+.field{display:flex;flex-direction:column;gap:7px}.field.full{grid-column:1/-1}
+label{font-size:10px;color:#cbd5e1;font-weight:650}
+input,select,textarea{
+  width:100%;padding:11px 12px;border:1px solid var(--border);border-radius:10px;
+  outline:none;background:rgba(255,255,255,.045);color:#fff
+}
+select option{background:#0b1728;color:#fff}
+input:focus,select:focus,textarea:focus{border-color:rgba(245,158,11,.55);box-shadow:0 0 0 3px rgba(245,158,11,.09)}
+.info-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.info-box{padding:14px;border:1px solid var(--border);border-radius:12px;background:var(--panel2)}
+.info-label{font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:.1em}
+.info-value{margin-top:6px;font-size:14px;font-weight:750}
+.table-wrap{overflow-x:auto}.data-table{width:100%;border-collapse:collapse}
+.data-table th,.data-table td{
+  padding:12px 14px;border-bottom:1px solid rgba(255,255,255,.06);text-align:left;white-space:nowrap
+}
+.data-table th{font-size:9px;color:#64748b;text-transform:uppercase;letter-spacing:.1em}
+.data-table td{font-size:11px;color:#dbe4ef}
+.badge{display:inline-flex;padding:5px 9px;border-radius:99px;font-size:9px;font-weight:750}
+.green{background:rgba(34,197,94,.1);color:#86efac}
+.amber{background:rgba(245,158,11,.1);color:#fcd34d}
+.red{background:rgba(239,68,68,.1);color:#fca5a5}
+.cyan{background:rgba(6,182,212,.1);color:#67e8f9}
+.blue{background:rgba(96,165,250,.1);color:#93c5fd}
+.grid{display:grid;grid-template-columns:1.3fr .7fr;gap:18px}
+.total-box{
+  display:flex;justify-content:space-between;align-items:center;padding:18px;
+  border-top:1px solid var(--border);background:rgba(245,158,11,.04)
+}
+.total-label{color:var(--muted);font-size:11px}.total-value{font-size:23px;font-weight:850}
+.activity{display:grid;grid-template-columns:34px 1fr auto;gap:10px;padding:12px 0;border-bottom:1px solid rgba(255,255,255,.06)}
+.activity:last-child{border-bottom:0}
+.activity-icon{width:32px;height:32px;display:grid;place-items:center;border-radius:9px;background:rgba(6,182,212,.09);color:#67e8f9}
+.activity-title{font-size:11px;font-weight:700}.activity-desc{margin-top:3px;color:var(--muted);font-size:9px}.activity-time{font-size:9px;color:#64748b;white-space:nowrap}
+.overlay{display:none;position:fixed;inset:0;z-index:999;background:rgba(0,0,0,.55)}.overlay.show{display:block}
+@media(max-width:1150px){.stats{grid-template-columns:repeat(2,1fr)}.info-grid{grid-template-columns:repeat(2,1fr)}.grid{grid-template-columns:1fr}}
+@media(max-width:991px){
+ .sidebar{transform:translateX(-100%)}.sidebar.open{transform:translateX(0)}
+ .main{width:100%;margin-left:0}.mobile-menu{display:grid;place-items:center}
+ .topbar{padding:0 16px}.content{padding:18px}.profile-text{display:none}
+}
+@media(max-width:650px){
+ .page-head{align-items:flex-start;flex-direction:column}.actions{width:100%}.actions .btn{flex:1}
+ .form-grid,.info-grid{grid-template-columns:1fr}.field.full{grid-column:auto}
+}
+@media(max-width:480px){.stats{grid-template-columns:1fr}.page-head h2{font-size:23px}.title h1{font-size:18px}}
+@media print{
+ .sidebar,.topbar,.actions,.mobile-menu{display:none!important}.main{width:100%;margin:0}body{background:#fff;color:#111}
+}
+</style>
+</head>
+
+<body>
+<div class="app">
+
+<aside class="sidebar" id="sidebar">
+  <div class="brand">
+    <div class="brand-title">Bhanu Shree <span>Tiles</span></div>
+    <div class="brand-subtitle">Tiles & Taps ERP</div>
+    <div class="role-badge">🛒 Purchase Manager</div>
+  </div>
+
+  <nav class="nav">
+    <div class="nav-title">Purchase Manager</div>
+    <a class="nav-link" href="purchase-dashboard.html"><span class="nav-icon">🛒</span>Purchase Dashboard</a>
+    <a class="nav-link" href="purchases.html"><span class="nav-icon">▤</span>Purchases</a>
+    <a class="nav-link" href="new-purchase.html"><span class="nav-icon">＋</span>New Purchase</a>
+    <a class="nav-link active" href="purchase-details.html"><span class="nav-icon">▣</span>Purchase Details</a>
+    <a class="nav-link" href="suppliers.html"><span class="nav-icon">👥</span>Suppliers</a>
+    <a class="nav-link" href="supplier-details.html"><span class="nav-icon">◉</span>Supplier Details</a>
+    <a class="nav-link" href="products.html"><span class="nav-icon">▧</span>Products</a>
+    <a class="nav-link" href="purchase-orders.html"><span class="nav-icon">📋</span>Purchase Orders</a>
+    <a class="nav-link" href="purchase-reports.html"><span class="nav-icon">▥</span>Purchase Reports</a>
+  </nav>
+
+  <div class="sidebar-bottom">
+    <a class="nav-link logout" href="login.html"><span class="nav-icon">↪</span>Logout</a>
+  </div>
+</aside>
+
+<div class="overlay" id="overlay"></div>
+
+<main class="main">
+
+<header class="topbar">
+  <div class="left-top">
+    <button class="mobile-menu" id="mobileMenu">☰</button>
+    <div class="title">
+      <h1>Purchase Details</h1>
+      <p>View complete purchase transaction information</p>
+    </div>
+  </div>
+
+  <div class="top-actions">
+    <button class="icon-btn" id="notify">🔔</button>
+    <div class="profile">
+      <div class="avatar">PM</div>
+      <div class="profile-text">
+        <div class="profile-name">Purchase Manager</div>
+        <div class="profile-role">Purchase Management</div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<section class="content">
+
+<div class="page-head">
+  <div>
+    <div class="kicker">Purchase Management</div>
+    <h2>Purchase Details</h2>
+    <p>Search and review supplier purchases, items, payments and delivery status.</p>
+  </div>
+  <div class="actions">
+    <a class="btn primary" href="new-purchase.html">＋ New Purchase</a>
+    <a class="btn secondary" href="purchases.html">← All Purchases</a>
+    <button class="btn secondary" onclick="window.print()">🖨 Print</button>
+  </div>
+</div>
+
+<div class="stats">
+  <div class="stat">
+    <div class="stat-top"><span class="stat-label">Purchase Amount</span><span class="stat-icon">₹</span></div>
+    <div class="stat-value">₹2,84,600</div>
+    <div class="stat-note">Selected purchase total</div>
+  </div>
+  <div class="stat">
+    <div class="stat-top"><span class="stat-label">Items</span><span class="stat-icon">▧</span></div>
+    <div class="stat-value">320</div>
+    <div class="stat-note">Boxes received</div>
+  </div>
+  <div class="stat">
+    <div class="stat-top"><span class="stat-label">Paid</span><span class="stat-icon">✓</span></div>
+    <div class="stat-value" style="color:#86efac">₹1,50,000</div>
+    <div class="stat-note">Amount paid to supplier</div>
+  </div>
+  <div class="stat">
+    <div class="stat-top"><span class="stat-label">Balance</span><span class="stat-icon">◷</span></div>
+    <div class="stat-value" style="color:#fcd34d">₹1,34,600</div>
+    <div class="stat-note">Pending supplier payment</div>
+  </div>
+</div>
+
+<div class="panel">
+  <div class="panel-head">
+    <div>
+      <div class="panel-title">Find Purchase</div>
+      <div class="panel-sub">Select a purchase transaction to view its details.</div>
+    </div>
+    <span class="badge cyan">Purchase Lookup</span>
+  </div>
+
+  <div class="panel-body">
+    <div class="form-grid">
+      <div class="field">
+        <label>Purchase ID</label>
+        <select id="purchaseSelect">
+          <option value="PUR-00862">PUR-00862</option>
+          <option value="PUR-00861">PUR-00861</option>
+          <option value="PUR-00860">PUR-00860</option>
+          <option value="PUR-00859">PUR-00859</option>
+          <option value="PUR-00858">PUR-00858</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Supplier</label>
+        <select id="supplierFilter">
+          <option value="all">All Suppliers</option>
+          <option>Somany Ceramics</option>
+          <option>Kajaria Tiles</option>
+          <option>Orient Bell</option>
+          <option>Johnson Tiles</option>
+          <option>Asian Granito</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Payment Status</label>
+        <select id="paymentFilter">
+          <option value="all">All</option>
+          <option>Paid</option>
+          <option>Partial</option>
+          <option>Pending</option>
+        </select>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="panel">
+  <div class="panel-head">
+    <div>
+      <div class="panel-title">Purchase Information</div>
+      <div class="panel-sub">Basic transaction and supplier information.</div>
+    </div>
+    <span class="badge green" id="purchaseStatus">Received</span>
+  </div>
+
+  <div class="panel-body">
+    <div class="info-grid">
+      <div class="info-box">
+        <div class="info-label">Purchase ID</div>
+        <div class="info-value" id="purchaseId">PUR-00862</div>
+      </div>
+      <div class="info-box">
+        <div class="info-label">Purchase Date</div>
+        <div class="info-value" id="purchaseDate">09 Aug 2026</div>
+      </div>
+      <div class="info-box">
+        <div class="info-label">Supplier</div>
+        <div class="info-value" id="supplierName">Somany Ceramics</div>
+      </div>
+      <div class="info-box">
+        <div class="info-label">Invoice Number</div>
+        <div class="info-value" id="invoiceNumber">SC/INV/862</div>
+      </div>
+      <div class="info-box">
+        <div class="info-label">Purchase Order</div>
+        <div class="info-value" id="poNumber">PO-00342</div>
+      </div>
+      <div class="info-box">
+        <div class="info-label">Godown</div>
+        <div class="info-value" id="godownName">Main Godown</div>
+      </div>
+      <div class="info-box">
+        <div class="info-label">Payment Method</div>
+        <div class="info-value" id="paymentMethod">Credit</div>
+      </div>
+      <div class="info-box">
+        <div class="info-label">Status</div>
+        <div class="info-value" id="infoStatus">Received</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="grid">
+
+<div class="panel">
+  <div class="panel-head">
+    <div>
+      <div class="panel-title">Purchased Items</div>
+      <div class="panel-sub">Products included in this purchase.</div>
+    </div>
+    <span class="badge blue">320 Boxes</span>
+  </div>
+
+  <div class="table-wrap">
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Product</th>
+          <th>Size</th>
+          <th>Qty</th>
+          <th>Rate</th>
+          <th>GST</th>
+          <th>Total</th>
+        </tr>
+      </thead>
+      <tbody id="itemsTable">
+        <tr>
+          <td>Premium Grey Marble</td>
+          <td>600×1200 mm</td>
+          <td>200</td>
+          <td>₹720</td>
+          <td>18%</td>
+          <td>₹1,69,920</td>
+        </tr>
+        <tr>
+          <td>Premium Grey Marble</td>
+          <td>800×1600 mm</td>
+          <td>120</td>
+          <td>₹760</td>
+          <td>18%</td>
+          <td>₹1,14,680</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="total-box">
+    <span class="total-label">Grand Total</span>
+    <span class="total-value">₹2,84,600</span>
+  </div>
+</div>
+
+<div class="panel">
+  <div class="panel-head">
+    <div>
+      <div class="panel-title">Payment Summary</div>
+      <div class="panel-sub">Supplier payment status.</div>
+    </div>
+  </div>
+
+  <div class="panel-body">
+    <div class="info-box" style="margin-bottom:10px">
+      <div class="info-label">Invoice Total</div>
+      <div class="info-value">₹2,84,600</div>
+    </div>
+    <div class="info-box" style="margin-bottom:10px">
+      <div class="info-label">Paid Amount</div>
+      <div class="info-value" style="color:#86efac">₹1,50,000</div>
+    </div>
+    <div class="info-box">
+      <div class="info-label">Outstanding</div>
+      <div class="info-value" style="color:#fcd34d">₹1,34,600</div>
+    </div>
+  </div>
+</div>
+
+</div>
+
+<div class="panel">
+  <div class="panel-head">
+    <div>
+      <div class="panel-title">Purchase Timeline</div>
+      <div class="panel-sub">Activity recorded for this purchase.</div>
+    </div>
+  </div>
+
+  <div class="panel-body">
+
+    <div class="activity">
+      <div class="activity-icon">✓</div>
+      <div>
+        <div class="activity-title">Purchase Received</div>
+        <div class="activity-desc">320 boxes received at Main Godown.</div>
+      </div>
+      <div class="activity-time">09 Aug · 11:42 AM</div>
+    </div>
+
+    <div class="activity">
+      <div class="activity-icon">₹</div>
+      <div>
+        <div class="activity-title">Partial Payment Recorded</div>
+        <div class="activity-desc">₹1,50,000 paid to supplier.</div>
+      </div>
+      <div class="activity-time">09 Aug · 12:10 PM</div>
+    </div>
+
+    <div class="activity">
+      <div class="activity-icon">📋</div>
+      <div>
+        <div class="activity-title">Purchase Order Linked</div>
+        <div class="activity-desc">PO-00342 linked to this purchase.</div>
+      </div>
+      <div class="activity-time">08 Aug · 04:25 PM</div>
+    </div>
+
+    <div class="activity">
+      <div class="activity-icon">＋</div>
+      <div>
+        <div class="activity-title">Purchase Created</div>
+        <div class="activity-desc">Purchase PUR-00862 was created.</div>
+      </div>
+      <div class="activity-time">08 Aug · 03:55 PM</div>
+    </div>
+
+  </div>
+</div>
+
+<div class="panel">
+  <div class="panel-head">
+    <div>
+      <div class="panel-title">Actions</div>
+      <div class="panel-sub">Available actions for this purchase.</div>
+    </div>
+  </div>
+  <div class="panel-body">
+    <div class="actions">
+      <a class="btn primary" href="new-purchase.html">✎ Edit Purchase</a>
+      <button class="btn secondary" id="downloadBtn">⇩ Download Details</button>
+      <button class="btn secondary" onclick="window.print()">🖨 Print Purchase</button>
+      <button class="btn danger" id="deleteBtn">🗑 Delete</button>
+    </div>
+  </div>
+</div>
+
+</section>
+</main>
+</div>
+
+<script>
+const sidebar=document.getElementById("sidebar");
+const overlay=document.getElementById("overlay");
+
+document.getElementById("mobileMenu").addEventListener("click",function(){
+  sidebar.classList.toggle("open");
+  overlay.classList.toggle("show");
+});
+
+overlay.addEventListener("click",function(){
+  sidebar.classList.remove("open");
+  overlay.classList.remove("show");
+});
+
+document.querySelectorAll(".nav-link").forEach(function(link){
+  link.addEventListener("click",function(){
+    if(window.innerWidth<=991){
+      sidebar.classList.remove("open");
+      overlay.classList.remove("show");
+    }
+  });
+});
+
+document.getElementById("notify").addEventListener("click",function(){
+  alert(
+    "Purchase Manager Alerts\n\n"+
+    "• PUR-00862 has ₹1,34,600 outstanding.\n"+
+    "• 18 purchase orders are pending delivery.\n"+
+    "• Review supplier payments regularly."
+  );
+});
+
+const purchases={
+ "PUR-00862":{
+   date:"09 Aug 2026",supplier:"Somany Ceramics",invoice:"SC/INV/862",po:"PO-00342",
+   godown:"Main Godown",payment:"Credit",status:"Received",
+   items:[
+     ["Premium Grey Marble","600×1200 mm","200","₹720","18%","₹1,69,920"],
+     ["Premium Grey Marble","800×1600 mm","120","₹760","18%","₹1,14,680"]
+   ],
+   total:"₹2,84,600",paid:"₹1,50,000",balance:"₹1,34,600"
+ },
+ "PUR-00861":{
+   date:"08 Aug 2026",supplier:"Kajaria Tiles",invoice:"KT/INV/861",po:"PO-00341",
+   godown:"North Godown",payment:"Credit",status:"Partial",
+   items:[
+     ["Royal Beige","600×1200 mm","160","₹740","18%","₹1,76,420"]
+   ],
+   total:"₹1,76,420",paid:"₹80,000",balance:"₹96,420"
+ },
+ "PUR-00860":{
+   date:"08 Aug 2026",supplier:"Orient Bell",invoice:"OB/INV/860",po:"PO-00340",
+   godown:"Main Godown",payment:"Bank",status:"Received",
+   items:[
+     ["Urban White","600×1200 mm","140","₹600","18%","₹98,750"]
+   ],
+   total:"₹98,750",paid:"₹98,750",balance:"₹0"
+ },
+ "PUR-00859":{
+   date:"07 Aug 2026",supplier:"Johnson Tiles",invoice:"JT/INV/859",po:"PO-00339",
+   godown:"South Godown",payment:"Credit",status:"Pending",
+   items:[
+     ["Black Stone","600×600 mm","180","₹590","18%","₹1,24,800"]
+   ],
+   total:"₹1,24,800",paid:"₹0",balance:"₹1,24,800"
+ },
+ "PUR-00858":{
+   date:"06 Aug 2026",supplier:"Asian Granito",invoice:"AG/INV/858",po:"PO-00338",
+   godown:"Premium Godown",payment:"Bank",status:"Received",
+   items:[
+     ["Elegant Marble","600×1200 mm","160","₹750","18%","₹1,42,300"]
+   ],
+   total:"₹1,42,300",paid:"₹1,42,300",balance:"₹0"
+ }
+};
+
+function loadPurchase(id){
+  const p=purchases[id];
+  if(!p)return;
+
+  document.getElementById("purchaseId").textContent=id;
+  document.getElementById("purchaseDate").textContent=p.date;
+  document.getElementById("supplierName").textContent=p.supplier;
+  document.getElementById("invoiceNumber").textContent=p.invoice;
+  document.getElementById("poNumber").textContent=p.po;
+  document.getElementById("godownName").textContent=p.godown;
+  document.getElementById("paymentMethod").textContent=p.payment;
+  document.getElementById("infoStatus").textContent=p.status;
+
+  const status=document.getElementById("purchaseStatus");
+  status.textContent=p.status;
+  status.className="badge "+(
+    p.status==="Received"?"green":p.status==="Partial"?"amber":"red"
+  );
+
+  const stats=document.querySelectorAll(".stat-value");
+  stats[0].textContent=p.total;
+  stats[1].textContent=p.items.reduce((sum,item)=>sum+Number(item[2]),0);
+  stats[2].textContent=p.paid;
+  stats[3].textContent=p.balance;
+
+  const tbody=document.getElementById("itemsTable");
+  tbody.innerHTML=p.items.map(item=>`
+    <tr>
+      <td>${item[0]}</td><td>${item[1]}</td><td>${item[2]}</td>
+      <td>${item[3]}</td><td>${item[4]}</td><td>${item[5]}</td>
+    </tr>
+  `).join("");
+
+  document.querySelector(".total-value").textContent=p.total;
+}
+
+document.getElementById("purchaseSelect").addEventListener("change",function(){
+  loadPurchase(this.value);
+});
+
+document.getElementById("downloadBtn").addEventListener("click",function(){
+  const id=document.getElementById("purchaseId").textContent;
+  const p=purchases[id];
+  const text=
+`BHANU SHREE TILES ERP
+PURCHASE DETAILS
+
+Purchase ID: ${id}
+Date: ${p.date}
+Supplier: ${p.supplier}
+Invoice: ${p.invoice}
+Purchase Order: ${p.po}
+Godown: ${p.godown}
+Payment Method: ${p.payment}
+Status: ${p.status}
+
+ITEMS
+${p.items.map(i=>`${i[0]} | ${i[1]} | Qty: ${i[2]} | Rate: ${i[3]} | GST: ${i[4]} | Total: ${i[5]}`).join("\n")}
+
+Grand Total: ${p.total}
+Paid: ${p.paid}
+Outstanding: ${p.balance}
+`;
+  const blob=new Blob([text],{type:"text/plain"});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement("a");
+  a.href=url;
+  a.download=id+"-purchase-details.txt";
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  URL.revokeObjectURL(url);
+});
+
+document.getElementById("deleteBtn").addEventListener("click",function(){
+  const id=document.getElementById("purchaseId").textContent;
+  if(confirm("Are you sure you want to delete "+id+"?")){
+    alert("Demo action: "+id+" would be deleted after backend confirmation.");
+  }
+});
+</script>
+
+</body>
+</html>

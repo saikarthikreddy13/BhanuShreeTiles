@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Roles & Permissions - Bhanu Shree Tiles ERP</title>
+
+<style>
+:root{
+    --bg:#07111f;
+    --panel:rgba(255,255,255,.055);
+    --panel2:rgba(255,255,255,.08);
+    --border:rgba(255,255,255,.10);
+    --text:#f8fafc;
+    --muted:#94a3b8;
+    --accent:#f59e0b;
+    --accent2:#06b6d4;
+    --green:#22c55e;
+    --red:#ef4444;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+    min-height:100vh;
+    font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;
+    color:var(--text);
+    background:
+        radial-gradient(circle at 85% 5%,rgba(245,158,11,.12),transparent 25%),
+        radial-gradient(circle at 5% 90%,rgba(6,182,212,.10),transparent 28%),
+        linear-gradient(135deg,#050b14,#0b1728 55%,#07111f);
+}
+a{text-decoration:none;color:inherit}
+button,input,select{font:inherit}
+.app{min-height:100vh;display:flex}
+
+/* SIDEBAR */
+.sidebar{
+    width:270px;position:fixed;inset:0 auto 0 0;z-index:1000;
+    display:flex;flex-direction:column;background:rgba(5,13,25,.97);
+    border-right:1px solid var(--border);backdrop-filter:blur(20px);
+    transition:transform .3s ease;
+}
+.brand{padding:24px 20px;border-bottom:1px solid var(--border)}
+.brand-title{font-size:21px;font-weight:800;letter-spacing:-.02em}
+.brand-title span{color:var(--accent)}
+.brand-subtitle{margin-top:4px;font-size:10px;letter-spacing:.20em;color:var(--muted);text-transform:uppercase}
+.role-badge{
+    display:inline-flex;align-items:center;gap:7px;margin-top:15px;padding:7px 11px;
+    border:1px solid rgba(245,158,11,.25);border-radius:999px;
+    background:rgba(245,158,11,.08);color:#fbbf24;font-size:11px;font-weight:700
+}
+.nav{flex:1;overflow-y:auto;padding:16px 12px}
+.nav-section{margin:15px 10px 8px;color:#64748b;font-size:10px;font-weight:700;letter-spacing:.16em;text-transform:uppercase}
+.nav-link{
+    display:flex;align-items:center;gap:12px;padding:11px 13px;margin:3px 0;
+    border:1px solid transparent;border-radius:11px;color:#cbd5e1;font-size:14px;transition:.2s
+}
+.nav-link:hover{background:rgba(255,255,255,.05);color:#fff}
+.nav-link.active{
+    background:linear-gradient(90deg,rgba(245,158,11,.16),rgba(245,158,11,.04));
+    border-color:rgba(245,158,11,.20);color:#fff
+}
+.nav-icon{width:24px;text-align:center;font-size:17px}
+.sidebar-bottom{padding:14px;border-top:1px solid var(--border)}
+.logout{color:#fca5a5}
+
+/* MAIN */
+.main{width:calc(100% - 270px);margin-left:270px;min-width:0}
+.topbar{
+    height:76px;position:sticky;top:0;z-index:900;display:flex;align-items:center;
+    justify-content:space-between;gap:20px;padding:0 28px;background:rgba(5,13,25,.80);
+    border-bottom:1px solid var(--border);backdrop-filter:blur(20px)
+}
+.mobile-menu{
+    display:none;width:42px;height:42px;border:1px solid var(--border);border-radius:10px;
+    background:rgba(255,255,255,.05);color:#fff;cursor:pointer;font-size:20px
+}
+.title h1{font-size:22px;letter-spacing:-.03em}
+.title p{margin-top:3px;color:var(--muted);font-size:12px}
+.top-actions{display:flex;align-items:center;gap:10px}
+.icon-btn{
+    width:40px;height:40px;border:1px solid var(--border);border-radius:10px;
+    background:rgba(255,255,255,.04);color:#cbd5e1;cursor:pointer
+}
+.profile{display:flex;align-items:center;gap:10px;margin-left:5px;padding-left:12px;border-left:1px solid var(--border)}
+.avatar{
+    width:38px;height:38px;display:grid;place-items:center;border-radius:11px;
+    background:linear-gradient(135deg,#f59e0b,#fb7185);color:#111827;font-weight:900
+}
+.profile-name{font-size:13px;font-weight:700}.profile-role{margin-top:2px;color:var(--muted);font-size:11px}
+.content{padding:28px}
+
+/* PAGE HEADER */
+.page-head{
+    display:flex;align-items:flex-end;justify-content:space-between;gap:20px;margin-bottom:20px
+}
+.kicker{color:#fbbf24;font-size:10px;font-weight:800;letter-spacing:.18em;text-transform:uppercase}
+.page-head h2{margin-top:6px;font-size:30px;letter-spacing:-.04em}
+.page-head p{margin-top:6px;color:var(--muted);font-size:13px}
+.btn{
+    border:0;border-radius:11px;padding:11px 16px;cursor:pointer;font-weight:750;font-size:12px;transition:.2s
+}
+.btn:hover{transform:translateY(-1px)}
+.btn-primary{background:linear-gradient(135deg,#f59e0b,#f97316);color:#111827;box-shadow:0 10px 25px rgba(245,158,11,.18)}
+.btn-secondary{background:rgba(255,255,255,.05);border:1px solid var(--border);color:#e2e8f0}
+.btn-danger{background:rgba(239,68,68,.10);border:1px solid rgba(239,68,68,.22);color:#fca5a5}
+
+/* ROLE SELECTOR */
+.layout{
+    display:grid;grid-template-columns:290px minmax(0,1fr);gap:18px
+}
+.roles-panel,.permissions-panel{
+    border:1px solid var(--border);border-radius:18px;background:var(--panel);overflow:hidden
+}
+.panel-head{
+    display:flex;align-items:center;justify-content:space-between;gap:15px;
+    padding:17px 19px;border-bottom:1px solid var(--border)
+}
+.panel-title{font-size:15px;font-weight:750}
+.panel-sub{margin-top:3px;color:var(--muted);font-size:11px}
+.role-list{padding:10px}
+.role-item{
+    display:flex;align-items:center;gap:12px;width:100%;padding:13px 12px;margin:3px 0;
+    border:1px solid transparent;border-radius:12px;background:transparent;color:#cbd5e1;
+    text-align:left;cursor:pointer;transition:.2s
+}
+.role-item:hover{background:rgba(255,255,255,.04)}
+.role-item.active{
+    background:linear-gradient(90deg,rgba(245,158,11,.15),rgba(245,158,11,.035));
+    border-color:rgba(245,158,11,.20);color:#fff
+}
+.role-icon{
+    width:38px;height:38px;display:grid;place-items:center;border-radius:11px;
+    background:rgba(255,255,255,.05);font-size:18px
+}
+.role-item.active .role-icon{background:rgba(245,158,11,.13)}
+.role-name{font-size:12px;font-weight:750}
+.role-desc{margin-top:3px;color:var(--muted);font-size:9px}
+.role-count{margin-left:auto;color:#64748b;font-size:10px}
+
+/* PERMISSIONS */
+.permissions-content{padding:20px}
+.selected-role{
+    display:flex;align-items:center;justify-content:space-between;gap:15px;
+    padding:16px;border:1px solid rgba(245,158,11,.18);border-radius:14px;
+    background:linear-gradient(100deg,rgba(245,158,11,.10),rgba(6,182,212,.035));margin-bottom:18px
+}
+.selected-role h3{font-size:18px}.selected-role p{margin-top:4px;color:var(--muted);font-size:11px}
+.role-status{
+    padding:6px 10px;border-radius:999px;color:#86efac;background:rgba(34,197,94,.10);
+    font-size:10px;font-weight:750
+}
+.permission-toolbar{
+    display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;
+    margin-bottom:12px
+}
+.toolbar-actions{display:flex;gap:8px;flex-wrap:wrap}
+.small-btn{
+    padding:8px 11px;border:1px solid var(--border);border-radius:9px;
+    background:rgba(255,255,255,.035);color:#cbd5e1;font-size:10px;font-weight:700;cursor:pointer
+}
+.small-btn:hover{background:rgba(255,255,255,.08);color:#fff}
+.permission-table-wrap{overflow-x:auto;border:1px solid var(--border);border-radius:14px}
+table{width:100%;border-collapse:collapse}
+th,td{padding:13px 15px;border-bottom:1px solid rgba(255,255,255,.06);text-align:center}
+th{color:#64748b;font-size:9px;letter-spacing:.1em;text-transform:uppercase}
+td{font-size:11px;color:#dbe4ef}
+th:first-child,td:first-child{text-align:left;min-width:210px}
+tbody tr:hover{background:rgba(255,255,255,.025)}
+.module-name{font-weight:700;color:#f8fafc}
+.module-desc{margin-top:3px;color:var(--muted);font-size:9px}
+.permission{
+    width:18px;height:18px;accent-color:var(--accent);cursor:pointer
+}
+.permission.readonly{accent-color:var(--accent2)}
+.permission-note{
+    margin-top:13px;padding:12px;border:1px solid rgba(6,182,212,.13);
+    border-radius:11px;background:rgba(6,182,212,.045);color:#a5f3fc;font-size:10px;line-height:1.5
+}
+.footer-actions{
+    display:flex;justify-content:flex-end;gap:9px;margin-top:16px
+}
+.toast{
+    display:none;position:fixed;right:22px;bottom:22px;z-index:3000;
+    padding:13px 16px;border:1px solid rgba(34,197,94,.25);border-radius:12px;
+    background:#0b1b18;color:#bbf7d0;box-shadow:0 15px 45px rgba(0,0,0,.35);font-size:12px
+}
+.toast.show{display:block}
+
+/* RESPONSIVE */
+@media(max-width:991px){
+    .sidebar{transform:translateX(-100%)}
+    .sidebar.open{transform:translateX(0)}
+    .main{width:100%;margin-left:0}
+    .mobile-menu{display:grid;place-items:center}
+    .topbar{padding:0 16px}
+    .content{padding:18px}
+    .profile-text{display:none}
+    .page-head{align-items:flex-start;flex-direction:column}
+    .layout{grid-template-columns:1fr}
+}
+@media(max-width:600px){
+    .permissions-content{padding:14px}
+    .page-head h2{font-size:26px}
+}
+.overlay{display:none;position:fixed;inset:0;z-index:999;background:rgba(0,0,0,.55)}
+.overlay.show{display:block}
+</style>
+</head>
+
+<body>
+
+<div class="app">
+
+<aside class="sidebar" id="sidebar">
+    <div class="brand">
+        <div class="brand-title">Bhanu Shree <span>Tiles</span></div>
+        <div class="brand-subtitle">Tiles & Taps ERP</div>
+        <div class="role-badge">👑 Super Admin</div>
+    </div>
+
+    <nav class="nav">
+        <div class="nav-section">Main</div>
+        <a class="nav-link" href="super-admin-dashboard.html"><span class="nav-icon">▦</span>Dashboard</a>
+        <a class="nav-link" href="users.html"><span class="nav-icon">👥</span>Users</a>
+        <a class="nav-link active" href="roles-permissions.html"><span class="nav-icon">🛡</span>Roles & Permissions</a>
+
+        <div class="nav-section">Inventory</div>
+        <a class="nav-link" href="products.html"><span class="nav-icon">▧</span>Products</a>
+        <a class="nav-link" href="stock.html"><span class="nav-icon">▤</span>Stock</a>
+        <a class="nav-link" href="stock-in.html"><span class="nav-icon">↓</span>Stock In</a>
+        <a class="nav-link" href="stock-out.html"><span class="nav-icon">↑</span>Stock Out</a>
+        <a class="nav-link" href="stock-transfer.html"><span class="nav-icon">⇄</span>Stock Transfer</a>
+        <a class="nav-link" href="godown.html"><span class="nav-icon">🏭</span>Godowns</a>
+
+        <div class="nav-section">Business</div>
+        <a class="nav-link" href="sales.html"><span class="nav-icon">₹</span>Sales</a>
+        <a class="nav-link" href="new-sale.html"><span class="nav-icon">＋</span>New Sale</a>
+        <a class="nav-link" href="invoice.html"><span class="nav-icon">▤</span>Invoices</a>
+        <a class="nav-link" href="purchase.html"><span class="nav-icon">🛒</span>Purchases</a>
+        <a class="nav-link" href="new-purchase.html"><span class="nav-icon">＋</span>New Purchase</a>
+        <a class="nav-link" href="customers.html"><span class="nav-icon">👤</span>Customers</a>
+        <a class="nav-link" href="suppliers.html"><span class="nav-icon">🚚</span>Suppliers</a>
+
+        <div class="nav-section">Finance</div>
+        <a class="nav-link" href="payments.html"><span class="nav-icon">💳</span>Payments</a>
+        <a class="nav-link" href="expenses.html"><span class="nav-icon">₹</span>Expenses</a>
+        <a class="nav-link" href="reports.html"><span class="nav-icon">▥</span>Reports</a>
+
+        <div class="nav-section">System</div>
+        <a class="nav-link" href="employees.html"><span class="nav-icon">♙</span>Employees</a>
+        <a class="nav-link" href="settings.html"><span class="nav-icon">⚙</span>Settings</a>
+    </nav>
+
+    <div class="sidebar-bottom">
+        <a class="nav-link logout" href="login.html"><span class="nav-icon">↪</span>Logout</a>
+    </div>
+</aside>
+
+<div class="overlay" id="overlay"></div>
+
+<main class="main">
+
+<header class="topbar">
+    <div style="display:flex;align-items:center;gap:12px">
+        <button class="mobile-menu" id="mobileMenu" aria-label="Open menu">☰</button>
+        <div class="title">
+            <h1>Roles & Permissions</h1>
+            <p>Configure role-based access for your ERP users</p>
+        </div>
+    </div>
+
+    <div class="top-actions">
+        <button class="icon-btn" id="notificationBtn">🔔</button>
+        <div class="profile">
+            <div class="avatar">SA</div>
+            <div class="profile-text">
+                <div class="profile-name">Super Admin</div>
+                <div class="profile-role">Full System Access</div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<section class="content">
+
+<div class="page-head">
+    <div>
+        <div class="kicker">Administration</div>
+        <h2>Roles & Permissions</h2>
+        <p>Control what each of the 9 ERP roles can view, create, edit or delete.</p>
+    </div>
+    <button class="btn btn-primary" id="saveTop">Save Permissions</button>
+</div>
+
+<div class="layout">
+
+<!-- ROLES -->
+<section class="roles-panel">
+    <div class="panel-head">
+        <div>
+            <div class="panel-title">ERP Roles</div>
+            <div class="panel-sub">Select a role to manage access</div>
+        </div>
+    </div>
+
+    <div class="role-list" id="roleList"></div>
+</section>
+
+<!-- PERMISSIONS -->
+<section class="permissions-panel">
+
+    <div class="permissions-content">
+
+        <div class="selected-role">
+            <div>
+                <h3 id="selectedRoleName">Super Admin</h3>
+                <p id="selectedRoleDescription">Complete access to all ERP modules and system settings.</p>
+            </div>
+            <div class="role-status">Active Role</div>
+        </div>
+
+        <div class="permission-toolbar">
+            <div style="color:var(--muted);font-size:11px">
+                Permissions for <strong id="permissionRoleLabel" style="color:#fff">Super Admin</strong>
+            </div>
+
+            <div class="toolbar-actions">
+                <button class="small-btn" id="selectAll">✓ Select All</button>
+                <button class="small-btn" id="clearAll">Clear All</button>
+                <button class="small-btn" id="resetRole">Reset Role</button>
+            </div>
+        </div>
+
+        <div class="permission-table-wrap">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Module</th>
+                        <th>View</th>
+                        <th>Create</th>
+                        <th>Edit</th>
+                        <th>Delete</th>
+                    </tr>
+                </thead>
+
+                <tbody id="permissionBody"></tbody>
+            </table>
+        </div>
+
+        <div class="permission-note">
+            <strong>Security:</strong> These permissions should be enforced by your backend API as well as the frontend.
+            Hiding a page or button in HTML alone does not provide security.
+        </div>
+
+        <div class="footer-actions">
+            <button class="btn btn-secondary" id="cancelBtn">Cancel Changes</button>
+            <button class="btn btn-primary" id="saveBtn">Save Permissions</button>
+        </div>
+
+    </div>
+</section>
+
+</div>
+
+</section>
+</main>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const roles = [
+    {
+        id:"super_admin",
+        name:"Super Admin",
+        icon:"👑",
+        description:"Complete access to all ERP modules and system settings."
+    },
+    {
+        id:"admin",
+        name:"Admin",
+        icon:"🏢",
+        description:"Manage daily business operations and ERP modules."
+    },
+    {
+        id:"sales_manager",
+        name:"Sales Manager",
+        icon:"💰",
+        description:"Manage sales, customers, invoices and sales reports."
+    },
+    {
+        id:"billing_staff",
+        name:"Billing Staff",
+        icon:"🧾",
+        description:"Create bills, invoices and manage customer payments."
+    },
+    {
+        id:"godown_manager",
+        name:"Godown Manager",
+        icon:"📦",
+        description:"Manage godowns, stock, transfers and damaged inventory."
+    },
+    {
+        id:"purchase_manager",
+        name:"Purchase Manager",
+        icon:"🛒",
+        description:"Manage suppliers, purchases and purchase reports."
+    },
+    {
+        id:"accountant",
+        name:"Accountant",
+        icon:"📊",
+        description:"Manage payments, expenses, ledgers and financial reports."
+    },
+    {
+        id:"sales_staff",
+        name:"Sales Staff",
+        icon:"👤",
+        description:"Create sales and manage customer information."
+    },
+    {
+        id:"store_keeper",
+        name:"Store Keeper",
+        icon:"🔧",
+        description:"Manage physical stock and godown operations."
+    }
+];
+
+const modules = [
+    ["dashboard","Dashboard","Business overview"],
+    ["users","Users","User account management"],
+    ["roles","Roles & Permissions","Role access control"],
+    ["products","Products","Tile and tap products"],
+    ["categories","Categories","Product categories"],
+    ["brands","Brands","Tile brands"],
+    ["godowns","Godowns","Warehouse management"],
+    ["stock","Stock","Current inventory"],
+    ["stock_in","Stock In","Receive inventory"],
+    ["stock_out","Stock Out","Issue or remove inventory"],
+    ["stock_transfer","Stock Transfer","Move stock between godowns"],
+    ["damaged_stock","Damaged Stock","Damaged inventory"],
+    ["sales","Sales","Sales transactions"],
+    ["new_sale","New Sale","Create sales"],
+    ["invoices","Invoices","Customer invoices"],
+    ["purchases","Purchases","Purchase transactions"],
+    ["new_purchase","New Purchase","Create purchases"],
+    ["customers","Customers","Customer management"],
+    ["suppliers","Suppliers","Supplier management"],
+    ["payments","Payments","Payment records"],
+    ["expenses","Expenses","Business expenses"],
+    ["reports","Reports","Business reports"],
+    ["employees","Employees","Employee records"],
+    ["settings","Settings","System settings"],
+    ["audit_logs","Audit Logs","System activity"]
+];
+
+const roleDefaults = {
+    super_admin: ["all"],
+    admin: [
+        "dashboard","products","categories","brands","godowns","stock","stock_in","stock_out",
+        "stock_transfer","sales","new_sale","invoices","purchases","new_purchase",
+        "customers","suppliers","payments","expenses","reports","employees"
+    ],
+    sales_manager: [
+        "dashboard","sales","new_sale","invoices","customers","products","reports"
+    ],
+    billing_staff: [
+        "dashboard","sales","new_sale","invoices","customers","payments","products"
+    ],
+    godown_manager: [
+        "dashboard","godowns","stock","stock_in","stock_out","stock_transfer",
+        "damaged_stock","products","reports"
+    ],
+    purchase_manager: [
+        "dashboard","products","purchases","new_purchase","suppliers","godowns","stock","reports"
+    ],
+    accountant: [
+        "dashboard","payments","expenses","sales","purchases","invoices","customers",
+        "suppliers","reports"
+    ],
+    sales_staff: [
+        "dashboard","sales","new_sale","invoices","customers","products"
+    ],
+    store_keeper: [
+        "dashboard","stock","stock_in","stock_out","stock_transfer","damaged_stock",
+        "godowns","products"
+    ]
+};
+
+const roleList = document.getElementById("roleList");
+const permissionBody = document.getElementById("permissionBody");
+
+let selectedRole = "super_admin";
+
+const permissions = {};
+
+function createDefaultPermissions(roleId){
+    const allowed = roleDefaults[roleId] || [];
+
+    const data = {};
+
+    modules.forEach(([id])=>{
+        const hasAccess = allowed.includes("all") || allowed.includes(id);
+
+        data[id] = {
+            view:hasAccess,
+            create:hasAccess,
+            edit:hasAccess,
+            delete:roleId==="super_admin"
+        };
+
+        /* Sensible restrictions for operational roles */
+        if(roleId==="sales_manager"){
+            data[id].delete = false;
+        }
+
+        if(roleId==="billing_staff"){
+            data[id].create = ["sales","new_sale","invoices","customers","payments"].includes(id);
+            data[id].edit = ["sales","new_sale","invoices","customers","payments"].includes(id);
+            data[id].delete = false;
+        }
+
+        if(roleId==="godown_manager"){
+            data[id].delete = ["stock_out","stock_transfer","damaged_stock"].includes(id);
+        }
+
+        if(roleId==="purchase_manager"){
+            data[id].delete = ["purchases","new_purchase"].includes(id);
+        }
+
+        if(roleId==="accountant"){
+            data[id].delete = false;
+            data[id].create = ["payments","expenses"].includes(id);
+            data[id].edit = ["payments","expenses"].includes(id);
+        }
+
+        if(roleId==="sales_staff"){
+            data[id].delete = false;
+            data[id].create = ["sales","new_sale","invoices","customers"].includes(id);
+            data[id].edit = ["sales","new_sale","invoices","customers"].includes(id);
+        }
+
+        if(roleId==="store_keeper"){
+            data[id].delete = false;
+            data[id].create = ["stock","stock_in","stock_out","stock_transfer","damaged_stock"].includes(id);
+            data[id].edit = ["stock","stock_in","stock_out","stock_transfer","damaged_stock"].includes(id);
+        }
+    });
+
+    return data;
+}
+
+roles.forEach(role=>{
+    permissions[role.id] = createDefaultPermissions(role.id);
+});
+
+function renderRoles(){
+    roleList.innerHTML="";
+
+    roles.forEach(role=>{
+        const accessCount = modules.filter(([id])=>permissions[role.id][id].view).length;
+
+        const button=document.createElement("button");
+        button.className="role-item"+(role.id===selectedRole?" active":"");
+
+        button.innerHTML=`
+            <div class="role-icon">${role.icon}</div>
+            <div>
+                <div class="role-name">${role.name}</div>
+                <div class="role-desc">${role.description}</div>
+            </div>
+            <div class="role-count">${accessCount}/${modules.length}</div>
+        `;
+
+        button.addEventListener("click",()=>{
+            selectedRole=role.id;
+            renderRoles();
+            renderPermissions();
+        });
+
+        roleList.appendChild(button);
+    });
+}
+
+function renderPermissions(){
+    const role=roles.find(r=>r.id===selectedRole);
+
+    document.getElementById("selectedRoleName").textContent=role.name;
+    document.getElementById("selectedRoleDescription").textContent=role.description;
+    document.getElementById("permissionRoleLabel").textContent=role.name;
+
+    permissionBody.innerHTML="";
+
+    modules.forEach(([id,name,description])=>{
+        const p=permissions[selectedRole][id];
+
+        const tr=document.createElement("tr");
+
+        tr.innerHTML=`
+            <td>
+                <div class="module-name">${name}</div>
+                <div class="module-desc">${description}</div>
+            </td>
+
+            <td><input class="permission" type="checkbox" data-module="${id}" data-action="view" ${p.view?"checked":""}></td>
+            <td><input class="permission" type="checkbox" data-module="${id}" data-action="create" ${p.create?"checked":""}></td>
+            <td><input class="permission" type="checkbox" data-module="${id}" data-action="edit" ${p.edit?"checked":""}></td>
+            <td><input class="permission" type="checkbox" data-module="${id}" data-action="delete" ${p.delete?"checked":""}></td>
+        `;
+
+        permissionBody.appendChild(tr);
+    });
+
+    permissionBody.querySelectorAll(".permission").forEach(box=>{
+        box.addEventListener("change",()=>{
+            const module=box.dataset.module;
+            const action=box.dataset.action;
+
+            permissions[selectedRole][module][action]=box.checked;
+
+            /* Create/Edit/Delete require View */
+            if(action!=="view" && box.checked){
+                permissions[selectedRole][module].view=true;
+                renderPermissions();
+            }
+        });
+    });
+}
+
+document.getElementById("selectAll").addEventListener("click",()=>{
+    modules.forEach(([id])=>{
+        permissions[selectedRole][id]={
+            view:true,create:true,edit:true,delete:selectedRole==="super_admin"
+        };
+    });
+
+    renderPermissions();
+    showToast("All available permissions selected.");
+});
+
+document.getElementById("clearAll").addEventListener("click",()=>{
+    modules.forEach(([id])=>{
+        permissions[selectedRole][id]={
+            view:false,create:false,edit:false,delete:false
+        };
+    });
+
+    renderPermissions();
+    showToast("All permissions cleared.");
+});
+
+document.getElementById("resetRole").addEventListener("click",()=>{
+    permissions[selectedRole]=createDefaultPermissions(selectedRole);
+    renderPermissions();
+    showToast("Role permissions reset to defaults.");
+});
+
+function savePermissions(){
+    /* Demo only. Replace this with POST /api/roles/permissions later. */
+    localStorage.setItem("bhanuShreeRolePermissions",JSON.stringify(permissions));
+    showToast("Permissions saved successfully.");
+}
+
+document.getElementById("saveBtn").addEventListener("click",savePermissions);
+document.getElementById("saveTop").addEventListener("click",savePermissions);
+
+document.getElementById("cancelBtn").addEventListener("click",()=>{
+    if(confirm("Discard current permission changes?")){
+        permissions[selectedRole]=createDefaultPermissions(selectedRole);
+        renderPermissions();
+        showToast("Changes discarded.");
+    }
+});
+
+function showToast(message){
+    const toast=document.getElementById("toast");
+    toast.textContent=message;
+    toast.classList.add("show");
+    setTimeout(()=>toast.classList.remove("show"),2500);
+}
+
+/* MOBILE SIDEBAR */
+const mobileMenu=document.getElementById("mobileMenu");
+const sidebar=document.getElementById("sidebar");
+const overlay=document.getElementById("overlay");
+
+mobileMenu.addEventListener("click",()=>{
+    sidebar.classList.toggle("open");
+    overlay.classList.toggle("show");
+});
+
+overlay.addEventListener("click",()=>{
+    sidebar.classList.remove("open");
+    overlay.classList.remove("show");
+});
+
+document.querySelectorAll(".sidebar .nav-link").forEach(link=>{
+    link.addEventListener("click",()=>{
+        if(window.innerWidth<=991){
+            sidebar.classList.remove("open");
+            overlay.classList.remove("show");
+        }
+    });
+});
+
+document.getElementById("notificationBtn").addEventListener("click",()=>{
+    alert("Roles & Permissions: 9 roles are configured.");
+});
+
+renderRoles();
+renderPermissions();
+</script>
+
+</body>
+</html>

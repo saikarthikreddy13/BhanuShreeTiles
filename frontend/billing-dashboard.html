@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Billing Dashboard | Bhanu Shree Tiles ERP</title>
+<style>
+:root{
+  --bg:#07111f;--panel:rgba(255,255,255,.055);--panel2:rgba(255,255,255,.035);
+  --border:rgba(255,255,255,.10);--text:#f8fafc;--muted:#94a3b8;
+  --accent:#f59e0b;--cyan:#06b6d4;--green:#22c55e;--red:#ef4444;--purple:#8b5cf6;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  min-height:100vh;color:var(--text);
+  font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+  background:
+    radial-gradient(circle at 85% 5%,rgba(245,158,11,.14),transparent 25%),
+    radial-gradient(circle at 5% 90%,rgba(6,182,212,.10),transparent 28%),
+    linear-gradient(135deg,#050b14,#0b1728 55%,#07111f);
+}
+a{text-decoration:none;color:inherit}button{font:inherit}
+.app{min-height:100vh;display:flex}
+.sidebar{
+  width:275px;position:fixed;inset:0 auto 0 0;z-index:1000;display:flex;flex-direction:column;
+  background:rgba(5,13,25,.98);border-right:1px solid var(--border);
+  backdrop-filter:blur(20px);transition:transform .3s ease;
+}
+.brand{padding:24px 20px;border-bottom:1px solid var(--border)}
+.brand-title{font-size:21px;font-weight:800}.brand-title span{color:var(--accent)}
+.brand-subtitle{margin-top:4px;color:var(--muted);font-size:10px;letter-spacing:.2em;text-transform:uppercase}
+.role-badge{
+  display:inline-flex;margin-top:15px;padding:7px 11px;border:1px solid rgba(6,182,212,.28);
+  border-radius:999px;background:rgba(6,182,212,.08);color:#67e8f9;font-size:11px;font-weight:700
+}
+.nav{flex:1;overflow-y:auto;padding:15px 12px}
+.nav-title{margin:4px 10px 9px;color:#64748b;font-size:10px;font-weight:700;letter-spacing:.16em;text-transform:uppercase}
+.nav-link{
+  display:flex;align-items:center;gap:12px;padding:11px 13px;margin:3px 0;
+  border:1px solid transparent;border-radius:11px;color:#cbd5e1;font-size:13px;transition:.2s
+}
+.nav-link:hover{background:rgba(255,255,255,.05);color:#fff}
+.nav-link.active{
+  background:linear-gradient(90deg,rgba(6,182,212,.16),rgba(245,158,11,.05));
+  border-color:rgba(6,182,212,.27);color:#fff
+}
+.nav-icon{width:25px;text-align:center;font-size:16px}
+.sidebar-bottom{padding:14px;border-top:1px solid var(--border)}.logout{color:#fca5a5}
+.main{width:calc(100% - 275px);margin-left:275px;min-width:0}
+.topbar{
+  height:76px;position:sticky;top:0;z-index:900;display:flex;align-items:center;justify-content:space-between;
+  gap:20px;padding:0 28px;background:rgba(5,13,25,.84);border-bottom:1px solid var(--border);
+  backdrop-filter:blur(20px)
+}
+.left-top{display:flex;align-items:center;gap:12px}
+.mobile-menu{
+  display:none;width:42px;height:42px;border:1px solid var(--border);border-radius:10px;
+  background:rgba(255,255,255,.05);color:#fff;cursor:pointer;font-size:20px
+}
+.title h1{font-size:22px;letter-spacing:-.03em}.title p{margin-top:3px;color:var(--muted);font-size:12px}
+.top-actions{display:flex;align-items:center;gap:10px}
+.icon-btn{
+  width:40px;height:40px;border:1px solid var(--border);border-radius:10px;
+  background:rgba(255,255,255,.04);color:#cbd5e1;cursor:pointer
+}
+.profile{display:flex;align-items:center;gap:10px;margin-left:5px;padding-left:12px;border-left:1px solid var(--border)}
+.avatar{
+  width:38px;height:38px;display:grid;place-items:center;border-radius:11px;
+  background:linear-gradient(135deg,#06b6d4,#f59e0b);color:#07111f;font-weight:900
+}
+.profile-name{font-size:13px;font-weight:700}.profile-role{margin-top:2px;color:var(--muted);font-size:11px}
+.content{padding:28px}
+.page-head{
+  display:flex;align-items:center;justify-content:space-between;gap:18px;margin-bottom:18px;padding:24px;
+  border:1px solid var(--border);border-radius:18px;
+  background:linear-gradient(135deg,rgba(6,182,212,.11),rgba(245,158,11,.05))
+}
+.kicker{color:#67e8f9;font-size:10px;font-weight:800;letter-spacing:.18em;text-transform:uppercase}
+.page-head h2{margin-top:7px;font-size:29px;letter-spacing:-.04em}.page-head p{margin-top:7px;color:var(--muted);font-size:12px}
+.actions{display:flex;gap:8px;flex-wrap:wrap}
+.btn{border:0;border-radius:10px;padding:10px 14px;cursor:pointer;font-size:10px;font-weight:750}
+.primary{background:linear-gradient(135deg,#06b6d4,#f59e0b);color:#07111f}
+.secondary{background:rgba(255,255,255,.05);border:1px solid var(--border);color:#e2e8f0}
+.kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.kpi{padding:18px;border:1px solid var(--border);border-radius:16px;background:var(--panel)}
+.kpi-top{display:flex;align-items:center;justify-content:space-between}.kpi-label{color:var(--muted);font-size:11px}
+.kpi-icon{width:38px;height:38px;display:grid;place-items:center;border-radius:11px;background:rgba(6,182,212,.10)}
+.kpi-value{margin-top:9px;font-size:24px;font-weight:800}.kpi-note{margin-top:5px;color:var(--muted);font-size:10px}
+.panel{border:1px solid var(--border);border-radius:17px;background:var(--panel);overflow:hidden;margin-top:18px}
+.panel-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:17px 19px;border-bottom:1px solid var(--border)}
+.panel-title{font-size:15px;font-weight:750}.panel-sub{margin-top:3px;color:var(--muted);font-size:11px}.panel-body{padding:18px}
+.quick-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:13px}
+.quick-card{padding:17px;border:1px solid var(--border);border-radius:14px;background:var(--panel2);transition:.2s}
+.quick-card:hover{transform:translateY(-2px);border-color:rgba(6,182,212,.35);background:rgba(6,182,212,.06)}
+.quick-icon{width:42px;height:42px;display:grid;place-items:center;border-radius:12px;background:rgba(6,182,212,.11);font-size:18px}
+.quick-card h3{margin-top:12px;font-size:13px}.quick-card p{margin-top:6px;color:var(--muted);font-size:10px;line-height:1.5}.quick-card .btn{margin-top:13px}
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.summary-item{display:flex;justify-content:space-between;gap:12px;padding:12px 0;border-bottom:1px solid rgba(255,255,255,.06)}
+.summary-item:last-child{border-bottom:0}.summary-label{color:var(--muted);font-size:10px}.summary-value{font-size:11px;font-weight:750}
+.data-table{width:100%;border-collapse:collapse}.table-wrap{overflow-x:auto}
+.data-table th,.data-table td{padding:12px 14px;border-bottom:1px solid rgba(255,255,255,.06);text-align:left;white-space:nowrap}
+.data-table th{font-size:9px;color:#64748b;text-transform:uppercase;letter-spacing:.1em}.data-table td{font-size:11px;color:#dbe4ef}
+.data-table tr:hover td{background:rgba(255,255,255,.025)}
+.badge{display:inline-flex;padding:5px 9px;border-radius:99px;font-size:9px;font-weight:750}
+.green{background:rgba(34,197,94,.1);color:#86efac}.amber{background:rgba(245,158,11,.1);color:#fcd34d}
+.red{background:rgba(239,68,68,.1);color:#fca5a5}.cyan{background:rgba(6,182,212,.1);color:#67e8f9}
+.blue{background:rgba(96,165,250,.1);color:#93c5fd}
+.progress-row{margin-bottom:15px}.progress-head{display:flex;justify-content:space-between;margin-bottom:7px;color:var(--muted);font-size:10px}
+.progress{height:9px;border-radius:99px;background:rgba(255,255,255,.06);overflow:hidden}
+.progress span{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,#06b6d4,#f59e0b)}
+.note{padding:14px;border:1px solid rgba(6,182,212,.16);border-radius:12px;background:rgba(6,182,212,.05);color:#cbd5e1;font-size:10px;line-height:1.6}
+.overlay{display:none;position:fixed;inset:0;z-index:999;background:rgba(0,0,0,.55)}.overlay.show{display:block}
+@media(max-width:1200px){.quick-grid{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:1150px){.kpi-grid{grid-template-columns:repeat(2,1fr)}.quick-grid{grid-template-columns:repeat(2,1fr)}.grid-2{grid-template-columns:1fr}}
+@media(max-width:991px){.sidebar{transform:translateX(-100%)}.sidebar.open{transform:translateX(0)}.main{width:100%;margin-left:0}.mobile-menu{display:grid;place-items:center}.topbar{padding:0 16px}.content{padding:18px}.profile-text{display:none}}
+@media(max-width:650px){.page-head{align-items:flex-start;flex-direction:column}.actions{width:100%}.actions .btn{flex:1}.kpi-grid,.quick-grid{grid-template-columns:1fr}}
+@media(max-width:480px){.page-head h2{font-size:23px}.title h1{font-size:18px}}
+@media print{.sidebar,.topbar,.actions,.mobile-menu{display:none!important}.main{width:100%;margin:0}body{background:#fff;color:#111}}
+</style>
+</head>
+
+<body>
+<div class="app">
+
+<aside class="sidebar" id="sidebar">
+  <div class="brand">
+    <div class="brand-title">Bhanu Shree <span>Tiles</span></div>
+    <div class="brand-subtitle">Tiles & Taps ERP</div>
+    <div class="role-badge">🧾 Billing Staff</div>
+  </div>
+
+  <nav class="nav">
+    <div class="nav-title">Billing Staff</div>
+
+    <!-- ONLY FILES PROVIDED IN YOUR PHOTO -->
+    <a class="nav-link active" href="billing-dashboard.html"><span class="nav-icon">🧾</span>Billing Dashboard</a>
+    <a class="nav-link" href="new-invoice.html"><span class="nav-icon">＋</span>New Invoice</a>
+    <a class="nav-link" href="invoices.html"><span class="nav-icon">🧾</span>Invoices</a>
+    <a class="nav-link" href="sales.html"><span class="nav-icon">💵</span>Sales</a>
+    <a class="nav-link" href="customers.html"><span class="nav-icon">👥</span>Customers</a>
+    <a class="nav-link" href="payments.html"><span class="nav-icon">₹</span>Payments</a>
+    <a class="nav-link" href="products.html"><span class="nav-icon">📦</span>Products</a>
+  </nav>
+
+  <div class="sidebar-bottom">
+    <a class="nav-link logout" href="login.html"><span class="nav-icon">↪</span>Logout</a>
+  </div>
+</aside>
+
+<div class="overlay" id="overlay"></div>
+
+<main class="main">
+
+<header class="topbar">
+  <div class="left-top">
+    <button class="mobile-menu" id="mobileMenu">☰</button>
+    <div class="title">
+      <h1>Billing Dashboard</h1>
+      <p>Create bills and manage customer payments</p>
+    </div>
+  </div>
+
+  <div class="top-actions">
+    <button class="icon-btn" id="notify">🔔</button>
+    <div class="profile">
+      <div class="avatar">BS</div>
+      <div class="profile-text">
+        <div class="profile-name">Billing Staff</div>
+        <div class="profile-role">Billing Operations</div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<section class="content">
+
+<div class="page-head">
+  <div>
+    <div class="kicker">Billing Operations</div>
+    <h2>Billing Staff Dashboard</h2>
+    <p>Create bills, manage invoices, process customer payments and check sales information.</p>
+  </div>
+
+  <div class="actions">
+    <a class="btn primary" href="new-invoice.html">＋ New Invoice</a>
+    <a class="btn secondary" href="payments.html">₹ Payments</a>
+    <button class="btn secondary" onclick="window.print()">🖨 Print</button>
+  </div>
+</div>
+
+<div class="kpi-grid">
+
+  <div class="kpi">
+    <div class="kpi-top"><span class="kpi-label">Today's Billing</span><span class="kpi-icon">₹</span></div>
+    <div class="kpi-value" style="color:#67e8f9">₹4.86L</div>
+    <div class="kpi-note">Total billed today</div>
+  </div>
+
+  <div class="kpi">
+    <div class="kpi-top"><span class="kpi-label">Invoices Today</span><span class="kpi-icon">🧾</span></div>
+    <div class="kpi-value">42</div>
+    <div class="kpi-note">Invoices generated</div>
+  </div>
+
+  <div class="kpi">
+    <div class="kpi-top"><span class="kpi-label">Payments Received</span><span class="kpi-icon">₹</span></div>
+    <div class="kpi-value" style="color:#86efac">₹3.91L</div>
+    <div class="kpi-note">Collected today</div>
+  </div>
+
+  <div class="kpi">
+    <div class="kpi-top"><span class="kpi-label">Pending Amount</span><span class="kpi-icon">⏳</span></div>
+    <div class="kpi-value" style="color:#fcd34d">₹95.5K</div>
+    <div class="kpi-note">Customer payments pending</div>
+  </div>
+
+</div>
+
+<div class="panel">
+
+  <div class="panel-head">
+    <div>
+      <div class="panel-title">Quick Actions</div>
+      <div class="panel-sub">Access only the pages provided for the Billing Staff role.</div>
+    </div>
+    <span class="badge cyan">7 Pages</span>
+  </div>
+
+  <div class="panel-body">
+
+    <div class="quick-grid">
+
+      <a class="quick-card" href="new-invoice.html">
+        <div class="quick-icon">＋</div><h3>New Invoice</h3>
+        <p>Create a new customer bill and invoice.</p><button class="btn primary">Create</button>
+      </a>
+
+      <a class="quick-card" href="invoices.html">
+        <div class="quick-icon">🧾</div><h3>Invoices</h3>
+        <p>View, search and manage generated invoices.</p><button class="btn primary">Open</button>
+      </a>
+
+      <a class="quick-card" href="sales.html">
+        <div class="quick-icon">💵</div><h3>Sales</h3>
+        <p>Check sales transactions connected to billing.</p><button class="btn primary">Open</button>
+      </a>
+
+      <a class="quick-card" href="customers.html">
+        <div class="quick-icon">👥</div><h3>Customers</h3>
+        <p>Find customers and review billing information.</p><button class="btn primary">Open</button>
+      </a>
+
+      <a class="quick-card" href="payments.html">
+        <div class="quick-icon">₹</div><h3>Payments</h3>
+        <p>Record and review customer payments.</p><button class="btn primary">Open</button>
+      </a>
+
+      <a class="quick-card" href="products.html">
+        <div class="quick-icon">📦</div><h3>Products</h3>
+        <p>Check products and pricing for billing.</p><button class="btn primary">Open</button>
+      </a>
+
+    </div>
+
+  </div>
+</div>
+
+<div class="grid-2">
+
+  <div class="panel">
+    <div class="panel-head">
+      <div><div class="panel-title">Today's Billing Summary</div><div class="panel-sub">Current billing activity.</div></div>
+      <span class="badge green">Active</span>
+    </div>
+
+    <div class="panel-body">
+      <div class="summary-item"><span class="summary-label">Gross Billing</span><span class="summary-value" style="color:#67e8f9">₹4,86,500</span></div>
+      <div class="summary-item"><span class="summary-label">Invoices Generated</span><span class="summary-value">42</span></div>
+      <div class="summary-item"><span class="summary-label">Payments Received</span><span class="summary-value" style="color:#86efac">₹3,91,000</span></div>
+      <div class="summary-item"><span class="summary-label">Pending Payments</span><span class="summary-value" style="color:#fcd34d">₹95,500</span></div>
+      <div class="summary-item"><span class="summary-label">Cancelled Invoices</span><span class="summary-value" style="color:#fca5a5">2</span></div>
+    </div>
+  </div>
+
+  <div class="panel">
+    <div class="panel-head">
+      <div><div class="panel-title">Billing Performance</div><div class="panel-sub">Current billing indicators.</div></div>
+      <span class="badge blue">Performance</span>
+    </div>
+
+    <div class="panel-body">
+
+      <div class="progress-row">
+        <div class="progress-head"><span>Invoice Completion</span><strong>96%</strong></div>
+        <div class="progress"><span style="width:96%"></span></div>
+      </div>
+
+      <div class="progress-row">
+        <div class="progress-head"><span>Payment Collection</span><strong>88%</strong></div>
+        <div class="progress"><span style="width:88%"></span></div>
+      </div>
+
+      <div class="progress-row" style="margin-bottom:0">
+        <div class="progress-head"><span>Billing Accuracy</span><strong>98%</strong></div>
+        <div class="progress"><span style="width:98%"></span></div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<div class="panel">
+
+  <div class="panel-head">
+    <div><div class="panel-title">Recent Invoices</div><div class="panel-sub">Latest bills created by billing staff.</div></div>
+    <a class="btn secondary" href="invoices.html">View Invoices</a>
+  </div>
+
+  <div class="table-wrap">
+
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Invoice</th><th>Customer</th><th>Sales</th><th>Amount</th><th>Date & Time</th><th>Status</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr><td>INV-1042</td><td>Ramesh Kumar</td><td>SAL-1042</td><td>₹48,500</td><td>09 Aug 2026, 02:05 PM</td><td><span class="badge green">Paid</span></td></tr>
+        <tr><td>INV-1041</td><td>Sri Lakshmi Traders</td><td>SAL-1041</td><td>₹36,800</td><td>09 Aug 2026, 01:48 PM</td><td><span class="badge amber">Pending</span></td></tr>
+        <tr><td>INV-1040</td><td>Venkatesh Constructions</td><td>SAL-1040</td><td>₹62,400</td><td>09 Aug 2026, 01:31 PM</td><td><span class="badge green">Paid</span></td></tr>
+        <tr><td>INV-1039</td><td>Haritha Homes</td><td>SAL-1039</td><td>₹29,500</td><td>09 Aug 2026, 01:12 PM</td><td><span class="badge cyan">Processing</span></td></tr>
+        <tr><td>INV-1038</td><td>Shree Sai Traders</td><td>SAL-1038</td><td>₹54,200</td><td>09 Aug 2026, 12:54 PM</td><td><span class="badge green">Paid</span></td></tr>
+      </tbody>
+    </table>
+
+  </div>
+</div>
+
+<div class="grid-2">
+
+  <div class="panel">
+    <div class="panel-head">
+      <div><div class="panel-title">Payment Summary</div><div class="panel-sub">Customer payment status.</div></div>
+      <a class="btn secondary" href="payments.html">Payments</a>
+    </div>
+
+    <div class="panel-body">
+      <div class="summary-item"><span class="summary-label">Cash Received</span><span class="summary-value" style="color:#86efac">₹1,24,500</span></div>
+      <div class="summary-item"><span class="summary-label">UPI Received</span><span class="summary-value">₹1,86,000</span></div>
+      <div class="summary-item"><span class="summary-label">Bank Transfer</span><span class="summary-value">₹80,500</span></div>
+      <div class="summary-item"><span class="summary-label">Pending Collection</span><span class="summary-value" style="color:#fcd34d">₹95,500</span></div>
+    </div>
+  </div>
+
+  <div class="panel">
+    <div class="panel-head">
+      <div><div class="panel-title">Billing Alerts</div><div class="panel-sub">Items requiring billing attention.</div></div>
+      <span class="badge amber">Attention</span>
+    </div>
+
+    <div class="panel-body">
+      <div class="summary-item"><span class="summary-label">Pending Invoices</span><span class="summary-value" style="color:#fcd34d">8</span></div>
+      <div class="summary-item"><span class="summary-label">Pending Payments</span><span class="summary-value">₹95,500</span></div>
+      <div class="summary-item"><span class="summary-label">Cancelled Invoices</span><span class="summary-value" style="color:#fca5a5">2</span></div>
+      <div class="summary-item"><span class="summary-label">New Customers</span><span class="summary-value" style="color:#67e8f9">18</span></div>
+    </div>
+  </div>
+
+</div>
+
+<div class="panel">
+  <div class="panel-head">
+    <div><div class="panel-title">Billing Staff Note</div><div class="panel-sub">Billing operations reminder.</div></div>
+    <span class="badge cyan">Billing Operations</span>
+  </div>
+
+  <div class="panel-body">
+    <div class="note">
+      Verify customer details, products, quantities, prices, taxes and payment information before
+      confirming an invoice. Keep invoice and payment records updated for accurate billing.
+    </div>
+  </div>
+</div>
+
+</section>
+</main>
+</div>
+
+<script>
+const sidebar=document.getElementById("sidebar");
+const overlay=document.getElementById("overlay");
+
+document.getElementById("mobileMenu").addEventListener("click",function(){
+  sidebar.classList.toggle("open");
+  overlay.classList.toggle("show");
+});
+
+overlay.addEventListener("click",function(){
+  sidebar.classList.remove("open");
+  overlay.classList.remove("show");
+});
+
+document.querySelectorAll(".nav-link").forEach(function(link){
+  link.addEventListener("click",function(){
+    if(window.innerWidth<=991){
+      sidebar.classList.remove("open");
+      overlay.classList.remove("show");
+    }
+  });
+});
+
+document.getElementById("notify").addEventListener("click",function(){
+  alert(
+    "Billing Notifications\n\n"+
+    "• Pending invoices: 8\n"+
+    "• Pending payments: ₹95,500\n"+
+    "• Cancelled invoices: 2\n"+
+    "• New customers: 18"
+  );
+});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Super Admin Dashboard | Bhanu Shree Tiles ERP</title>
+<style>
+:root{
+  --bg:#07111f;
+  --panel:rgba(255,255,255,.055);
+  --panel2:rgba(255,255,255,.035);
+  --border:rgba(255,255,255,.10);
+  --text:#f8fafc;
+  --muted:#94a3b8;
+  --accent:#f59e0b;
+  --cyan:#06b6d4;
+  --green:#22c55e;
+  --red:#ef4444;
+  --purple:#8b5cf6;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  min-height:100vh;color:var(--text);
+  font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+  background:
+    radial-gradient(circle at 85% 5%,rgba(245,158,11,.13),transparent 25%),
+    radial-gradient(circle at 5% 90%,rgba(139,92,246,.10),transparent 28%),
+    linear-gradient(135deg,#050b14,#0b1728 55%,#07111f);
+}
+a{text-decoration:none;color:inherit}
+button{font:inherit}
+.app{min-height:100vh;display:flex}
+.sidebar{
+  width:275px;position:fixed;inset:0 auto 0 0;z-index:1000;
+  display:flex;flex-direction:column;background:rgba(5,13,25,.98);
+  border-right:1px solid var(--border);backdrop-filter:blur(20px);
+  transition:transform .3s ease;
+}
+.brand{padding:24px 20px;border-bottom:1px solid var(--border)}
+.brand-title{font-size:21px;font-weight:800}.brand-title span{color:var(--accent)}
+.brand-subtitle{margin-top:4px;color:var(--muted);font-size:10px;letter-spacing:.2em;text-transform:uppercase}
+.role-badge{
+  display:inline-flex;margin-top:15px;padding:7px 11px;
+  border:1px solid rgba(245,158,11,.28);border-radius:999px;
+  background:rgba(245,158,11,.08);color:#fbbf24;font-size:11px;font-weight:700
+}
+.nav{flex:1;overflow-y:auto;padding:15px 12px}
+.nav-title{margin:4px 10px 9px;color:#64748b;font-size:10px;font-weight:700;letter-spacing:.16em;text-transform:uppercase}
+.nav-link{
+  display:flex;align-items:center;gap:12px;padding:10px 13px;margin:3px 0;
+  border:1px solid transparent;border-radius:11px;color:#cbd5e1;font-size:13px;transition:.2s
+}
+.nav-link:hover{background:rgba(255,255,255,.05);color:#fff}
+.nav-link.active{
+  background:linear-gradient(90deg,rgba(245,158,11,.17),rgba(139,92,246,.05));
+  border-color:rgba(245,158,11,.27);color:#fff
+}
+.nav-icon{width:25px;text-align:center;font-size:16px}
+.sidebar-bottom{padding:14px;border-top:1px solid var(--border)}
+.logout{color:#fca5a5}
+.main{width:calc(100% - 275px);margin-left:275px;min-width:0}
+.topbar{
+  height:76px;position:sticky;top:0;z-index:900;
+  display:flex;align-items:center;justify-content:space-between;gap:20px;
+  padding:0 28px;background:rgba(5,13,25,.84);
+  border-bottom:1px solid var(--border);backdrop-filter:blur(20px)
+}
+.left-top{display:flex;align-items:center;gap:12px}
+.mobile-menu{
+  display:none;width:42px;height:42px;border:1px solid var(--border);
+  border-radius:10px;background:rgba(255,255,255,.05);color:#fff;cursor:pointer;font-size:20px
+}
+.title h1{font-size:22px;letter-spacing:-.03em}
+.title p{margin-top:3px;color:var(--muted);font-size:12px}
+.top-actions{display:flex;align-items:center;gap:10px}
+.icon-btn{
+  width:40px;height:40px;border:1px solid var(--border);border-radius:10px;
+  background:rgba(255,255,255,.04);color:#cbd5e1;cursor:pointer
+}
+.profile{display:flex;align-items:center;gap:10px;margin-left:5px;padding-left:12px;border-left:1px solid var(--border)}
+.avatar{
+  width:38px;height:38px;display:grid;place-items:center;border-radius:11px;
+  background:linear-gradient(135deg,#f59e0b,#8b5cf6);color:#111827;font-weight:900
+}
+.profile-name{font-size:13px;font-weight:700}.profile-role{margin-top:2px;color:var(--muted);font-size:11px}
+.content{padding:28px}
+.page-head{
+  display:flex;align-items:center;justify-content:space-between;gap:18px;margin-bottom:18px;
+  padding:24px;border:1px solid var(--border);border-radius:18px;
+  background:linear-gradient(135deg,rgba(245,158,11,.12),rgba(139,92,246,.07))
+}
+.kicker{color:#fbbf24;font-size:10px;font-weight:800;letter-spacing:.18em;text-transform:uppercase}
+.page-head h2{margin-top:7px;font-size:29px;letter-spacing:-.04em}
+.page-head p{margin-top:7px;color:var(--muted);font-size:12px}
+.actions{display:flex;gap:8px;flex-wrap:wrap}
+.btn{border:0;border-radius:10px;padding:10px 14px;cursor:pointer;font-size:10px;font-weight:750}
+.primary{background:linear-gradient(135deg,#f59e0b,#8b5cf6);color:#fff}
+.secondary{background:rgba(255,255,255,.05);border:1px solid var(--border);color:#e2e8f0}
+.kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.kpi{padding:18px;border:1px solid var(--border);border-radius:16px;background:var(--panel)}
+.kpi-top{display:flex;align-items:center;justify-content:space-between}
+.kpi-label{color:var(--muted);font-size:11px}
+.kpi-icon{width:38px;height:38px;display:grid;place-items:center;border-radius:11px;background:rgba(245,158,11,.10)}
+.kpi-value{margin-top:9px;font-size:24px;font-weight:800}
+.kpi-note{margin-top:5px;color:var(--muted);font-size:10px}
+.panel{border:1px solid var(--border);border-radius:17px;background:var(--panel);overflow:hidden;margin-top:18px}
+.panel-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:17px 19px;border-bottom:1px solid var(--border)}
+.panel-title{font-size:15px;font-weight:750}
+.panel-sub{margin-top:3px;color:var(--muted);font-size:11px}
+.panel-body{padding:18px}
+.quick-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:13px}
+.quick-card{
+  padding:17px;border:1px solid var(--border);border-radius:14px;
+  background:var(--panel2);transition:.2s
+}
+.quick-card:hover{transform:translateY(-2px);border-color:rgba(245,158,11,.35);background:rgba(245,158,11,.06)}
+.quick-icon{width:42px;height:42px;display:grid;place-items:center;border-radius:12px;background:rgba(245,158,11,.11);font-size:18px}
+.quick-card h3{margin-top:12px;font-size:13px}
+.quick-card p{margin-top:6px;color:var(--muted);font-size:10px;line-height:1.5}
+.quick-card .btn{margin-top:13px}
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.summary-item{display:flex;justify-content:space-between;gap:12px;padding:12px 0;border-bottom:1px solid rgba(255,255,255,.06)}
+.summary-item:last-child{border-bottom:0}
+.summary-label{color:var(--muted);font-size:10px}
+.summary-value{font-size:11px;font-weight:750}
+.data-table{width:100%;border-collapse:collapse}
+.table-wrap{overflow-x:auto}
+.data-table th,.data-table td{padding:12px 14px;border-bottom:1px solid rgba(255,255,255,.06);text-align:left;white-space:nowrap}
+.data-table th{font-size:9px;color:#64748b;text-transform:uppercase;letter-spacing:.1em}
+.data-table td{font-size:11px;color:#dbe4ef}
+.data-table tr:hover td{background:rgba(255,255,255,.025)}
+.badge{display:inline-flex;padding:5px 9px;border-radius:99px;font-size:9px;font-weight:750}
+.green{background:rgba(34,197,94,.1);color:#86efac}
+.amber{background:rgba(245,158,11,.1);color:#fcd34d}
+.red{background:rgba(239,68,68,.1);color:#fca5a5}
+.cyan{background:rgba(6,182,212,.1);color:#67e8f9}
+.blue{background:rgba(96,165,250,.1);color:#93c5fd}
+.purple{background:rgba(139,92,246,.12);color:#c4b5fd}
+.progress-row{margin-bottom:15px}
+.progress-head{display:flex;justify-content:space-between;margin-bottom:7px;color:var(--muted);font-size:10px}
+.progress{height:9px;border-radius:99px;background:rgba(255,255,255,.06);overflow:hidden}
+.progress span{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,#f59e0b,#8b5cf6)}
+.note{
+  padding:14px;border:1px solid rgba(245,158,11,.16);border-radius:12px;
+  background:rgba(245,158,11,.05);color:#cbd5e1;font-size:10px;line-height:1.6
+}
+.overlay{display:none;position:fixed;inset:0;z-index:999;background:rgba(0,0,0,.55)}
+.overlay.show{display:block}
+@media(max-width:1200px){.quick-grid{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:1150px){.kpi-grid{grid-template-columns:repeat(2,1fr)}.quick-grid{grid-template-columns:repeat(2,1fr)}.grid-2{grid-template-columns:1fr}}
+@media(max-width:991px){
+  .sidebar{transform:translateX(-100%)}.sidebar.open{transform:translateX(0)}
+  .main{width:100%;margin-left:0}.mobile-menu{display:grid;place-items:center}
+  .topbar{padding:0 16px}.content{padding:18px}.profile-text{display:none}
+}
+@media(max-width:650px){
+  .page-head{align-items:flex-start;flex-direction:column}.actions{width:100%}.actions .btn{flex:1}
+  .kpi-grid,.quick-grid{grid-template-columns:1fr}
+}
+@media(max-width:480px){.page-head h2{font-size:23px}.title h1{font-size:18px}}
+@media print{
+  .sidebar,.topbar,.actions,.mobile-menu{display:none!important}
+  .main{width:100%;margin:0}body{background:#fff;color:#111}
+}
+</style>
+</head>
+
+<body>
+<div class="app">
+
+<aside class="sidebar" id="sidebar">
+  <div class="brand">
+    <div class="brand-title">Bhanu Shree <span>Tiles</span></div>
+    <div class="brand-subtitle">Tiles & Taps ERP</div>
+    <div class="role-badge">👑 Super Admin</div>
+  </div>
+
+  <nav class="nav">
+    <div class="nav-title">Super Admin</div>
+
+    <!-- ONLY FILES PROVIDED IN YOUR PHOTO -->
+    <a class="nav-link active" href="super-admin-dashboard.html"><span class="nav-icon">👑</span>Super Admin Dashboard</a>
+    <a class="nav-link" href="users.html"><span class="nav-icon">👥</span>Users</a>
+    <a class="nav-link" href="roles-permissions.html"><span class="nav-icon">🔐</span>Roles & Permissions</a>
+    <a class="nav-link" href="products.html"><span class="nav-icon">📦</span>Products</a>
+    <a class="nav-link" href="categories.html"><span class="nav-icon">▦</span>Categories</a>
+    <a class="nav-link" href="brands.html"><span class="nav-icon">🏷</span>Brands</a>
+    <a class="nav-link" href="godowns.html"><span class="nav-icon">🏭</span>Godowns</a>
+    <a class="nav-link" href="stock.html"><span class="nav-icon">📊</span>Stock</a>
+    <a class="nav-link" href="stock-transfer.html"><span class="nav-icon">⇄</span>Stock Transfer</a>
+    <a class="nav-link" href="purchases.html"><span class="nav-icon">🛒</span>Purchases</a>
+    <a class="nav-link" href="suppliers.html"><span class="nav-icon">🏢</span>Suppliers</a>
+    <a class="nav-link" href="sales.html"><span class="nav-icon">💰</span>Sales</a>
+    <a class="nav-link" href="customers.html"><span class="nav-icon">👤</span>Customers</a>
+    <a class="nav-link" href="invoices.html"><span class="nav-icon">🧾</span>Invoices</a>
+    <a class="nav-link" href="payments.html"><span class="nav-icon">₹</span>Payments</a>
+    <a class="nav-link" href="expenses.html"><span class="nav-icon">↘</span>Expenses</a>
+    <a class="nav-link" href="employees.html"><span class="nav-icon">🧑‍💼</span>Employees</a>
+    <a class="nav-link" href="reports.html"><span class="nav-icon">📈</span>Reports</a>
+    <a class="nav-link" href="settings.html"><span class="nav-icon">⚙</span>Settings</a>
+    <a class="nav-link" href="audit-logs.html"><span class="nav-icon">📋</span>Audit Logs</a>
+  </nav>
+
+  <div class="sidebar-bottom">
+    <a class="nav-link logout" href="login.html"><span class="nav-icon">↪</span>Logout</a>
+  </div>
+</aside>
+
+<div class="overlay" id="overlay"></div>
+
+<main class="main">
+
+<header class="topbar">
+  <div class="left-top">
+    <button class="mobile-menu" id="mobileMenu">☰</button>
+    <div class="title">
+      <h1>Super Admin Dashboard</h1>
+      <p>Complete control of the ERP</p>
+    </div>
+  </div>
+
+  <div class="top-actions">
+    <button class="icon-btn" id="notify">🔔</button>
+    <div class="profile">
+      <div class="avatar">SA</div>
+      <div class="profile-text">
+        <div class="profile-name">Super Admin</div>
+        <div class="profile-role">Complete ERP Control</div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<section class="content">
+
+<div class="page-head">
+  <div>
+    <div class="kicker">System Administration</div>
+    <h2>Super Admin Dashboard</h2>
+    <p>Complete control over users, master data, inventory, sales, purchases, finance and system settings.</p>
+  </div>
+
+  <div class="actions">
+    <a class="btn primary" href="users.html">＋ Manage Users</a>
+    <a class="btn secondary" href="audit-logs.html">📋 Audit Logs</a>
+    <button class="btn secondary" onclick="window.print()">🖨 Print</button>
+  </div>
+</div>
+
+<div class="kpi-grid">
+
+  <div class="kpi">
+    <div class="kpi-top">
+      <span class="kpi-label">Total Users</span>
+      <span class="kpi-icon">👥</span>
+    </div>
+    <div class="kpi-value">42</div>
+    <div class="kpi-note">System users registered</div>
+  </div>
+
+  <div class="kpi">
+    <div class="kpi-top">
+      <span class="kpi-label">Products</span>
+      <span class="kpi-icon">📦</span>
+    </div>
+    <div class="kpi-value">1,284</div>
+    <div class="kpi-note">Active product records</div>
+  </div>
+
+  <div class="kpi">
+    <div class="kpi-top">
+      <span class="kpi-label">Customers</span>
+      <span class="kpi-icon">👤</span>
+    </div>
+    <div class="kpi-value">2,486</div>
+    <div class="kpi-note">Customer accounts</div>
+  </div>
+
+  <div class="kpi">
+    <div class="kpi-top">
+      <span class="kpi-label">Today's Sales</span>
+      <span class="kpi-icon">₹</span>
+    </div>
+    <div class="kpi-value" style="color:#67e8f9">₹4.86L</div>
+    <div class="kpi-note">Sales completed today</div>
+  </div>
+
+</div>
+
+<div class="panel">
+
+  <div class="panel-head">
+    <div>
+      <div class="panel-title">System Management</div>
+      <div class="panel-sub">Access only the pages provided for the Super Admin role.</div>
+    </div>
+    <span class="badge purple">19 Pages</span>
+  </div>
+
+  <div class="panel-body">
+
+    <div class="quick-grid">
+
+      <a class="quick-card" href="users.html">
+        <div class="quick-icon">👥</div>
+        <h3>Users</h3>
+        <p>Create, manage and review ERP system users.</p>
+        <button class="btn primary">Open</button>
+      </a>
+
+      <a class="quick-card" href="roles-permissions.html">
+        <div class="quick-icon">🔐</div>
+        <h3>Roles & Permissions</h3>
+        <p>Control role access and permission settings.</p>
+        <button class="btn primary">Open</button>
+      </a>
+
+      <a class="quick-card" href="products.html">
+        <div class="quick-icon">📦</div>
+        <h3>Products</h3>
+        <p>Manage the complete product master.</p>
+        <button class="btn primary">Open</button>
+      </a>
+
+      <a class="quick-card" href="categories.html">
+        <div class="quick-icon">▦</div>
+        <h3>Categories</h3>
+        <p>Manage product categories and classification.</p>
+        <button class="btn primary">Open</button>
+      </a>
+
+      <a class="quick-card" href="brands.html">
+        <div class="quick-icon">🏷</div>
+        <h3>Brands</h3>
+        <p>Manage tile and product brands.</p>
+        <button class="btn primary">Open</button>
+      </a>
+
+      <a class="quick-card" href="godowns.html">
+        <div class="quick-icon">🏭</div>
+        <h3>Godowns</h3>
+        <p>Manage warehouse and godown records.</p>
+        <button class="btn primary">Open</button>
+      </a>
+
+      <a class="quick-card" href="stock.html">
+        <div class="quick-icon">📊</div>
+        <h3>Stock</h3>
+        <p>Monitor the complete inventory position.</p>
+        <button class="btn primary">Open</button>
+      </a>
+
+      <a class="quick-card" href="stock-transfer.html">
+        <div class="quick-icon">⇄</div>
+        <h3>Stock Transfer</h3>
+        <p>Review stock movement between locations.</p>
+        <button class="btn primary">Open</button>
+      </a>
+
+      <a class="quick-card" href="purchases.html">
+        <div class="quick-icon">🛒</div>
+        <h3>Purchases</h3>
+        <p>Review supplier purchase transactions.</p>
+        <button class="btn primary">Open</button>
+      </a>
+
+      <a class="quick-card" href="suppliers.html">
+        <div class="quick-icon">🏢</div>
+        <h3>Suppliers</h3>
+        <p>Manage supplier master information.</p>
+        <button class="btn primary">Open</button>
+      </a>
+
+      <a class="quick-card" href="sales.html">
+        <div class="quick-icon">💰</div>
+        <h3>Sales</h3>
+        <p>Monitor all sales transactions.</p>
+        <button class="btn primary">Open</button>
+      </a>
+
+      <a class="quick-card" href="customers.html">
+        <div class="quick-icon">👤</div>
+        <h3>Customers</h3>
+        <p>Manage customer accounts and information.</p>
+        <button class="btn primary">Open</button>
+      </a>
+
+      <a class="quick-card" href="invoices.html">
+        <div class="quick-icon">🧾</div>
+        <h3>Invoices</h3>
+        <p>Review invoices and billing records.</p>
+        <button class="btn primary">Open</button>
+      </a>
+
+      <a class="quick-card" href="payments.html">
+        <div class="quick-icon">₹</div>
+        <h3>Payments</h3>
+        <p>Review payment transactions.</p>
+        <button class="btn primary">Open</button>
+      </a>
+
+      <a class="quick-card" href="expenses.html">
+        <div class="quick-icon">↘</div>
+        <h3>Expenses</h3>
+        <p>Monitor business expense records.</p>
+        <button class="btn primary">Open</button>
+      </a>
+
+      <a class="quick-card" href="employees.html">
+        <div class="quick-icon">🧑‍💼</div>
+        <h3>Employees</h3>
+        <p>Manage employee records.</p>
+        <button class="btn primary">Open</button>
+      </a>
+
+      <a class="quick-card" href="reports.html">
+        <div class="quick-icon">📈</div>
+        <h3>Reports</h3>
+        <p>Access ERP business and management reports.</p>
+        <button class="btn primary">Open</button>
+      </a>
+
+      <a class="quick-card" href="settings.html">
+        <div class="quick-icon">⚙</div>
+        <h3>Settings</h3>
+        <p>Manage system configuration and preferences.</p>
+        <button class="btn primary">Open</button>
+      </a>
+
+      <a class="quick-card" href="audit-logs.html">
+        <div class="quick-icon">📋</div>
+        <h3>Audit Logs</h3>
+        <p>Review system activity and administrative actions.</p>
+        <button class="btn primary">Open</button>
+      </a>
+
+    </div>
+
+  </div>
+</div>
+
+<div class="grid-2">
+
+  <div class="panel">
+
+    <div class="panel-head">
+      <div>
+        <div class="panel-title">ERP Overview</div>
+        <div class="panel-sub">Current system-level summary.</div>
+      </div>
+      <span class="badge green">System Online</span>
+    </div>
+
+    <div class="panel-body">
+
+      <div class="summary-item">
+        <span class="summary-label">Active Users</span>
+        <span class="summary-value">38 / 42</span>
+      </div>
+
+      <div class="summary-item">
+        <span class="summary-label">Products</span>
+        <span class="summary-value">1,284</span>
+      </div>
+
+      <div class="summary-item">
+        <span class="summary-label">Godowns</span>
+        <span class="summary-value">4</span>
+      </div>
+
+      <div class="summary-item">
+        <span class="summary-label">Suppliers</span>
+        <span class="summary-value">186</span>
+      </div>
+
+      <div class="summary-item">
+        <span class="summary-label">Customers</span>
+        <span class="summary-value">2,486</span>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="panel">
+
+    <div class="panel-head">
+      <div>
+        <div class="panel-title">System Health</div>
+        <div class="panel-sub">Administrative health indicators.</div>
+      </div>
+      <span class="badge cyan">Healthy</span>
+    </div>
+
+    <div class="panel-body">
+
+      <div class="progress-row">
+        <div class="progress-head">
+          <span>User Access Configuration</span>
+          <strong>96%</strong>
+        </div>
+        <div class="progress"><span style="width:96%"></span></div>
+      </div>
+
+      <div class="progress-row">
+        <div class="progress-head">
+          <span>Master Data Completion</span>
+          <strong>91%</strong>
+        </div>
+        <div class="progress"><span style="width:91%"></span></div>
+      </div>
+
+      <div class="progress-row" style="margin-bottom:0">
+        <div class="progress-head">
+          <span>ERP Operational Status</span>
+          <strong>99%</strong>
+        </div>
+        <div class="progress"><span style="width:99%"></span></div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<div class="panel">
+
+  <div class="panel-head">
+    <div>
+      <div class="panel-title">Recent Administrative Activity</div>
+      <div class="panel-sub">Latest important ERP activities.</div>
+    </div>
+
+    <a class="btn secondary" href="audit-logs.html">View Audit Logs</a>
+  </div>
+
+  <div class="table-wrap">
+
+    <table class="data-table">
+
+      <thead>
+        <tr>
+          <th>Reference</th>
+          <th>Activity</th>
+          <th>User</th>
+          <th>Module</th>
+          <th>Date & Time</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+
+      <tbody>
+
+        <tr>
+          <td>ADM-1042</td>
+          <td>User permission updated</td>
+          <td>Super Admin</td>
+          <td>Roles & Permissions</td>
+          <td>09 Aug 2026, 02:05 PM</td>
+          <td><span class="badge green">Success</span></td>
+        </tr>
+
+        <tr>
+          <td>ADM-1041</td>
+          <td>New product added</td>
+          <td>Admin</td>
+          <td>Products</td>
+          <td>09 Aug 2026, 01:48 PM</td>
+          <td><span class="badge green">Success</span></td>
+        </tr>
+
+        <tr>
+          <td>ADM-1040</td>
+          <td>Stock transfer approved</td>
+          <td>Store Keeper</td>
+          <td>Stock Transfer</td>
+          <td>09 Aug 2026, 01:31 PM</td>
+          <td><span class="badge blue">Approved</span></td>
+        </tr>
+
+        <tr>
+          <td>ADM-1039</td>
+          <td>Supplier updated</td>
+          <td>Purchase Manager</td>
+          <td>Suppliers</td>
+          <td>09 Aug 2026, 01:12 PM</td>
+          <td><span class="badge green">Success</span></td>
+        </tr>
+
+        <tr>
+          <td>ADM-1038</td>
+          <td>System setting changed</td>
+          <td>Super Admin</td>
+          <td>Settings</td>
+          <td>09 Aug 2026, 12:54 PM</td>
+          <td><span class="badge amber">Updated</span></td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+  </div>
+</div>
+
+<div class="grid-2">
+
+  <div class="panel">
+
+    <div class="panel-head">
+      <div>
+        <div class="panel-title">Business Summary</div>
+        <div class="panel-sub">Current business activity.</div>
+      </div>
+    </div>
+
+    <div class="panel-body">
+
+      <div class="summary-item">
+        <span class="summary-label">Today's Sales</span>
+        <span class="summary-value" style="color:#67e8f9">₹4,86,500</span>
+      </div>
+
+      <div class="summary-item">
+        <span class="summary-label">Today's Purchases</span>
+        <span class="summary-value">₹3,42,800</span>
+      </div>
+
+      <div class="summary-item">
+        <span class="summary-label">Payments Received</span>
+        <span class="summary-value" style="color:#86efac">₹3,91,000</span>
+      </div>
+
+      <div class="summary-item">
+        <span class="summary-label">Outstanding</span>
+        <span class="summary-value" style="color:#fcd34d">₹8,74,600</span>
+      </div>
+
+    </div>
+
+  </div>
+
+  <div class="panel">
+
+    <div class="panel-head">
+      <div>
+        <div class="panel-title">Administrative Alerts</div>
+        <div class="panel-sub">Items requiring Super Admin attention.</div>
+      </div>
+      <span class="badge amber">Attention</span>
+    </div>
+
+    <div class="panel-body">
+
+      <div class="summary-item">
+        <span class="summary-label">Pending User Approvals</span>
+        <span class="summary-value" style="color:#fcd34d">4</span>
+      </div>
+
+      <div class="summary-item">
+        <span class="summary-label">Low Stock Products</span>
+        <span class="summary-value" style="color:#fca5a5">17</span>
+      </div>
+
+      <div class="summary-item">
+        <span class="summary-label">Audit Events Today</span>
+        <span class="summary-value">126</span>
+      </div>
+
+      <div class="summary-item">
+        <span class="summary-label">System Notifications</span>
+        <span class="summary-value" style="color:#67e8f9">8</span>
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+<div class="panel">
+
+  <div class="panel-head">
+    <div>
+      <div class="panel-title">Super Admin Control Note</div>
+      <div class="panel-sub">ERP administration reminder.</div>
+    </div>
+    <span class="badge purple">Full Control</span>
+  </div>
+
+  <div class="panel-body">
+
+    <div class="note">
+      The Super Admin has complete ERP control. Review user access, roles and permissions,
+      master data, inventory, purchases, sales, customers, invoices, payments, expenses,
+      reports, settings and audit activity regularly.
+    </div>
+
+  </div>
+
+</div>
+
+</section>
+</main>
+</div>
+
+<script>
+const sidebar=document.getElementById("sidebar");
+const overlay=document.getElementById("overlay");
+
+document.getElementById("mobileMenu").addEventListener("click",function(){
+  sidebar.classList.toggle("open");
+  overlay.classList.toggle("show");
+});
+
+overlay.addEventListener("click",function(){
+  sidebar.classList.remove("open");
+  overlay.classList.remove("show");
+});
+
+document.querySelectorAll(".nav-link").forEach(function(link){
+  link.addEventListener("click",function(){
+    if(window.innerWidth<=991){
+      sidebar.classList.remove("open");
+      overlay.classList.remove("show");
+    }
+  });
+});
+
+document.getElementById("notify").addEventListener("click",function(){
+  alert(
+    "Super Admin Notifications\n\n"+
+    "• Pending user approvals: 4\n"+
+    "• Low stock products: 17\n"+
+    "• Audit events today: 126\n"+
+    "• System notifications: 8"
+  );
+});
+</script>
+
+</body>
+</html>

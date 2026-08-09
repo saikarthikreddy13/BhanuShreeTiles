@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Supplier Details | Bhanu Shree Tiles ERP</title>
+<style>
+:root{
+  --bg:#07111f;--panel:rgba(255,255,255,.055);--panel2:rgba(255,255,255,.035);
+  --border:rgba(255,255,255,.10);--text:#f8fafc;--muted:#94a3b8;
+  --accent:#f59e0b;--cyan:#06b6d4;--green:#22c55e;--red:#ef4444;--blue:#60a5fa
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  min-height:100vh;font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;color:var(--text);
+  background:radial-gradient(circle at 85% 5%,rgba(245,158,11,.13),transparent 25%),
+  radial-gradient(circle at 5% 90%,rgba(6,182,212,.09),transparent 28%),
+  linear-gradient(135deg,#050b14,#0b1728 55%,#07111f)
+}
+a{text-decoration:none;color:inherit}button,input,select,textarea{font:inherit}
+.app{min-height:100vh;display:flex}
+.sidebar{
+  width:275px;position:fixed;inset:0 auto 0 0;z-index:1000;display:flex;flex-direction:column;
+  background:rgba(5,13,25,.98);border-right:1px solid var(--border);backdrop-filter:blur(20px);transition:transform .3s ease
+}
+.brand{padding:24px 20px;border-bottom:1px solid var(--border)}
+.brand-title{font-size:21px;font-weight:800}.brand-title span{color:var(--accent)}
+.brand-subtitle{margin-top:4px;font-size:10px;letter-spacing:.2em;color:var(--muted);text-transform:uppercase}
+.role-badge{display:inline-flex;margin-top:15px;padding:7px 11px;border:1px solid rgba(245,158,11,.25);border-radius:999px;background:rgba(245,158,11,.08);color:#fbbf24;font-size:11px;font-weight:700}
+.nav{flex:1;overflow-y:auto;padding:15px 12px}
+.nav-title{margin:4px 10px 9px;color:#64748b;font-size:10px;font-weight:700;letter-spacing:.16em;text-transform:uppercase}
+.nav-link{display:flex;align-items:center;gap:12px;padding:11px 13px;margin:3px 0;border:1px solid transparent;border-radius:11px;color:#cbd5e1;font-size:14px;transition:.2s}
+.nav-link:hover{background:rgba(255,255,255,.05);color:#fff}
+.nav-link.active{background:linear-gradient(90deg,rgba(245,158,11,.16),rgba(6,182,212,.04));border-color:rgba(245,158,11,.24);color:#fff}
+.nav-icon{width:25px;text-align:center;font-size:17px}
+.sidebar-bottom{padding:14px;border-top:1px solid var(--border)}.logout{color:#fca5a5}
+.main{width:calc(100% - 275px);margin-left:275px;min-width:0}
+.topbar{height:76px;position:sticky;top:0;z-index:900;display:flex;align-items:center;justify-content:space-between;gap:20px;padding:0 28px;background:rgba(5,13,25,.84);border-bottom:1px solid var(--border);backdrop-filter:blur(20px)}
+.left-top{display:flex;align-items:center;gap:12px}
+.mobile-menu{display:none;width:42px;height:42px;border:1px solid var(--border);border-radius:10px;background:rgba(255,255,255,.05);color:#fff;cursor:pointer;font-size:20px}
+.title h1{font-size:22px;letter-spacing:-.03em}.title p{margin-top:3px;color:var(--muted);font-size:12px}
+.top-actions{display:flex;align-items:center;gap:10px}
+.icon-btn{width:40px;height:40px;border:1px solid var(--border);border-radius:10px;background:rgba(255,255,255,.04);color:#cbd5e1;cursor:pointer}
+.profile{display:flex;align-items:center;gap:10px;margin-left:5px;padding-left:12px;border-left:1px solid var(--border)}
+.avatar{width:38px;height:38px;display:grid;place-items:center;border-radius:11px;background:linear-gradient(135deg,#f59e0b,#06b6d4);color:#111827;font-weight:900}
+.profile-name{font-size:13px;font-weight:700}.profile-role{margin-top:2px;color:var(--muted);font-size:11px}
+.content{padding:28px}
+.page-head{display:flex;align-items:center;justify-content:space-between;gap:18px;margin-bottom:18px;padding:24px;border:1px solid var(--border);border-radius:18px;background:linear-gradient(135deg,rgba(245,158,11,.11),rgba(6,182,212,.04))}
+.kicker{color:#fbbf24;font-size:10px;font-weight:800;letter-spacing:.18em;text-transform:uppercase}
+.page-head h2{margin-top:7px;font-size:29px;letter-spacing:-.04em}.page-head p{margin-top:7px;color:var(--muted);font-size:12px}
+.actions{display:flex;gap:8px;flex-wrap:wrap}
+.btn{border:0;border-radius:10px;padding:10px 14px;cursor:pointer;font-size:10px;font-weight:750}
+.primary{background:linear-gradient(135deg,#f59e0b,#06b6d4);color:#07111f}
+.secondary{background:rgba(255,255,255,.05);border:1px solid var(--border);color:#e2e8f0}
+.danger{background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.2);color:#fca5a5}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:18px}
+.stat{padding:18px;border:1px solid var(--border);border-radius:16px;background:var(--panel)}
+.stat-top{display:flex;justify-content:space-between;align-items:center}.stat-label{color:var(--muted);font-size:11px}
+.stat-icon{width:38px;height:38px;display:grid;place-items:center;border-radius:11px;background:rgba(245,158,11,.10)}
+.stat-value{margin-top:8px;font-size:24px;font-weight:800}.stat-note{margin-top:5px;color:var(--muted);font-size:10px}
+.panel{border:1px solid var(--border);border-radius:17px;background:var(--panel);overflow:hidden;margin-top:18px}
+.panel-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:17px 19px;border-bottom:1px solid var(--border)}
+.panel-title{font-size:15px;font-weight:750}.panel-sub{margin-top:3px;color:var(--muted);font-size:11px}.panel-body{padding:18px}
+.form-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:13px}
+.field{display:flex;flex-direction:column;gap:7px}.field.full{grid-column:1/-1}
+label{font-size:10px;color:#cbd5e1;font-weight:650}
+input,select,textarea{width:100%;padding:11px 12px;border:1px solid var(--border);border-radius:10px;outline:none;background:rgba(255,255,255,.045);color:#fff}
+select option{background:#0b1728;color:#fff}
+input:focus,select:focus,textarea:focus{border-color:rgba(245,158,11,.55);box-shadow:0 0 0 3px rgba(245,158,11,.09)}
+.info-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.info-box{padding:14px;border:1px solid var(--border);border-radius:12px;background:var(--panel2)}
+.info-label{font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:.1em}.info-value{margin-top:6px;font-size:14px;font-weight:750}
+.grid{display:grid;grid-template-columns:1.25fr .75fr;gap:18px}
+.table-wrap{overflow-x:auto}.data-table{width:100%;border-collapse:collapse}
+.data-table th,.data-table td{padding:12px 14px;border-bottom:1px solid rgba(255,255,255,.06);text-align:left;white-space:nowrap}
+.data-table th{font-size:9px;color:#64748b;text-transform:uppercase;letter-spacing:.1em}.data-table td{font-size:11px;color:#dbe4ef}
+.badge{display:inline-flex;padding:5px 9px;border-radius:99px;font-size:9px;font-weight:750}
+.green{background:rgba(34,197,94,.1);color:#86efac}.amber{background:rgba(245,158,11,.1);color:#fcd34d}
+.red{background:rgba(239,68,68,.1);color:#fca5a5}.cyan{background:rgba(6,182,212,.1);color:#67e8f9}.blue{background:rgba(96,165,250,.1);color:#93c5fd}
+.activity{display:grid;grid-template-columns:34px 1fr auto;gap:10px;padding:12px 0;border-bottom:1px solid rgba(255,255,255,.06)}
+.activity:last-child{border-bottom:0}.activity-icon{width:32px;height:32px;display:grid;place-items:center;border-radius:9px;background:rgba(6,182,212,.09);color:#67e8f9}
+.activity-title{font-size:11px;font-weight:700}.activity-desc{margin-top:3px;color:var(--muted);font-size:9px}.activity-time{font-size:9px;color:#64748b;white-space:nowrap}
+.note{padding:14px;border:1px solid rgba(245,158,11,.16);border-radius:12px;background:rgba(245,158,11,.05);color:#cbd5e1;font-size:10px;line-height:1.6}
+.overlay{display:none;position:fixed;inset:0;z-index:999;background:rgba(0,0,0,.55)}.overlay.show{display:block}
+@media(max-width:1150px){.stats{grid-template-columns:repeat(2,1fr)}.info-grid{grid-template-columns:repeat(2,1fr)}.grid{grid-template-columns:1fr}}
+@media(max-width:991px){.sidebar{transform:translateX(-100%)}.sidebar.open{transform:translateX(0)}.main{width:100%;margin-left:0}.mobile-menu{display:grid;place-items:center}.topbar{padding:0 16px}.content{padding:18px}.profile-text{display:none}}
+@media(max-width:650px){.page-head{align-items:flex-start;flex-direction:column}.actions{width:100%}.actions .btn{flex:1}.form-grid,.info-grid{grid-template-columns:1fr}.field.full{grid-column:auto}}
+@media(max-width:480px){.stats{grid-template-columns:1fr}.page-head h2{font-size:23px}.title h1{font-size:18px}}
+@media print{.sidebar,.topbar,.actions,.mobile-menu{display:none!important}.main{width:100%;margin:0}body{background:#fff;color:#111}}
+</style>
+</head>
+
+<body>
+<div class="app">
+
+<aside class="sidebar" id="sidebar">
+  <div class="brand">
+    <div class="brand-title">Bhanu Shree <span>Tiles</span></div>
+    <div class="brand-subtitle">Tiles & Taps ERP</div>
+    <div class="role-badge">🛒 Purchase Manager</div>
+  </div>
+
+  <nav class="nav">
+    <div class="nav-title">Purchase Manager</div>
+    <a class="nav-link" href="purchase-dashboard.html"><span class="nav-icon">🛒</span>Purchase Dashboard</a>
+    <a class="nav-link" href="purchases.html"><span class="nav-icon">▤</span>Purchases</a>
+    <a class="nav-link" href="new-purchase.html"><span class="nav-icon">＋</span>New Purchase</a>
+    <a class="nav-link" href="purchase-details.html"><span class="nav-icon">▣</span>Purchase Details</a>
+    <a class="nav-link" href="suppliers.html"><span class="nav-icon">👥</span>Suppliers</a>
+    <a class="nav-link active" href="supplier-details.html"><span class="nav-icon">◉</span>Supplier Details</a>
+    <a class="nav-link" href="products.html"><span class="nav-icon">▧</span>Products</a>
+    <a class="nav-link" href="purchase-orders.html"><span class="nav-icon">📋</span>Purchase Orders</a>
+    <a class="nav-link" href="purchase-reports.html"><span class="nav-icon">▥</span>Purchase Reports</a>
+  </nav>
+
+  <div class="sidebar-bottom">
+    <a class="nav-link logout" href="login.html"><span class="nav-icon">↪</span>Logout</a>
+  </div>
+</aside>
+
+<div class="overlay" id="overlay"></div>
+
+<main class="main">
+
+<header class="topbar">
+  <div class="left-top">
+    <button class="mobile-menu" id="mobileMenu">☰</button>
+    <div class="title">
+      <h1>Supplier Details</h1>
+      <p>View supplier profile, purchases, payments and performance</p>
+    </div>
+  </div>
+  <div class="top-actions">
+    <button class="icon-btn" id="notify">🔔</button>
+    <div class="profile">
+      <div class="avatar">PM</div>
+      <div class="profile-text">
+        <div class="profile-name">Purchase Manager</div>
+        <div class="profile-role">Purchase Management</div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<section class="content">
+
+<div class="page-head">
+  <div>
+    <div class="kicker">Supplier Management</div>
+    <h2>Supplier Details</h2>
+    <p>Manage supplier contact information, purchase history, balances and performance.</p>
+  </div>
+  <div class="actions">
+    <a class="btn primary" href="suppliers.html">← All Suppliers</a>
+    <a class="btn secondary" href="new-purchase.html">＋ New Purchase</a>
+    <button class="btn secondary" onclick="window.print()">🖨 Print</button>
+  </div>
+</div>
+
+<div class="stats">
+  <div class="stat">
+    <div class="stat-top"><span class="stat-label">Total Purchases</span><span class="stat-icon">🛒</span></div>
+    <div class="stat-value">₹18.42L</div>
+    <div class="stat-note">Current supplier purchase value</div>
+  </div>
+  <div class="stat">
+    <div class="stat-top"><span class="stat-label">Orders</span><span class="stat-icon">📋</span></div>
+    <div class="stat-value">24</div>
+    <div class="stat-note">Purchase orders placed</div>
+  </div>
+  <div class="stat">
+    <div class="stat-top"><span class="stat-label">Paid Amount</span><span class="stat-icon">✓</span></div>
+    <div class="stat-value" style="color:#86efac">₹15.72L</div>
+    <div class="stat-note">Payments completed</div>
+  </div>
+  <div class="stat">
+    <div class="stat-top"><span class="stat-label">Outstanding</span><span class="stat-icon">◷</span></div>
+    <div class="stat-value" style="color:#fcd34d">₹2.70L</div>
+    <div class="stat-note">Balance payable</div>
+  </div>
+</div>
+
+<div class="panel">
+  <div class="panel-head">
+    <div>
+      <div class="panel-title">Select Supplier</div>
+      <div class="panel-sub">Choose a supplier to load complete details.</div>
+    </div>
+    <span class="badge cyan">Supplier Lookup</span>
+  </div>
+  <div class="panel-body">
+    <div class="form-grid">
+      <div class="field">
+        <label>Supplier</label>
+        <select id="supplierSelect">
+          <option value="somany">Somany Ceramics</option>
+          <option value="kajaria">Kajaria Tiles</option>
+          <option value="orient">Orient Bell</option>
+          <option value="johnson">Johnson Tiles</option>
+          <option value="asian">Asian Granito</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Supplier Status</label>
+        <select id="statusFilter">
+          <option value="all">All Status</option>
+          <option value="Active">Active</option>
+          <option value="On Hold">On Hold</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Supplier Category</label>
+        <select id="categoryFilter">
+          <option value="all">All Categories</option>
+          <option>Tiles</option>
+          <option>Sanitaryware</option>
+          <option>Marble & Stone</option>
+          <option>Mixed Products</option>
+        </select>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="panel">
+  <div class="panel-head">
+    <div>
+      <div class="panel-title">Supplier Information</div>
+      <div class="panel-sub">Registered supplier and contact details.</div>
+    </div>
+    <span class="badge green" id="supplierStatus">Active</span>
+  </div>
+
+  <div class="panel-body">
+    <div class="info-grid">
+      <div class="info-box"><div class="info-label">Supplier Name</div><div class="info-value" id="supplierName">Somany Ceramics</div></div>
+      <div class="info-box"><div class="info-label">Supplier Code</div><div class="info-value" id="supplierCode">SUP-00042</div></div>
+      <div class="info-box"><div class="info-label">Contact Person</div><div class="info-value" id="contactPerson">Rajesh Kumar</div></div>
+      <div class="info-box"><div class="info-label">Phone</div><div class="info-value" id="phone">98765 43210</div></div>
+      <div class="info-box"><div class="info-label">Email</div><div class="info-value" id="email">sales@somanyceramics.com</div></div>
+      <div class="info-box"><div class="info-label">GSTIN</div><div class="info-value" id="gstin">36ABCDE1234F1Z5</div></div>
+      <div class="info-box"><div class="info-label">Payment Terms</div><div class="info-value" id="terms">30 Days Credit</div></div>
+      <div class="info-box"><div class="info-label">Category</div><div class="info-value" id="category">Tiles</div></div>
+    </div>
+  </div>
+</div>
+
+<div class="grid">
+
+<div class="panel">
+  <div class="panel-head">
+    <div>
+      <div class="panel-title">Address & Banking</div>
+      <div class="panel-sub">Supplier billing and payment information.</div>
+    </div>
+  </div>
+  <div class="panel-body">
+    <div class="note" style="margin-bottom:14px">
+      <strong>Registered Address</strong><br>
+      <span id="address">Industrial Area, Hyderabad, Telangana - 500018</span>
+    </div>
+
+    <div class="info-grid" style="grid-template-columns:repeat(2,1fr)">
+      <div class="info-box"><div class="info-label">Bank</div><div class="info-value" id="bank">HDFC Bank</div></div>
+      <div class="info-box"><div class="info-label">Account</div><div class="info-value" id="account">XXXX XXXX 4582</div></div>
+      <div class="info-box"><div class="info-label">IFSC</div><div class="info-value" id="ifsc">HDFC0001234</div></div>
+      <div class="info-box"><div class="info-label">Branch</div><div class="info-value" id="branch">Hyderabad Main</div></div>
+    </div>
+  </div>
+</div>
+
+<div class="panel">
+  <div class="panel-head">
+    <div>
+      <div class="panel-title">Supplier Performance</div>
+      <div class="panel-sub">Current procurement performance.</div>
+    </div>
+  </div>
+  <div class="panel-body">
+    <div class="info-box" style="margin-bottom:10px">
+      <div class="info-label">On-Time Delivery</div>
+      <div class="info-value" style="color:#86efac">94%</div>
+    </div>
+    <div class="info-box" style="margin-bottom:10px">
+      <div class="info-label">Quality Rating</div>
+      <div class="info-value" style="color:#67e8f9">4.7 / 5</div>
+    </div>
+    <div class="info-box">
+      <div class="info-label">Total Orders</div>
+      <div class="info-value">24 Orders</div>
+    </div>
+  </div>
+</div>
+
+</div>
+
+<div class="panel">
+  <div class="panel-head">
+    <div>
+      <div class="panel-title">Purchase History</div>
+      <div class="panel-sub">Recent transactions with this supplier.</div>
+    </div>
+    <a class="btn secondary" href="purchases.html">View All Purchases</a>
+  </div>
+
+  <div class="table-wrap">
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Purchase ID</th><th>Date</th><th>Invoice</th><th>Products</th>
+          <th>Amount</th><th>Paid</th><th>Balance</th><th>Status</th>
+        </tr>
+      </thead>
+      <tbody id="purchaseTable">
+        <tr>
+          <td>PUR-00862</td><td>09 Aug 2026</td><td>SC/INV/862</td><td>Premium Grey Marble</td>
+          <td>₹2,84,600</td><td>₹1,50,000</td><td>₹1,34,600</td><td><span class="badge green">Received</span></td>
+        </tr>
+        <tr>
+          <td>PUR-00850</td><td>03 Aug 2026</td><td>SC/INV/850</td><td>Royal Beige</td>
+          <td>₹3,42,800</td><td>₹3,42,800</td><td>₹0</td><td><span class="badge green">Paid</span></td>
+        </tr>
+        <tr>
+          <td>PUR-00821</td><td>26 Jul 2026</td><td>SC/INV/821</td><td>Urban White</td>
+          <td>₹2,18,400</td><td>₹2,18,400</td><td>₹0</td><td><span class="badge green">Paid</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="grid">
+
+<div class="panel">
+  <div class="panel-head">
+    <div>
+      <div class="panel-title">Supplier Activity</div>
+      <div class="panel-sub">Recent supplier-related events.</div>
+    </div>
+  </div>
+  <div class="panel-body">
+
+    <div class="activity">
+      <div class="activity-icon">✓</div>
+      <div><div class="activity-title">Purchase Received</div><div class="activity-desc">PUR-00862 received at Main Godown.</div></div>
+      <div class="activity-time">09 Aug</div>
+    </div>
+
+    <div class="activity">
+      <div class="activity-icon">₹</div>
+      <div><div class="activity-title">Payment Recorded</div><div class="activity-desc">₹1,50,000 payment recorded.</div></div>
+      <div class="activity-time">09 Aug</div>
+    </div>
+
+    <div class="activity">
+      <div class="activity-icon">📋</div>
+      <div><div class="activity-title">Purchase Order Created</div><div class="activity-desc">PO-00342 created for new stock.</div></div>
+      <div class="activity-time">08 Aug</div>
+    </div>
+
+    <div class="activity">
+      <div class="activity-icon">✎</div>
+      <div><div class="activity-title">Supplier Profile Updated</div><div class="activity-desc">Contact information updated.</div></div>
+      <div class="activity-time">01 Aug</div>
+    </div>
+
+  </div>
+</div>
+
+<div class="panel">
+  <div class="panel-head">
+    <div>
+      <div class="panel-title">Actions</div>
+      <div class="panel-sub">Manage this supplier.</div>
+    </div>
+  </div>
+  <div class="panel-body">
+    <div class="actions">
+      <button class="btn primary" id="editBtn">✎ Edit Supplier</button>
+      <button class="btn secondary" id="statementBtn">⇩ Download Statement</button>
+      <button class="btn danger" id="holdBtn">⏸ Put On Hold</button>
+    </div>
+  </div>
+</div>
+
+</div>
+
+</section>
+</main>
+</div>
+
+<script>
+const sidebar=document.getElementById("sidebar");
+const overlay=document.getElementById("overlay");
+
+document.getElementById("mobileMenu").addEventListener("click",function(){
+  sidebar.classList.toggle("open");
+  overlay.classList.toggle("show");
+});
+
+overlay.addEventListener("click",function(){
+  sidebar.classList.remove("open");
+  overlay.classList.remove("show");
+});
+
+document.querySelectorAll(".nav-link").forEach(function(link){
+  link.addEventListener("click",function(){
+    if(window.innerWidth<=991){
+      sidebar.classList.remove("open");
+      overlay.classList.remove("show");
+    }
+  });
+});
+
+document.getElementById("notify").addEventListener("click",function(){
+  alert(
+    "Purchase Manager Alerts\n\n"+
+    "• Supplier has ₹2.70L outstanding.\n"+
+    "• 24 purchase orders recorded.\n"+
+    "• Current supplier rating: 4.7 / 5."
+  );
+});
+
+const suppliers={
+ somany:{
+  name:"Somany Ceramics",code:"SUP-00042",contact:"Rajesh Kumar",phone:"98765 43210",
+  email:"sales@somanyceramics.com",gst:"36ABCDE1234F1Z5",terms:"30 Days Credit",category:"Tiles",
+  address:"Industrial Area, Hyderabad, Telangana - 500018",bank:"HDFC Bank",account:"XXXX XXXX 4582",ifsc:"HDFC0001234",branch:"Hyderabad Main",
+  status:"Active",orders:"24",purchase:"₹18.42L",paid:"₹15.72L",balance:"₹2.70L"
+ },
+ kajaria:{
+  name:"Kajaria Tiles",code:"SUP-00031",contact:"Suresh Reddy",phone:"98660 22110",
+  email:"sales@kajaria.com",gst:"36KJARIA1234F1Z5",terms:"30 Days Credit",category:"Tiles",
+  address:"Jeedimetla Industrial Area, Hyderabad, Telangana - 500055",bank:"ICICI Bank",account:"XXXX XXXX 7721",ifsc:"ICIC0001245",branch:"Jeedimetla",
+  status:"Active",orders:"18",purchase:"₹14.86L",paid:"₹12.40L",balance:"₹2.46L"
+ },
+ orient:{
+  name:"Orient Bell",code:"SUP-00028",contact:"Vijay Sharma",phone:"98123 45120",
+  email:"sales@orientbell.com",gst:"36ORIENT1234F1Z5",terms:"15 Days Credit",category:"Tiles",
+  address:"Balanagar, Hyderabad, Telangana - 500037",bank:"SBI",account:"XXXX XXXX 3421",ifsc:"SBIN0001456",branch:"Balanagar",
+  status:"Active",orders:"12",purchase:"₹9.74L",paid:"₹9.10L",balance:"₹64,000"
+ },
+ johnson:{
+  name:"Johnson Tiles",code:"SUP-00019",contact:"Anil Kumar",phone:"98490 33221",
+  email:"sales@johnson-tiles.com",gst:"36JOHN1234F1Z5",terms:"45 Days Credit",category:"Mixed Products",
+  address:"Kukatpally, Hyderabad, Telangana - 500072",bank:"Axis Bank",account:"XXXX XXXX 6128",ifsc:"UTIB0002345",branch:"Kukatpally",
+  status:"On Hold",orders:"10",purchase:"₹7.62L",paid:"₹5.10L",balance:"₹2.52L"
+ },
+ asian:{
+  name:"Asian Granito",code:"SUP-00015",contact:"Mahesh Patel",phone:"99080 55443",
+  email:"sales@aglasiangranito.com",gst:"36ASIAN1234F1Z5",terms:"30 Days Credit",category:"Marble & Stone",
+  address:"Madhapur, Hyderabad, Telangana - 500081",bank:"Kotak Mahindra Bank",account:"XXXX XXXX 9832",ifsc:"KKBK0003456",branch:"Madhapur",
+  status:"Active",orders:"15",purchase:"₹11.35L",paid:"₹10.20L",balance:"₹1.15L"
+ }
+};
+
+function loadSupplier(key){
+  const s=suppliers[key];
+  if(!s)return;
+
+  document.getElementById("supplierName").textContent=s.name;
+  document.getElementById("supplierCode").textContent=s.code;
+  document.getElementById("contactPerson").textContent=s.contact;
+  document.getElementById("phone").textContent=s.phone;
+  document.getElementById("email").textContent=s.email;
+  document.getElementById("gstin").textContent=s.gst;
+  document.getElementById("terms").textContent=s.terms;
+  document.getElementById("category").textContent=s.category;
+  document.getElementById("address").textContent=s.address;
+  document.getElementById("bank").textContent=s.bank;
+  document.getElementById("account").textContent=s.account;
+  document.getElementById("ifsc").textContent=s.ifsc;
+  document.getElementById("branch").textContent=s.branch;
+
+  const badge=document.getElementById("supplierStatus");
+  badge.textContent=s.status;
+  badge.className="badge "+(s.status==="Active"?"green":"amber");
+
+  const stats=document.querySelectorAll(".stat-value");
+  stats[0].textContent=s.purchase;
+  stats[1].textContent=s.orders;
+  stats[2].textContent=s.paid;
+  stats[3].textContent=s.balance;
+
+  document.getElementById("holdBtn").textContent=s.status==="On Hold"?"▶ Activate Supplier":"⏸ Put On Hold";
+}
+
+document.getElementById("supplierSelect").addEventListener("change",function(){
+  loadSupplier(this.value);
+});
+
+document.getElementById("statusFilter").addEventListener("change",function(){
+  const selected=this.value;
+  document.querySelectorAll("#supplierSelect option").forEach(function(option){
+    if(option.value==="")return;
+  });
+  if(selected==="all")return;
+  const key=document.getElementById("supplierSelect").value;
+  const current=suppliers[key];
+  if(current.status!==selected){
+    alert("The selected supplier is not "+selected+".");
+  }
+});
+
+document.getElementById("categoryFilter").addEventListener("change",function(){
+  const selected=this.value;
+  const key=document.getElementById("supplierSelect").value;
+  const current=suppliers[key];
+  if(selected!=="all" && current.category!==selected){
+    alert("The selected supplier belongs to the "+current.category+" category.");
+  }
+});
+
+document.getElementById("editBtn").addEventListener("click",function(){
+  alert("Supplier edit form can be connected to your backend here.");
+});
+
+document.getElementById("statementBtn").addEventListener("click",function(){
+  const key=document.getElementById("supplierSelect").value;
+  const s=suppliers[key];
+  const text=
+`BHANU SHREE TILES ERP
+SUPPLIER STATEMENT
+
+Supplier: ${s.name}
+Supplier Code: ${s.code}
+Contact Person: ${s.contact}
+Phone: ${s.phone}
+Email: ${s.email}
+GSTIN: ${s.gst}
+
+Total Purchases: ${s.purchase}
+Total Orders: ${s.orders}
+Paid Amount: ${s.paid}
+Outstanding: ${s.balance}
+Payment Terms: ${s.terms}
+Status: ${s.status}
+`;
+
+  const blob=new Blob([text],{type:"text/plain"});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement("a");
+  a.href=url;
+  a.download=s.code+"-supplier-statement.txt";
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  URL.revokeObjectURL(url);
+});
+
+document.getElementById("holdBtn").addEventListener("click",function(){
+  const key=document.getElementById("supplierSelect").value;
+  const s=suppliers[key];
+
+  if(s.status==="On Hold"){
+    if(confirm("Activate "+s.name+"?")){
+      s.status="Active";
+      loadSupplier(key);
+      alert("Supplier activated successfully.");
+    }
+  }else{
+    if(confirm("Put "+s.name+" on hold?")){
+      s.status="On Hold";
+      loadSupplier(key);
+      alert("Supplier placed on hold.");
+    }
+  }
+});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,820 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Stock Transfer - Bhanu Shree Tiles ERP</title>
+<style>
+:root{
+  --bg:#07111f;--panel:rgba(255,255,255,.055);--panel2:rgba(255,255,255,.035);
+  --border:rgba(255,255,255,.10);--text:#f8fafc;--muted:#94a3b8;
+  --accent:#f59e0b;--cyan:#06b6d4;--green:#22c55e;--red:#ef4444;--blue:#3b82f6;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  min-height:100vh;font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;
+  color:var(--text);
+  background:
+    radial-gradient(circle at 85% 5%,rgba(245,158,11,.12),transparent 25%),
+    radial-gradient(circle at 5% 90%,rgba(6,182,212,.10),transparent 28%),
+    linear-gradient(135deg,#050b14,#0b1728 55%,#07111f);
+}
+a{text-decoration:none;color:inherit}
+button,input,select,textarea{font:inherit}
+.app{min-height:100vh;display:flex}
+
+.sidebar{
+  width:270px;position:fixed;inset:0 auto 0 0;z-index:1000;
+  display:flex;flex-direction:column;background:rgba(5,13,25,.97);
+  border-right:1px solid var(--border);backdrop-filter:blur(20px);
+  transition:transform .3s ease;
+}
+.brand{padding:24px 20px;border-bottom:1px solid var(--border)}
+.brand-title{font-size:21px;font-weight:800}
+.brand-title span{color:var(--accent)}
+.brand-subtitle{margin-top:4px;font-size:10px;letter-spacing:.2em;color:var(--muted);text-transform:uppercase}
+.role-badge{
+  display:inline-flex;margin-top:15px;padding:7px 11px;border:1px solid rgba(245,158,11,.25);
+  border-radius:999px;background:rgba(245,158,11,.08);color:#fbbf24;font-size:11px;font-weight:700
+}
+.nav{flex:1;overflow-y:auto;padding:16px 12px}
+.nav-section{margin:15px 10px 8px;color:#64748b;font-size:10px;font-weight:700;letter-spacing:.16em;text-transform:uppercase}
+.nav-link{
+  display:flex;align-items:center;gap:12px;padding:11px 13px;margin:3px 0;
+  border:1px solid transparent;border-radius:11px;color:#cbd5e1;font-size:14px;transition:.2s
+}
+.nav-link:hover{background:rgba(255,255,255,.05);color:#fff}
+.nav-link.active{
+  background:linear-gradient(90deg,rgba(245,158,11,.16),rgba(245,158,11,.04));
+  border-color:rgba(245,158,11,.2);color:#fff
+}
+.nav-icon{width:24px;text-align:center;font-size:17px}
+.sidebar-bottom{padding:14px;border-top:1px solid var(--border)}
+.logout{color:#fca5a5}
+
+.main{width:calc(100% - 270px);margin-left:270px;min-width:0}
+.topbar{
+  height:76px;position:sticky;top:0;z-index:900;display:flex;align-items:center;
+  justify-content:space-between;gap:20px;padding:0 28px;background:rgba(5,13,25,.8);
+  border-bottom:1px solid var(--border);backdrop-filter:blur(20px)
+}
+.mobile-menu{
+  display:none;width:42px;height:42px;border:1px solid var(--border);border-radius:10px;
+  background:rgba(255,255,255,.05);color:#fff;cursor:pointer;font-size:20px
+}
+.title h1{font-size:22px;letter-spacing:-.03em}
+.title p{margin-top:3px;color:var(--muted);font-size:12px}
+.top-actions{display:flex;align-items:center;gap:10px}
+.icon-btn{
+  width:40px;height:40px;border:1px solid var(--border);border-radius:10px;
+  background:rgba(255,255,255,.04);color:#cbd5e1;cursor:pointer
+}
+.profile{display:flex;align-items:center;gap:10px;margin-left:5px;padding-left:12px;border-left:1px solid var(--border)}
+.avatar{
+  width:38px;height:38px;display:grid;place-items:center;border-radius:11px;
+  background:linear-gradient(135deg,#f59e0b,#fb7185);color:#111827;font-weight:900
+}
+.profile-name{font-size:13px;font-weight:700}.profile-role{margin-top:2px;color:var(--muted);font-size:11px}
+.content{padding:28px}
+
+.page-head{
+  display:flex;align-items:flex-end;justify-content:space-between;gap:20px;margin-bottom:20px
+}
+.kicker{color:#fbbf24;font-size:10px;font-weight:800;letter-spacing:.18em;text-transform:uppercase}
+.page-head h2{margin-top:6px;font-size:30px;letter-spacing:-.04em}
+.page-head p{margin-top:6px;color:var(--muted);font-size:13px}
+.btn{
+  border:0;border-radius:11px;padding:11px 16px;cursor:pointer;font-weight:750;font-size:12px;transition:.2s
+}
+.btn:hover{transform:translateY(-1px)}
+.primary{background:linear-gradient(135deg,#f59e0b,#f97316);color:#111827;box-shadow:0 10px 25px rgba(245,158,11,.18)}
+.secondary{background:rgba(255,255,255,.05);border:1px solid var(--border);color:#e2e8f0}
+
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin-bottom:18px}
+.stat{
+  position:relative;overflow:hidden;padding:17px;border:1px solid var(--border);
+  border-radius:16px;background:var(--panel)
+}
+.stat::after{
+  content:"";position:absolute;width:85px;height:85px;right:-35px;top:-35px;border-radius:50%;
+  background:rgba(245,158,11,.08)
+}
+.stat-label{color:var(--muted);font-size:11px}
+.stat-value{margin-top:8px;font-size:24px;font-weight:800;letter-spacing:-.04em}
+.stat-note{margin-top:5px;font-size:10px;color:var(--green)}
+
+.transfer-grid{
+  display:grid;grid-template-columns:minmax(0,1.25fr) minmax(300px,.75fr);gap:18px
+}
+.panel{
+  border:1px solid var(--border);border-radius:17px;background:var(--panel);overflow:hidden
+}
+.panel-head{
+  display:flex;align-items:center;justify-content:space-between;gap:15px;
+  padding:17px 19px;border-bottom:1px solid var(--border)
+}
+.panel-title{font-size:15px;font-weight:750}
+.panel-sub{margin-top:3px;color:var(--muted);font-size:11px}
+
+.form{padding:20px}
+.form-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:15px}
+.field label{display:block;margin-bottom:7px;color:#cbd5e1;font-size:11px;font-weight:650}
+.field input,.field select,.field textarea{
+  width:100%;padding:11px 13px;border:1px solid var(--border);border-radius:10px;
+  background:rgba(255,255,255,.035);color:#fff;outline:none
+}
+.field textarea{min-height:85px;resize:vertical}
+.field select{background:#0b1728}
+.field input::placeholder,.field textarea::placeholder{color:#64748b}
+.field input:focus,.field select:focus,.field textarea:focus{
+  border-color:rgba(245,158,11,.55);box-shadow:0 0 0 .2rem rgba(245,158,11,.10)
+}
+.full{grid-column:1/-1}
+.transfer-arrow{
+  display:flex;align-items:center;justify-content:center;height:42px;margin-top:21px;
+  border:1px solid rgba(6,182,212,.18);border-radius:10px;background:rgba(6,182,212,.07);
+  color:#67e8f9;font-size:20px
+}
+.form-actions{display:flex;justify-content:flex-end;gap:9px;margin-top:20px}
+
+.preview{
+  margin-top:18px;padding:15px;border:1px solid var(--border);border-radius:13px;
+  background:rgba(255,255,255,.025)
+}
+.preview-title{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.12em}
+.preview-row{
+  display:flex;align-items:center;justify-content:space-between;gap:12px;
+  padding:11px 0;border-bottom:1px solid rgba(255,255,255,.06);font-size:12px
+}
+.preview-row:last-child{border-bottom:0}
+.preview-row strong{color:#fff}.preview-row span{color:var(--muted)}
+
+.table-panel{margin-top:18px}
+.table-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse}
+th,td{padding:14px 15px;border-bottom:1px solid rgba(255,255,255,.06);text-align:left;white-space:nowrap}
+th{color:#64748b;font-size:9px;letter-spacing:.1em;text-transform:uppercase}
+td{color:#dbe4ef;font-size:12px}
+tbody tr:hover{background:rgba(255,255,255,.025)}
+.transfer-id{font-weight:800;color:#fbbf24}
+.product{font-weight:700;color:#fff}.small{margin-top:3px;color:var(--muted);font-size:9px}
+.badge{display:inline-flex;padding:5px 9px;border-radius:999px;font-size:10px;font-weight:750}
+.pending{color:#fcd34d;background:rgba(245,158,11,.10)}
+.completed{color:#86efac;background:rgba(34,197,94,.10)}
+.cancelled{color:#fca5a5;background:rgba(239,68,68,.10)}
+.intransit{color:#67e8f9;background:rgba(6,182,212,.10)}
+.actions{display:flex;gap:6px}
+.action{
+  width:32px;height:32px;border:1px solid var(--border);border-radius:8px;
+  background:rgba(255,255,255,.035);color:#cbd5e1;cursor:pointer
+}
+.action:hover{background:rgba(255,255,255,.08);color:#fff}
+
+.search-bar{
+  display:flex;gap:9px;padding:15px;border-bottom:1px solid var(--border);flex-wrap:wrap
+}
+.search-bar input,.search-bar select{
+  padding:10px 12px;border:1px solid var(--border);border-radius:10px;
+  background:rgba(255,255,255,.035);color:#fff;outline:none
+}
+.search-bar input{flex:1;min-width:230px}.search-bar select{background:#0b1728;min-width:150px}
+.pagination{
+  display:flex;align-items:center;justify-content:space-between;padding:14px 18px;
+  color:var(--muted);font-size:11px
+}
+.pages{display:flex;gap:5px}.page{
+  min-width:32px;height:30px;border:1px solid var(--border);border-radius:8px;
+  background:rgba(255,255,255,.035);color:#cbd5e1;cursor:pointer
+}.page.current{background:rgba(245,158,11,.15);border-color:rgba(245,158,11,.3);color:#fbbf24}
+
+.modal{
+  display:none;position:fixed;inset:0;z-index:2000;align-items:center;justify-content:center;
+  padding:20px;background:rgba(0,0,0,.65);backdrop-filter:blur(7px)
+}
+.modal.show{display:flex}
+.modal-card{
+  width:min(760px,100%);max-height:92vh;overflow:auto;border:1px solid var(--border);
+  border-radius:20px;background:#0a1626;box-shadow:0 30px 100px rgba(0,0,0,.5)
+}
+.modal-head{
+  display:flex;align-items:center;justify-content:space-between;padding:20px;border-bottom:1px solid var(--border)
+}
+.modal-head h3{font-size:18px}.close{border:0;background:none;color:#94a3b8;font-size:25px;cursor:pointer}
+
+.toast{
+  display:none;position:fixed;right:22px;bottom:22px;z-index:3000;padding:13px 16px;
+  border:1px solid rgba(34,197,94,.25);border-radius:12px;background:#0b1b18;color:#bbf7d0;
+  box-shadow:0 15px 45px rgba(0,0,0,.35);font-size:12px
+}
+.toast.show{display:block}
+.overlay{display:none;position:fixed;inset:0;z-index:999;background:rgba(0,0,0,.55)}
+.overlay.show{display:block}
+
+@media(max-width:1100px){
+  .stats{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .transfer-grid{grid-template-columns:1fr}
+}
+@media(max-width:991px){
+  .sidebar{transform:translateX(-100%)}
+  .sidebar.open{transform:translateX(0)}
+  .main{width:100%;margin-left:0}
+  .mobile-menu{display:grid;place-items:center}
+  .topbar{padding:0 16px}.content{padding:18px}
+  .profile-text{display:none}
+  .page-head{align-items:flex-start;flex-direction:column}
+}
+@media(max-width:650px){
+  .stats{grid-template-columns:1fr 1fr}
+  .form-grid{grid-template-columns:1fr}
+  .full{grid-column:auto}
+  .page-head h2{font-size:26px}
+}
+@media(max-width:430px){.stats{grid-template-columns:1fr}}
+@media print{
+  .sidebar,.topbar,.page-head .btn,.search-bar,.actions,.pagination{display:none!important}
+  .main{width:100%;margin:0}.content{padding:0}.panel{border:1px solid #ccc;background:#fff;color:#111}
+  body{background:#fff;color:#111}th,td{color:#111}
+}
+</style>
+</head>
+<body>
+
+<div class="app">
+
+<aside class="sidebar" id="sidebar">
+  <div class="brand">
+    <div class="brand-title">Bhanu Shree <span>Tiles</span></div>
+    <div class="brand-subtitle">Tiles & Taps ERP</div>
+    <div class="role-badge">👑 Super Admin</div>
+  </div>
+
+  <nav class="nav">
+    <div class="nav-section">Main</div>
+    <a class="nav-link" href="super-admin-dashboard.html"><span class="nav-icon">▦</span>Dashboard</a>
+    <a class="nav-link" href="users.html"><span class="nav-icon">👥</span>Users</a>
+    <a class="nav-link" href="roles-permissions.html"><span class="nav-icon">🛡</span>Roles & Permissions</a>
+
+    <div class="nav-section">Inventory</div>
+    <a class="nav-link" href="products.html"><span class="nav-icon">▧</span>Products</a>
+    <a class="nav-link" href="categories.html"><span class="nav-icon">▤</span>Categories</a>
+    <a class="nav-link" href="brands.html"><span class="nav-icon">◆</span>Brands</a>
+    <a class="nav-link" href="stock.html"><span class="nav-icon">▥</span>Stock</a>
+    <a class="nav-link" href="stock-in.html"><span class="nav-icon">↓</span>Stock In</a>
+    <a class="nav-link" href="stock-out.html"><span class="nav-icon">↑</span>Stock Out</a>
+    <a class="nav-link active" href="stock-transfer.html"><span class="nav-icon">⇄</span>Stock Transfer</a>
+    <a class="nav-link" href="godown.html"><span class="nav-icon">🏭</span>Godowns</a>
+
+    <div class="nav-section">Business</div>
+    <a class="nav-link" href="sales.html"><span class="nav-icon">₹</span>Sales</a>
+    <a class="nav-link" href="new-sale.html"><span class="nav-icon">＋</span>New Sale</a>
+    <a class="nav-link" href="invoice.html"><span class="nav-icon">▤</span>Invoices</a>
+    <a class="nav-link" href="purchase.html"><span class="nav-icon">🛒</span>Purchases</a>
+    <a class="nav-link" href="new-purchase.html"><span class="nav-icon">＋</span>New Purchase</a>
+    <a class="nav-link" href="customers.html"><span class="nav-icon">👤</span>Customers</a>
+    <a class="nav-link" href="suppliers.html"><span class="nav-icon">🚚</span>Suppliers</a>
+
+    <div class="nav-section">Finance</div>
+    <a class="nav-link" href="payments.html"><span class="nav-icon">💳</span>Payments</a>
+    <a class="nav-link" href="expenses.html"><span class="nav-icon">₹</span>Expenses</a>
+    <a class="nav-link" href="reports.html"><span class="nav-icon">▥</span>Reports</a>
+
+    <div class="nav-section">System</div>
+    <a class="nav-link" href="employees.html"><span class="nav-icon">♙</span>Employees</a>
+    <a class="nav-link" href="settings.html"><span class="nav-icon">⚙</span>Settings</a>
+  </nav>
+
+  <div class="sidebar-bottom">
+    <a class="nav-link logout" href="login.html"><span class="nav-icon">↪</span>Logout</a>
+  </div>
+</aside>
+
+<div class="overlay" id="overlay"></div>
+
+<main class="main">
+
+<header class="topbar">
+  <div style="display:flex;align-items:center;gap:12px">
+    <button class="mobile-menu" id="mobileMenu">☰</button>
+    <div class="title">
+      <h1>Stock Transfer</h1>
+      <p>Move inventory safely between your godowns</p>
+    </div>
+  </div>
+
+  <div class="top-actions">
+    <button class="icon-btn" id="notify">🔔</button>
+    <div class="profile">
+      <div class="avatar">SA</div>
+      <div class="profile-text">
+        <div class="profile-name">Super Admin</div>
+        <div class="profile-role">Full System Access</div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<section class="content">
+
+<div class="page-head">
+  <div>
+    <div class="kicker">Inventory Movement</div>
+    <h2>Stock Transfer</h2>
+    <p>Transfer tiles, taps and other products from one godown to another with a complete movement history.</p>
+  </div>
+  <div style="display:flex;gap:8px;flex-wrap:wrap">
+    <button class="btn secondary" id="printBtn">Print</button>
+    <button class="btn primary" id="newTransferBtn">＋ New Transfer</button>
+  </div>
+</div>
+
+<div class="stats">
+  <div class="stat">
+    <div class="stat-label">Transfers Today</div>
+    <div class="stat-value" id="todayCount">0</div>
+    <div class="stat-note">Created today</div>
+  </div>
+  <div class="stat">
+    <div class="stat-label">In Transit</div>
+    <div class="stat-value" id="transitCount">0</div>
+    <div class="stat-note" style="color:#67e8f9">Awaiting receipt</div>
+  </div>
+  <div class="stat">
+    <div class="stat-label">Completed</div>
+    <div class="stat-value" id="completedCount">0</div>
+    <div class="stat-note">Successfully received</div>
+  </div>
+  <div class="stat">
+    <div class="stat-label">Units Transferred</div>
+    <div class="stat-value" id="unitsCount">0</div>
+    <div class="stat-note">Across all transfers</div>
+  </div>
+</div>
+
+<div class="transfer-grid">
+
+<div class="panel">
+  <div class="panel-head">
+    <div>
+      <div class="panel-title">Create Stock Transfer</div>
+      <div class="panel-sub">Select source, destination and products to move.</div>
+    </div>
+    <span class="badge pending">Draft</span>
+  </div>
+
+  <form class="form" id="transferForm">
+    <div class="form-grid">
+
+      <div class="field">
+        <label>From Godown *</label>
+        <select id="fromGodown" required></select>
+      </div>
+
+      <div class="field">
+        <label>To Godown *</label>
+        <select id="toGodown" required></select>
+      </div>
+
+      <div class="field">
+        <label>Product *</label>
+        <select id="product" required></select>
+      </div>
+
+      <div class="field">
+        <label>Available Stock</label>
+        <input id="available" readonly placeholder="Select product and source">
+      </div>
+
+      <div class="field">
+        <label>Transfer Quantity *</label>
+        <input id="quantity" type="number" min="1" required placeholder="Enter quantity">
+      </div>
+
+      <div class="field">
+        <label>Unit</label>
+        <input id="unit" readonly placeholder="Unit">
+      </div>
+
+      <div class="field">
+        <label>Transfer Date *</label>
+        <input id="transferDate" type="date" required>
+      </div>
+
+      <div class="field">
+        <label>Expected Receipt Date</label>
+        <input id="receiptDate" type="date">
+      </div>
+
+      <div class="field full">
+        <label>Transport / Vehicle Number</label>
+        <input id="vehicle" placeholder="Example: TS 09 AB 1234">
+      </div>
+
+      <div class="field full">
+        <label>Transfer Reason / Notes</label>
+        <textarea id="notes" placeholder="Branch requirement, showroom display, stock balancing, customer order, etc."></textarea>
+      </div>
+
+    </div>
+
+    <div class="preview">
+      <div class="preview-title">Transfer Preview</div>
+      <div class="preview-row"><span>From</span><strong id="previewFrom">—</strong></div>
+      <div class="preview-row"><span>To</span><strong id="previewTo">—</strong></div>
+      <div class="preview-row"><span>Product</span><strong id="previewProduct">—</strong></div>
+      <div class="preview-row"><span>Quantity</span><strong id="previewQty">0</strong></div>
+    </div>
+
+    <div class="form-actions">
+      <button type="button" class="btn secondary" id="clearBtn">Clear</button>
+      <button type="submit" class="btn primary">Create Transfer</button>
+    </div>
+  </form>
+</div>
+
+<div class="panel">
+  <div class="panel-head">
+    <div>
+      <div class="panel-title">Transfer Rules</div>
+      <div class="panel-sub">Important checks before stock movement</div>
+    </div>
+    <span style="font-size:22px">🛡</span>
+  </div>
+
+  <div style="padding:20px">
+    <div class="preview-row">
+      <span>Source stock validation</span>
+      <strong style="color:#86efac">Enabled</strong>
+    </div>
+    <div class="preview-row">
+      <span>Same godown transfer</span>
+      <strong style="color:#fca5a5">Blocked</strong>
+    </div>
+    <div class="preview-row">
+      <span>Negative stock</span>
+      <strong style="color:#fca5a5">Blocked</strong>
+    </div>
+    <div class="preview-row">
+      <span>Transfer history</span>
+      <strong style="color:#86efac">Recorded</strong>
+    </div>
+    <div class="preview-row">
+      <span>Stock deduction</span>
+      <strong style="color:#fcd34d">On dispatch</strong>
+    </div>
+    <div class="preview-row">
+      <span>Stock addition</span>
+      <strong style="color:#67e8f9">On receipt</strong>
+    </div>
+
+    <div style="margin-top:20px;padding:14px;border:1px solid rgba(245,158,11,.18);border-radius:12px;background:rgba(245,158,11,.06)">
+      <div style="font-size:12px;font-weight:750;color:#fbbf24">ERP workflow</div>
+      <div style="margin-top:7px;color:var(--muted);font-size:11px;line-height:1.6">
+        Create → Dispatch → In Transit → Receive → Completed
+      </div>
+    </div>
+  </div>
+</div>
+
+</div>
+
+<div class="panel table-panel">
+  <div class="panel-head">
+    <div>
+      <div class="panel-title">Transfer History</div>
+      <div class="panel-sub">Track all stock movements between godowns.</div>
+    </div>
+    <button class="btn secondary" id="exportBtn">Export CSV</button>
+  </div>
+
+  <div class="search-bar">
+    <input id="search" type="search" placeholder="Search transfer ID, product, godown or vehicle...">
+    <select id="statusFilter">
+      <option value="">All Status</option>
+      <option value="Pending">Pending</option>
+      <option value="In Transit">In Transit</option>
+      <option value="Completed">Completed</option>
+      <option value="Cancelled">Cancelled</option>
+    </select>
+  </div>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Transfer ID</th>
+          <th>Product</th>
+          <th>From</th>
+          <th>To</th>
+          <th>Quantity</th>
+          <th>Date</th>
+          <th>Vehicle</th>
+          <th>Status</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody id="historyBody"></tbody>
+    </table>
+  </div>
+
+  <div class="pagination">
+    <span id="resultCount"></span>
+    <div class="pages">
+      <button class="page current">1</button>
+      <button class="page">2</button>
+      <button class="page">›</button>
+    </div>
+  </div>
+</div>
+
+</section>
+</main>
+</div>
+
+<div class="modal" id="modal">
+  <div class="modal-card">
+    <div class="modal-head">
+      <div>
+        <h3 id="modalTitle">Transfer Details</h3>
+        <div style="margin-top:4px;color:var(--muted);font-size:11px">View the complete stock movement record.</div>
+      </div>
+      <button class="close" id="closeModal">×</button>
+    </div>
+    <div id="modalContent" style="padding:20px"></div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const products = [
+  {id:1,name:"Urban Marble 4×2",code:"BST-TIL-001",unit:"Box",godown:"Main Tile Godown",stock:520},
+  {id:2,name:"Glossy White Wall 2×4",code:"BST-TIL-002",unit:"Box",godown:"Main Tile Godown",stock:185},
+  {id:3,name:"Anti-Skid Stone Grey",code:"BST-TIL-003",unit:"Box",godown:"Bhanu Shree Branch Godown",stock:18},
+  {id:4,name:"Bathroom Décor Series",code:"BST-TIL-004",unit:"Box",godown:"Main Tile Godown",stock:120},
+  {id:5,name:"Premium Gold Basin Tap",code:"BST-TAP-001",unit:"Piece",godown:"Bathroom Fittings Store",stock:46},
+  {id:6,name:"Chrome Pillar Tap",code:"BST-TAP-002",unit:"Piece",godown:"Bathroom Fittings Store",stock:74},
+  {id:7,name:"Wooden Finish Floor Tile",code:"BST-TIL-005",unit:"Box",godown:"Overflow Godown",stock:96},
+  {id:8,name:"Rain Shower Set",code:"BST-TAP-003",unit:"Set",godown:"Bathroom Fittings Store",stock:31}
+];
+
+const transfers = [
+  {id:"TRF-2026-001",product:"Urban Marble 4×2",code:"BST-TIL-001",from:"Main Tile Godown",to:"Bhanu Shree Branch Godown",qty:40,unit:"Box",date:"2026-08-09",vehicle:"TS 09 AB 1234",status:"Completed"},
+  {id:"TRF-2026-002",product:"Chrome Pillar Tap",code:"BST-TAP-002",from:"Bathroom Fittings Store",to:"Main Tile Godown",qty:12,unit:"Piece",date:"2026-08-09",vehicle:"TS 10 CD 5512",status:"In Transit"},
+  {id:"TRF-2026-003",product:"Wooden Finish Floor Tile",code:"BST-TIL-005",from:"Overflow Godown",to:"Main Tile Godown",qty:25,unit:"Box",date:"2026-08-08",vehicle:"TS 08 EF 7788",status:"Pending"},
+  {id:"TRF-2026-004",product:"Rain Shower Set",code:"BST-TAP-003",from:"Bathroom Fittings Store",to:"Bhanu Shree Branch Godown",qty:8,unit:"Set",date:"2026-08-07",vehicle:"TS 11 GH 2201",status:"Completed"},
+  {id:"TRF-2026-005",product:"Anti-Skid Stone Grey",code:"BST-TIL-003",from:"Bhanu Shree Branch Godown",to:"Main Tile Godown",qty:5,unit:"Box",date:"2026-08-06",vehicle:"TS 09 JK 9122",status:"Cancelled"}
+];
+
+const $ = id => document.getElementById(id);
+
+function today(){
+  return new Date().toISOString().slice(0,10);
+}
+$("transferDate").value = today();
+
+function setupForm(){
+  const godowns = [...new Set(products.map(p=>p.godown).concat([
+    "Main Tile Godown","Bhanu Shree Branch Godown","Bathroom Fittings Store","Overflow Godown"
+  ]))];
+
+  $("fromGodown").innerHTML = '<option value="">Select source godown</option>' +
+    godowns.map(g=>`<option>${g}</option>`).join("");
+
+  $("toGodown").innerHTML = '<option value="">Select destination godown</option>' +
+    godowns.map(g=>`<option>${g}</option>`).join("");
+
+  $("product").innerHTML = '<option value="">Select product</option>' +
+    products.map(p=>`<option value="${p.id}">${p.name} (${p.code})</option>`).join("");
+}
+
+function updateProduct(){
+  const p = products.find(x=>x.id === Number($("product").value));
+  $("available").value = p ? `${p.stock} ${p.unit}` : "";
+  $("unit").value = p ? p.unit : "";
+  updatePreview();
+}
+
+function updatePreview(){
+  const p = products.find(x=>x.id === Number($("product").value));
+  $("previewFrom").textContent = $("fromGodown").value || "—";
+  $("previewTo").textContent = $("toGodown").value || "—";
+  $("previewProduct").textContent = p ? p.name : "—";
+  $("previewQty").textContent = $("quantity").value || "0";
+}
+
+$("product").addEventListener("change", updateProduct);
+$("fromGodown").addEventListener("change", updatePreview);
+$("toGodown").addEventListener("change", updatePreview);
+$("quantity").addEventListener("input", updatePreview);
+
+function statusClass(status){
+  if(status==="Completed") return "completed";
+  if(status==="In Transit") return "intransit";
+  if(status==="Cancelled") return "cancelled";
+  return "pending";
+}
+
+function renderHistory(){
+  const q = $("search").value.toLowerCase().trim();
+  const status = $("statusFilter").value;
+
+  const list = transfers.filter(t=>{
+    const text = [t.id,t.product,t.code,t.from,t.to,t.vehicle].join(" ").toLowerCase();
+    return (!q || text.includes(q)) && (!status || t.status===status);
+  });
+
+  $("historyBody").innerHTML = list.map(t=>`
+    <tr>
+      <td><div class="transfer-id">${t.id}</div><div class="small">${t.date}</div></td>
+      <td><div class="product">${t.product}</div><div class="small">${t.code}</div></td>
+      <td>${t.from}</td>
+      <td>${t.to}</td>
+      <td><strong>${t.qty}</strong> ${t.unit}</td>
+      <td>${t.date}</td>
+      <td>${t.vehicle || "—"}</td>
+      <td><span class="badge ${statusClass(t.status)}">${t.status}</span></td>
+      <td>
+        <div class="actions">
+          <button class="action" title="View" onclick="viewTransfer('${t.id}')">▤</button>
+          <button class="action" title="Print" onclick="printTransfer('${t.id}')">⎙</button>
+        </div>
+      </td>
+    </tr>
+  `).join("");
+
+  $("resultCount").textContent = `Showing ${list.length} of ${transfers.length} transfers`;
+  updateStats();
+}
+
+function updateStats(){
+  $("todayCount").textContent = transfers.filter(t=>t.date===today()).length;
+  $("transitCount").textContent = transfers.filter(t=>t.status==="In Transit").length;
+  $("completedCount").textContent = transfers.filter(t=>t.status==="Completed").length;
+  $("unitsCount").textContent = transfers.reduce((sum,t)=>sum+t.qty,0).toLocaleString("en-IN");
+}
+
+["search","statusFilter"].forEach(id=>{
+  $(id).addEventListener("input",renderHistory);
+  $(id).addEventListener("change",renderHistory);
+});
+
+$("transferForm").addEventListener("submit",e=>{
+  e.preventDefault();
+
+  const from = $("fromGodown").value;
+  const to = $("toGodown").value;
+  const p = products.find(x=>x.id===Number($("product").value));
+  const qty = Number($("quantity").value);
+
+  if(!from || !to || !p || !qty){
+    alert("Please complete all required fields.");
+    return;
+  }
+
+  if(from === to){
+    alert("Source and destination godown cannot be the same.");
+    return;
+  }
+
+  if(qty > p.stock){
+    alert(`Insufficient stock. Available: ${p.stock} ${p.unit}`);
+    return;
+  }
+
+  const newId = "TRF-2026-" + String(transfers.length+1).padStart(3,"0");
+
+  transfers.unshift({
+    id:newId,
+    product:p.name,
+    code:p.code,
+    from,
+    to,
+    qty,
+    unit:p.unit,
+    date:$("transferDate").value,
+    vehicle:$("vehicle").value || "—",
+    status:"Pending"
+  });
+
+  p.stock -= qty;
+
+  toast(`${newId} created successfully.`);
+  clearForm();
+  renderHistory();
+});
+
+function clearForm(){
+  $("transferForm").reset();
+  $("transferDate").value = today();
+  $("available").value="";
+  $("unit").value="";
+  updatePreview();
+}
+
+$("clearBtn").onclick=clearForm;
+
+function viewTransfer(id){
+  const t=transfers.find(x=>x.id===id);
+  if(!t)return;
+
+  $("modalTitle").textContent=t.id;
+  $("modalContent").innerHTML=`
+    <div class="preview">
+      <div class="preview-row"><span>Product</span><strong>${t.product}</strong></div>
+      <div class="preview-row"><span>Product Code</span><strong>${t.code}</strong></div>
+      <div class="preview-row"><span>From Godown</span><strong>${t.from}</strong></div>
+      <div class="preview-row"><span>To Godown</span><strong>${t.to}</strong></div>
+      <div class="preview-row"><span>Quantity</span><strong>${t.qty} ${t.unit}</strong></div>
+      <div class="preview-row"><span>Transfer Date</span><strong>${t.date}</strong></div>
+      <div class="preview-row"><span>Vehicle</span><strong>${t.vehicle}</strong></div>
+      <div class="preview-row"><span>Status</span><strong><span class="badge ${statusClass(t.status)}">${t.status}</span></strong></div>
+    </div>
+  `;
+
+  $("modal").classList.add("show");
+}
+
+function printTransfer(id){
+  const t=transfers.find(x=>x.id===id);
+  if(!t)return;
+  const w=window.open("","_blank","width=800,height=650");
+  w.document.write(`
+    <html><head><title>${t.id}</title>
+    <style>body{font-family:Arial;padding:40px;color:#111}h1{margin-bottom:25px}table{width:100%;border-collapse:collapse}td{padding:12px;border:1px solid #ddd}td:first-child{font-weight:bold;width:35%}</style>
+    </head><body>
+    <h1>Bhanu Shree Tiles - Stock Transfer</h1>
+    <h2>${t.id}</h2>
+    <table>
+      <tr><td>Product</td><td>${t.product} (${t.code})</td></tr>
+      <tr><td>From Godown</td><td>${t.from}</td></tr>
+      <tr><td>To Godown</td><td>${t.to}</td></tr>
+      <tr><td>Quantity</td><td>${t.qty} ${t.unit}</td></tr>
+      <tr><td>Date</td><td>${t.date}</td></tr>
+      <tr><td>Vehicle</td><td>${t.vehicle}</td></tr>
+      <tr><td>Status</td><td>${t.status}</td></tr>
+    </table>
+    </body></html>
+  `);
+  w.document.close();
+  w.print();
+}
+
+$("closeModal").onclick=()=>$("modal").classList.remove("show");
+$("modal").onclick=e=>{
+  if(e.target===$("modal")) $("modal").classList.remove("show");
+};
+
+$("newTransferBtn").onclick=()=>{
+  window.scrollTo({top:0,behavior:"smooth"});
+  $("fromGodown").focus();
+};
+
+$("printBtn").onclick=()=>window.print();
+
+$("exportBtn").onclick=()=>{
+  const rows=[
+    ["Transfer ID","Product","Code","From Godown","To Godown","Quantity","Unit","Date","Vehicle","Status"],
+    ...transfers.map(t=>[t.id,t.product,t.code,t.from,t.to,t.qty,t.unit,t.date,t.vehicle,t.status])
+  ];
+  const csv=rows.map(r=>r.map(v=>`"${String(v).replace(/"/g,'""')}"`).join(",")).join("\n");
+  const a=document.createElement("a");
+  a.href=URL.createObjectURL(new Blob([csv],{type:"text/csv;charset=utf-8"}));
+  a.download="bhanu-shree-stock-transfers.csv";
+  a.click();
+  toast("Transfer history exported.");
+};
+
+$("notify").onclick=()=>{
+  alert(`${transfers.filter(t=>t.status==="In Transit"||t.status==="Pending").length} transfer(s) need attention.`);
+};
+
+function toast(message){
+  $("toast").textContent=message;
+  $("toast").classList.add("show");
+  setTimeout(()=>$("toast").classList.remove("show"),2500);
+}
+
+const sidebar=$("sidebar"),overlay=$("overlay");
+$("mobileMenu").onclick=()=>{
+  sidebar.classList.toggle("open");
+  overlay.classList.toggle("show");
+};
+overlay.onclick=()=>{
+  sidebar.classList.remove("open");
+  overlay.classList.remove("show");
+};
+document.querySelectorAll(".sidebar .nav-link").forEach(link=>{
+  link.addEventListener("click",()=>{
+    if(innerWidth<=991){
+      sidebar.classList.remove("open");
+      overlay.classList.remove("show");
+    }
+  });
+});
+
+setupForm();
+renderHistory();
+updatePreview();
+</script>
+</body>
+</html>

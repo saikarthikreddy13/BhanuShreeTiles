@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Damaged Stock | Bhanu Shree Tiles ERP</title>
+<style>
+:root{
+  --bg:#07111f;--panel:rgba(255,255,255,.055);--panel2:rgba(255,255,255,.035);
+  --border:rgba(255,255,255,.10);--text:#f8fafc;--muted:#94a3b8;
+  --accent:#f59e0b;--cyan:#06b6d4;--green:#22c55e;--red:#ef4444;
+  --blue:#60a5fa
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  min-height:100vh;font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+  color:var(--text);
+  background:radial-gradient(circle at 85% 5%,rgba(245,158,11,.13),transparent 25%),
+  radial-gradient(circle at 5% 90%,rgba(6,182,212,.09),transparent 28%),
+  linear-gradient(135deg,#050b14,#0b1728 55%,#07111f)
+}
+a{text-decoration:none;color:inherit}button,input,select,textarea{font:inherit}
+.app{min-height:100vh;display:flex}
+.sidebar{
+  width:275px;position:fixed;inset:0 auto 0 0;z-index:1000;display:flex;flex-direction:column;
+  background:rgba(5,13,25,.98);border-right:1px solid var(--border);backdrop-filter:blur(20px);
+  transition:transform .3s ease
+}
+.brand{padding:24px 20px;border-bottom:1px solid var(--border)}
+.brand-title{font-size:21px;font-weight:800}.brand-title span{color:var(--accent)}
+.brand-subtitle{margin-top:4px;font-size:10px;letter-spacing:.2em;color:var(--muted);text-transform:uppercase}
+.role-badge{
+  display:inline-flex;margin-top:15px;padding:7px 11px;border:1px solid rgba(245,158,11,.25);
+  border-radius:999px;background:rgba(245,158,11,.08);color:#fbbf24;font-size:11px;font-weight:700
+}
+.nav{flex:1;overflow-y:auto;padding:15px 12px}
+.nav-title{margin:4px 10px 9px;color:#64748b;font-size:10px;font-weight:700;letter-spacing:.16em;text-transform:uppercase}
+.nav-link{
+  display:flex;align-items:center;gap:12px;padding:11px 13px;margin:3px 0;border:1px solid transparent;
+  border-radius:11px;color:#cbd5e1;font-size:14px;transition:.2s
+}
+.nav-link:hover{background:rgba(255,255,255,.05);color:#fff}
+.nav-link.active{
+  background:linear-gradient(90deg,rgba(245,158,11,.16),rgba(6,182,212,.04));
+  border-color:rgba(245,158,11,.24);color:#fff
+}
+.nav-icon{width:25px;text-align:center;font-size:17px}
+.sidebar-bottom{padding:14px;border-top:1px solid var(--border)}.logout{color:#fca5a5}
+.main{width:calc(100% - 275px);margin-left:275px;min-width:0}
+.topbar{
+  height:76px;position:sticky;top:0;z-index:900;display:flex;align-items:center;justify-content:space-between;
+  gap:20px;padding:0 28px;background:rgba(5,13,25,.84);border-bottom:1px solid var(--border);
+  backdrop-filter:blur(20px)
+}
+.left-top{display:flex;align-items:center;gap:12px}
+.mobile-menu{
+  display:none;width:42px;height:42px;border:1px solid var(--border);border-radius:10px;
+  background:rgba(255,255,255,.05);color:#fff;cursor:pointer;font-size:20px
+}
+.title h1{font-size:22px;letter-spacing:-.03em}.title p{margin-top:3px;color:var(--muted);font-size:12px}
+.top-actions{display:flex;align-items:center;gap:10px}
+.icon-btn{
+  width:40px;height:40px;border:1px solid var(--border);border-radius:10px;
+  background:rgba(255,255,255,.04);color:#cbd5e1;cursor:pointer
+}
+.profile{display:flex;align-items:center;gap:10px;margin-left:5px;padding-left:12px;border-left:1px solid var(--border)}
+.avatar{
+  width:38px;height:38px;display:grid;place-items:center;border-radius:11px;
+  background:linear-gradient(135deg,#f59e0b,#06b6d4);color:#111827;font-weight:900
+}
+.profile-name{font-size:13px;font-weight:700}.profile-role{margin-top:2px;color:var(--muted);font-size:11px}
+.content{padding:28px}
+.page-head{
+  display:flex;align-items:center;justify-content:space-between;gap:18px;margin-bottom:18px;padding:24px;
+  border:1px solid var(--border);border-radius:18px;
+  background:linear-gradient(135deg,rgba(239,68,68,.10),rgba(245,158,11,.06))
+}
+.kicker{color:#fbbf24;font-size:10px;font-weight:800;letter-spacing:.18em;text-transform:uppercase}
+.page-head h2{margin-top:7px;font-size:29px;letter-spacing:-.04em}
+.page-head p{margin-top:7px;color:var(--muted);font-size:12px}
+.actions{display:flex;gap:8px;flex-wrap:wrap}
+.btn{
+  border:0;border-radius:10px;padding:10px 14px;cursor:pointer;font-size:10px;font-weight:750
+}
+.primary{background:linear-gradient(135deg,#f59e0b,#06b6d4);color:#07111f}
+.danger{background:linear-gradient(135deg,#ef4444,#f97316);color:#fff}
+.secondary{background:rgba(255,255,255,.05);border:1px solid var(--border);color:#e2e8f0}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:18px}
+.stat{padding:18px;border:1px solid var(--border);border-radius:16px;background:var(--panel)}
+.stat-top{display:flex;justify-content:space-between;align-items:center}.stat-label{color:var(--muted);font-size:11px}
+.stat-icon{width:38px;height:38px;display:grid;place-items:center;border-radius:11px;background:rgba(239,68,68,.10)}
+.stat-value{margin-top:8px;font-size:24px;font-weight:800}.stat-note{margin-top:5px;color:var(--muted);font-size:10px}
+.panel{border:1px solid var(--border);border-radius:17px;background:var(--panel);overflow:hidden;margin-top:18px}
+.panel-head{
+  display:flex;align-items:center;justify-content:space-between;gap:12px;padding:17px 19px;border-bottom:1px solid var(--border)
+}
+.panel-title{font-size:15px;font-weight:750}.panel-sub{margin-top:3px;color:var(--muted);font-size:11px}
+.panel-body{padding:18px}
+.form-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:13px}
+.field{display:flex;flex-direction:column;gap:7px}
+.field.full{grid-column:1/-1}
+label{font-size:10px;color:#cbd5e1;font-weight:650}
+input,select,textarea{
+  width:100%;padding:11px 12px;border:1px solid var(--border);border-radius:10px;
+  outline:none;background:rgba(255,255,255,.045);color:#fff
+}
+select option{background:#0b1728;color:#fff}
+textarea{min-height:88px;resize:vertical}
+input:focus,select:focus,textarea:focus{border-color:rgba(245,158,11,.55);box-shadow:0 0 0 3px rgba(245,158,11,.09)}
+.table-wrap{overflow-x:auto}.data-table{width:100%;border-collapse:collapse}
+.data-table th,.data-table td{
+  padding:12px 14px;border-bottom:1px solid rgba(255,255,255,.06);text-align:left;white-space:nowrap
+}
+.data-table th{font-size:9px;color:#64748b;text-transform:uppercase;letter-spacing:.1em}
+.data-table td{font-size:11px;color:#dbe4ef}
+.badge{display:inline-flex;padding:5px 9px;border-radius:99px;font-size:9px;font-weight:750}
+.green{background:rgba(34,197,94,.1);color:#86efac}
+.amber{background:rgba(245,158,11,.1);color:#fcd34d}
+.red{background:rgba(239,68,68,.1);color:#fca5a5}
+.cyan{background:rgba(6,182,212,.1);color:#67e8f9}
+.blue{background:rgba(96,165,250,.1);color:#93c5fd}
+.empty{
+  padding:35px 20px;text-align:center;color:var(--muted);font-size:11px
+}
+.empty-icon{font-size:35px;margin-bottom:10px}
+.overlay{display:none;position:fixed;inset:0;z-index:999;background:rgba(0,0,0,.55)}
+.overlay.show{display:block}
+@media(max-width:1100px){.stats{grid-template-columns:repeat(2,1fr)}.form-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:991px){
+  .sidebar{transform:translateX(-100%)}.sidebar.open{transform:translateX(0)}
+  .main{width:100%;margin-left:0}.mobile-menu{display:grid;place-items:center}
+  .topbar{padding:0 16px}.content{padding:18px}.profile-text{display:none}
+}
+@media(max-width:650px){
+  .page-head{align-items:flex-start;flex-direction:column}.actions{width:100%}.actions .btn{flex:1}
+  .form-grid{grid-template-columns:1fr}.field.full{grid-column:auto}
+}
+@media(max-width:480px){
+  .stats{grid-template-columns:1fr}.page-head h2{font-size:23px}.title h1{font-size:18px}
+}
+@media print{
+  .sidebar,.topbar,.actions,.mobile-menu{display:none!important}
+  .main{width:100%;margin:0}body{background:#fff;color:#111}
+}
+</style>
+</head>
+
+<body>
+<div class="app">
+
+<aside class="sidebar" id="sidebar">
+  <div class="brand">
+    <div class="brand-title">Bhanu Shree <span>Tiles</span></div>
+    <div class="brand-subtitle">Tiles & Taps ERP</div>
+    <div class="role-badge">📦 Godown Manager</div>
+  </div>
+
+  <nav class="nav">
+    <div class="nav-title">Godown Manager</div>
+    <a class="nav-link" href="godown-dashboard.html"><span class="nav-icon">📦</span>Godown Dashboard</a>
+    <a class="nav-link" href="godowns.html"><span class="nav-icon">🏭</span>Godowns</a>
+    <a class="nav-link" href="godown-details.html"><span class="nav-icon">▣</span>Godown Details</a>
+    <a class="nav-link" href="stock.html"><span class="nav-icon">📊</span>Stock</a>
+    <a class="nav-link" href="stock-in.html"><span class="nav-icon">↓</span>Stock In</a>
+    <a class="nav-link" href="stock-out.html"><span class="nav-icon">↑</span>Stock Out</a>
+    <a class="nav-link" href="stock-transfer.html"><span class="nav-icon">⇄</span>Stock Transfer</a>
+    <a class="nav-link active" href="damaged-stock.html"><span class="nav-icon">⚠</span>Damaged Stock</a>
+    <a class="nav-link" href="stock-adjustment.html"><span class="nav-icon">±</span>Stock Adjustment</a>
+    <a class="nav-link" href="stock-reports.html"><span class="nav-icon">▥</span>Stock Reports</a>
+    <a class="nav-link" href="products.html"><span class="nav-icon">▧</span>Products</a>
+  </nav>
+
+  <div class="sidebar-bottom">
+    <a class="nav-link logout" href="login.html"><span class="nav-icon">↪</span>Logout</a>
+  </div>
+</aside>
+
+<div class="overlay" id="overlay"></div>
+
+<main class="main">
+
+<header class="topbar">
+  <div class="left-top">
+    <button class="mobile-menu" id="mobileMenu">☰</button>
+    <div class="title">
+      <h1>Damaged Stock</h1>
+      <p>Record, review and manage damaged inventory</p>
+    </div>
+  </div>
+
+  <div class="top-actions">
+    <button class="icon-btn" id="notify">🔔</button>
+    <div class="profile">
+      <div class="avatar">GM</div>
+      <div class="profile-text">
+        <div class="profile-name">Godown Manager</div>
+        <div class="profile-role">Warehouse Management</div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<section class="content">
+
+<div class="page-head">
+  <div>
+    <div class="kicker">Inventory Control</div>
+    <h2>Damaged Stock Management</h2>
+    <p>Record damaged tiles, identify the reason, track quantities and maintain a clear warehouse damage history.</p>
+  </div>
+
+  <div class="actions">
+    <button class="btn danger" onclick="document.getElementById('damageForm').scrollIntoView({behavior:'smooth'})">＋ Record Damage</button>
+    <button class="btn secondary" onclick="window.print()">🖨 Print</button>
+    <button class="btn secondary" onclick="location.href='stock-reports.html'">▥ Reports</button>
+  </div>
+</div>
+
+<div class="stats">
+  <div class="stat">
+    <div class="stat-top"><span class="stat-label">Damaged Boxes</span><span class="stat-icon">⚠</span></div>
+    <div class="stat-value" style="color:#fca5a5">186</div>
+    <div class="stat-note">Current damaged inventory</div>
+  </div>
+
+  <div class="stat">
+    <div class="stat-top"><span class="stat-label">Damage Value</span><span class="stat-icon">₹</span></div>
+    <div class="stat-value">₹74,860</div>
+    <div class="stat-note">Estimated stock value</div>
+  </div>
+
+  <div class="stat">
+    <div class="stat-top"><span class="stat-label">Pending Review</span><span class="stat-icon">◷</span></div>
+    <div class="stat-value" style="color:#fcd34d">24</div>
+    <div class="stat-note">Awaiting approval/disposal</div>
+  </div>
+
+  <div class="stat">
+    <div class="stat-top"><span class="stat-label">This Month</span><span class="stat-icon">▥</span></div>
+    <div class="stat-value">52</div>
+    <div class="stat-note">Damage records created</div>
+  </div>
+</div>
+
+<!-- RECORD DAMAGED STOCK -->
+<div class="panel" id="damageForm">
+  <div class="panel-head">
+    <div>
+      <div class="panel-title">Record Damaged Stock</div>
+      <div class="panel-sub">Enter the damaged inventory details below.</div>
+    </div>
+    <span class="badge red">Damage Entry</span>
+  </div>
+
+  <div class="panel-body">
+    <form id="damageEntryForm">
+
+      <div class="form-grid">
+
+        <div class="field">
+          <label>Godown</label>
+          <select id="godown" required>
+            <option value="">Select Godown</option>
+            <option>Main Godown</option>
+            <option>North Godown</option>
+            <option>South Godown</option>
+            <option>Premium Godown</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label>Product</label>
+          <select id="product" required>
+            <option value="">Select Product</option>
+            <option>Premium Grey Marble</option>
+            <option>Royal Beige</option>
+            <option>Urban White</option>
+            <option>Black Stone</option>
+            <option>Elegant Marble</option>
+            <option>Classic Ivory</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label>Damage Date</label>
+          <input type="date" id="damageDate" required>
+        </div>
+
+        <div class="field">
+          <label>Damaged Quantity</label>
+          <input type="number" id="quantity" min="1" placeholder="Enter boxes" required>
+        </div>
+
+        <div class="field">
+          <label>Damage Reason</label>
+          <select id="reason" required>
+            <option value="">Select Reason</option>
+            <option>Broken Tile</option>
+            <option>Cracked Tile</option>
+            <option>Water Damage</option>
+            <option>Handling Damage</option>
+            <option>Transport Damage</option>
+            <option>Manufacturing Defect</option>
+            <option>Other</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label>Action</label>
+          <select id="action" required>
+            <option value="">Select Action</option>
+            <option>Pending Review</option>
+            <option>Dispose</option>
+            <option>Return to Supplier</option>
+            <option>Repair / Rework</option>
+            <option>Write Off</option>
+          </select>
+        </div>
+
+        <div class="field full">
+          <label>Remarks</label>
+          <textarea id="remarks" placeholder="Add damage description, batch details or other remarks..."></textarea>
+        </div>
+
+      </div>
+
+      <div class="actions" style="margin-top:16px">
+        <button type="submit" class="btn danger">Save Damage Record</button>
+        <button type="reset" class="btn secondary">Clear</button>
+      </div>
+
+    </form>
+  </div>
+</div>
+
+<!-- DAMAGE RECORDS -->
+<div class="panel">
+  <div class="panel-head">
+    <div>
+      <div class="panel-title">Damaged Stock Records</div>
+      <div class="panel-sub">Review all recorded damaged inventory.</div>
+    </div>
+
+    <div class="actions">
+      <select id="statusFilter" style="width:auto;padding:8px 10px">
+        <option value="all">All Status</option>
+        <option value="Pending Review">Pending Review</option>
+        <option value="Approved">Approved</option>
+        <option value="Disposed">Disposed</option>
+        <option value="Returned">Returned</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="table-wrap">
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Record ID</th>
+          <th>Date</th>
+          <th>Godown</th>
+          <th>Product</th>
+          <th>Qty</th>
+          <th>Reason</th>
+          <th>Value</th>
+          <th>Action</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+
+      <tbody id="damageTable">
+        <tr data-status="Pending Review">
+          <td>DMG-00125</td>
+          <td>09 Aug 2026</td>
+          <td>Main Godown</td>
+          <td>Premium Grey Marble</td>
+          <td>24</td>
+          <td>Broken Tile</td>
+          <td>₹12,480</td>
+          <td>Review</td>
+          <td><span class="badge amber">Pending Review</span></td>
+        </tr>
+
+        <tr data-status="Approved">
+          <td>DMG-00124</td>
+          <td>08 Aug 2026</td>
+          <td>North Godown</td>
+          <td>Royal Beige</td>
+          <td>18</td>
+          <td>Cracked Tile</td>
+          <td>₹7,920</td>
+          <td>Write Off</td>
+          <td><span class="badge green">Approved</span></td>
+        </tr>
+
+        <tr data-status="Disposed">
+          <td>DMG-00123</td>
+          <td>07 Aug 2026</td>
+          <td>Main Godown</td>
+          <td>Black Stone</td>
+          <td>12</td>
+          <td>Handling Damage</td>
+          <td>₹5,640</td>
+          <td>Dispose</td>
+          <td><span class="badge red">Disposed</span></td>
+        </tr>
+
+        <tr data-status="Returned">
+          <td>DMG-00122</td>
+          <td>06 Aug 2026</td>
+          <td>South Godown</td>
+          <td>Urban White</td>
+          <td>30</td>
+          <td>Manufacturing Defect</td>
+          <td>₹13,200</td>
+          <td>Supplier Return</td>
+          <td><span class="badge blue">Returned</span></td>
+        </tr>
+
+        <tr data-status="Pending Review">
+          <td>DMG-00121</td>
+          <td>05 Aug 2026</td>
+          <td>Premium Godown</td>
+          <td>Elegant Marble</td>
+          <td>9</td>
+          <td>Water Damage</td>
+          <td>₹4,950</td>
+          <td>Review</td>
+          <td><span class="badge amber">Pending Review</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- DAMAGE SUMMARY -->
+<div class="panel">
+  <div class="panel-head">
+    <div>
+      <div class="panel-title">Damage Summary by Reason</div>
+      <div class="panel-sub">Current damaged stock grouped by reason.</div>
+    </div>
+  </div>
+
+  <div class="table-wrap">
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Damage Reason</th>
+          <th>Records</th>
+          <th>Boxes</th>
+          <th>Estimated Value</th>
+          <th>Priority</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Broken Tile</td><td>18</td><td>68</td><td>₹26,420</td>
+          <td><span class="badge red">High</span></td>
+        </tr>
+        <tr>
+          <td>Cracked Tile</td><td>11</td><td>42</td><td>₹17,860</td>
+          <td><span class="badge amber">Medium</span></td>
+        </tr>
+        <tr>
+          <td>Handling Damage</td><td>9</td><td>31</td><td>₹12,180</td>
+          <td><span class="badge amber">Medium</span></td>
+        </tr>
+        <tr>
+          <td>Manufacturing Defect</td><td>6</td><td>27</td><td>₹10,900</td>
+          <td><span class="badge blue">Review</span></td>
+        </tr>
+        <tr>
+          <td>Water / Other Damage</td><td>8</td><td>18</td><td>₹7,500</td>
+          <td><span class="badge green">Low</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+</section>
+</main>
+</div>
+
+<script>
+const sidebar=document.getElementById("sidebar");
+const overlay=document.getElementById("overlay");
+
+document.getElementById("mobileMenu").addEventListener("click",function(){
+  sidebar.classList.toggle("open");
+  overlay.classList.toggle("show");
+});
+
+overlay.addEventListener("click",function(){
+  sidebar.classList.remove("open");
+  overlay.classList.remove("show");
+});
+
+document.querySelectorAll(".nav-link").forEach(function(link){
+  link.addEventListener("click",function(){
+    if(window.innerWidth<=991){
+      sidebar.classList.remove("open");
+      overlay.classList.remove("show");
+    }
+  });
+});
+
+document.getElementById("notify").addEventListener("click",function(){
+  alert(
+    "Damaged Stock Alerts\n\n"+
+    "• 186 damaged boxes currently recorded.\n"+
+    "• 24 records are pending review.\n"+
+    "• Estimated damaged stock value: ₹74,860."
+  );
+});
+
+document.getElementById("damageDate").value=new Date().toISOString().split("T")[0];
+
+document.getElementById("damageEntryForm").addEventListener("submit",function(e){
+  e.preventDefault();
+
+  const godown=document.getElementById("godown").value;
+  const product=document.getElementById("product").value;
+  const quantity=document.getElementById("quantity").value;
+  const reason=document.getElementById("reason").value;
+
+  if(!godown || !product || !quantity || !reason){
+    alert("Please fill all required fields.");
+    return;
+  }
+
+  alert(
+    "Damage record saved successfully!\n\n"+
+    "Godown: "+godown+"\n"+
+    "Product: "+product+"\n"+
+    "Quantity: "+quantity+" boxes\n"+
+    "Reason: "+reason
+  );
+
+  this.reset();
+  document.getElementById("damageDate").value=new Date().toISOString().split("T")[0];
+});
+
+document.getElementById("statusFilter").addEventListener("change",function(){
+  const selected=this.value;
+
+  document.querySelectorAll("#damageTable tr").forEach(function(row){
+    row.style.display=(selected==="all" || row.dataset.status===selected) ? "" : "none";
+  });
+});
+</script>
+
+</body>
+</html>
