@@ -1,0 +1,2838 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="description"
+        content="Bhanu Shree Tiles ERP - Secure Employee Login"
+    >
+
+    <meta
+        name="theme-color"
+        content="#07111f"
+    >
+
+    <title>Login | Bhanu Shree Tiles ERP</title>
+
+
+    <!-- =====================================================
+         GOOGLE FONT
+    ====================================================== -->
+
+    <link
+        rel="preconnect"
+        href="https://fonts.googleapis.com"
+    >
+
+    <link
+        rel="preconnect"
+        href="https://fonts.gstatic.com"
+        crossorigin
+    >
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
+
+
+    <!-- =====================================================
+         BOOTSTRAP 5
+    ====================================================== -->
+
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+    >
+
+
+    <!-- =====================================================
+         FONT AWESOME
+    ====================================================== -->
+
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+    >
+
+
+    <!-- =====================================================
+         INLINE CSS
+    ====================================================== -->
+
+    <style>
+
+        /* =====================================================
+           ROOT VARIABLES
+        ====================================================== */
+
+        :root {
+
+            --app-bg: #07111f;
+
+            --app-bg-2: #0b1728;
+
+            --app-card: rgba(255, 255, 255, 0.07);
+
+            --app-accent: #f59e0b;
+
+            --app-accent-light: #fbbf24;
+
+            --app-accent-2: #06b6d4;
+
+            --app-muted: #94a3b8;
+
+            --app-text: #ffffff;
+
+            --app-border:
+                rgba(255, 255, 255, 0.12);
+
+            --app-border-light:
+                rgba(255, 255, 255, 0.08);
+        }
+
+
+        /* =====================================================
+           RESET
+        ====================================================== */
+
+        * {
+            box-sizing: border-box;
+        }
+
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+
+        body {
+
+            margin: 0;
+
+            min-height: 100vh;
+
+            font-family:
+                "Inter",
+                sans-serif;
+
+            color:
+                var(--app-text);
+
+            background:
+
+                radial-gradient(
+                    circle at 10% 20%,
+                    rgba(6, 182, 212, 0.12),
+                    transparent 30%
+                ),
+
+                radial-gradient(
+                    circle at 90% 10%,
+                    rgba(245, 158, 11, 0.12),
+                    transparent 30%
+                ),
+
+                linear-gradient(
+                    135deg,
+                    var(--app-bg),
+                    var(--app-bg-2)
+                );
+
+            overflow-x: hidden;
+        }
+
+
+        /* =====================================================
+           BACKGROUND EFFECTS
+        ====================================================== */
+
+        body::before {
+
+            content: "";
+
+            position: fixed;
+
+            width: 400px;
+
+            height: 400px;
+
+            top: 20%;
+
+            left: 25%;
+
+            border-radius: 50%;
+
+            background:
+                rgba(6, 182, 212, 0.04);
+
+            filter:
+                blur(100px);
+
+            pointer-events: none;
+
+            z-index: 0;
+        }
+
+
+        body::after {
+
+            content: "";
+
+            position: fixed;
+
+            width: 400px;
+
+            height: 400px;
+
+            right: 10%;
+
+            bottom: 0;
+
+            border-radius: 50%;
+
+            background:
+                rgba(245, 158, 11, 0.04);
+
+            filter:
+                blur(100px);
+
+            pointer-events: none;
+
+            z-index: 0;
+        }
+
+
+        /* =====================================================
+           NAVBAR
+        ====================================================== */
+
+        .navbar {
+
+            position: relative;
+
+            z-index: 20;
+
+            min-height: 72px;
+
+            background:
+                rgba(5, 12, 24, 0.78);
+
+            backdrop-filter:
+                blur(20px);
+
+            -webkit-backdrop-filter:
+                blur(20px);
+
+            border-bottom:
+                1px solid
+                rgba(255, 255, 255, 0.08);
+        }
+
+
+        .navbar-brand {
+
+            color:
+                #fff !important;
+
+            letter-spacing:
+                0.02em;
+        }
+
+
+        .brand-logo {
+
+            width: 44px;
+
+            height: 44px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            flex-shrink: 0;
+
+            border-radius: 13px;
+
+            color:
+                #07111f;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    var(--app-accent),
+                    var(--app-accent-light)
+                );
+
+            box-shadow:
+                0 10px 30px
+                rgba(245, 158, 11, 0.22);
+        }
+
+
+        .brand-title {
+
+            display: block;
+
+            font-size:
+                1rem;
+
+            font-weight:
+                700;
+        }
+
+
+        .brand-kicker {
+
+            display: block;
+
+            margin-top: 2px;
+
+            font-size:
+                0.60rem;
+
+            letter-spacing:
+                0.16em;
+
+            text-transform:
+                uppercase;
+
+            color:
+                var(--app-muted);
+        }
+
+
+        .navbar .nav-link {
+
+            position: relative;
+
+            color:
+                rgba(229, 231, 235, 0.82);
+
+            font-size:
+                0.83rem;
+
+            font-weight:
+                500;
+
+            padding:
+                0.7rem 0.65rem !important;
+
+            transition:
+                all 0.25s ease;
+        }
+
+
+        .navbar .nav-link:hover,
+        .navbar .nav-link:focus,
+        .navbar .nav-link.active {
+
+            color:
+                #ffffff;
+        }
+
+
+        .navbar .nav-link.active::after {
+
+            content: "";
+
+            position: absolute;
+
+            left: 10px;
+
+            right: 10px;
+
+            bottom: 3px;
+
+            height: 2px;
+
+            border-radius:
+                999px;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    var(--app-accent),
+                    var(--app-accent-2)
+                );
+        }
+
+
+        /* =====================================================
+           CONTACT BUTTON
+        ====================================================== */
+
+        .btn-accent {
+
+            color:
+                #07111f !important;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    var(--app-accent),
+                    var(--app-accent-light)
+                );
+
+            border:
+                none;
+
+            font-weight:
+                700;
+
+            border-radius:
+                10px;
+
+            padding:
+                0.72rem 1rem;
+
+            box-shadow:
+                0 12px 30px
+                rgba(245, 158, 11, 0.18);
+
+            transition:
+                all 0.25s ease;
+        }
+
+
+        .btn-accent:hover {
+
+            color:
+                #07111f !important;
+
+            transform:
+                translateY(-2px);
+
+            box-shadow:
+                0 18px 40px
+                rgba(245, 158, 11, 0.30);
+        }
+
+
+        /* =====================================================
+           PAGE SHELL
+        ====================================================== */
+
+        .page-shell {
+
+            position:
+                relative;
+
+            z-index:
+                1;
+
+            min-height:
+                calc(100vh - 72px);
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            padding:
+                3.5rem 0
+                4rem;
+
+            overflow:
+                hidden;
+        }
+
+
+        .page-shell::before,
+        .page-shell::after {
+
+            content: "";
+
+            position:
+                absolute;
+
+            border-radius:
+                999px;
+
+            filter:
+                blur(24px);
+
+            pointer-events:
+                none;
+
+            opacity:
+                0.9;
+        }
+
+
+        .page-shell::before {
+
+            width:
+                18rem;
+
+            height:
+                18rem;
+
+            top:
+                -4rem;
+
+            right:
+                -3rem;
+
+            background:
+                rgba(245, 158, 11, 0.18);
+        }
+
+
+        .page-shell::after {
+
+            width:
+                16rem;
+
+            height:
+                16rem;
+
+            left:
+                -4rem;
+
+            bottom:
+                2rem;
+
+            background:
+                rgba(6, 182, 212, 0.16);
+        }
+
+
+        /* =====================================================
+           LEFT CONTENT
+        ====================================================== */
+
+        .login-panel {
+
+            position:
+                relative;
+
+            z-index:
+                2;
+
+            animation:
+                slideLeft 0.8s ease;
+        }
+
+
+        .premium-badge {
+
+            padding:
+                0.62rem 0.95rem;
+
+            color:
+                #fbbf24;
+
+            background:
+                rgba(245, 158, 11, 0.10);
+
+            border:
+                1px solid
+                rgba(245, 158, 11, 0.25);
+
+            font-size:
+                0.68rem;
+
+            letter-spacing:
+                0.10em;
+
+            font-weight:
+                700;
+        }
+
+
+        .gradient-text {
+
+            background:
+                linear-gradient(
+                    90deg,
+                    #f59e0b,
+                    #fbbf24,
+                    #06b6d4
+                );
+
+            -webkit-background-clip:
+                text;
+
+            background-clip:
+                text;
+
+            color:
+                transparent;
+        }
+
+
+        .hero-description {
+
+            max-width:
+                650px;
+
+            color:
+                #94a3b8;
+
+            line-height:
+                1.7;
+        }
+
+
+        /* =====================================================
+           HERO LIST
+        ====================================================== */
+
+        .hero-list {
+
+            list-style:
+                none;
+
+            padding:
+                0;
+
+            margin:
+                0;
+
+            max-width:
+                680px;
+        }
+
+
+        .hero-list li {
+
+            display:
+                flex;
+
+            gap:
+                0.9rem;
+
+            align-items:
+                flex-start;
+
+            padding:
+                0.85rem 0;
+
+            border-bottom:
+                1px solid
+                rgba(255, 255, 255, 0.08);
+        }
+
+
+        .hero-list li:last-child {
+
+            border-bottom:
+                none;
+        }
+
+
+        .hero-list-icon {
+
+            width:
+                34px;
+
+            height:
+                34px;
+
+            flex-shrink:
+                0;
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            justify-content:
+                center;
+
+            border-radius:
+                10px;
+
+            color:
+                var(--app-accent);
+
+            background:
+                rgba(245, 158, 11, 0.08);
+        }
+
+
+        .hero-list strong {
+
+            display:
+                block;
+
+            margin-bottom:
+                0.15rem;
+
+            font-size:
+                0.95rem;
+        }
+
+
+        .hero-list small {
+
+            color:
+                #94a3b8;
+
+            line-height:
+                1.5;
+        }
+
+
+        /* =====================================================
+           SECURITY NOTE
+        ====================================================== */
+
+        .security-note {
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            gap:
+                0.7rem;
+
+            max-width:
+                650px;
+
+            padding:
+                0.9rem 1rem;
+
+            color:
+                #94a3b8;
+
+            background:
+                rgba(255, 255, 255, 0.04);
+
+            border:
+                1px solid
+                rgba(255, 255, 255, 0.08);
+
+            border-radius:
+                12px;
+
+            font-size:
+                0.82rem;
+        }
+
+
+        .security-note i {
+
+            color:
+                var(--app-accent);
+        }
+
+
+        /* =====================================================
+           LOGIN CARD
+        ====================================================== */
+
+        .login-card {
+
+            position:
+                relative;
+
+            z-index:
+                3;
+
+            border:
+                1px solid
+                rgba(255, 255, 255, 0.12);
+
+            background:
+                linear-gradient(
+                    180deg,
+                    rgba(255, 255, 255, 0.105),
+                    rgba(255, 255, 255, 0.055)
+                );
+
+            backdrop-filter:
+                blur(20px);
+
+            -webkit-backdrop-filter:
+                blur(20px);
+
+            box-shadow:
+                0 24px 70px
+                rgba(0, 0, 0, 0.30);
+
+            animation:
+                slideRight 0.8s ease;
+        }
+
+
+        /* =====================================================
+           LOGIN ICON
+        ====================================================== */
+
+        .login-icon {
+
+            width:
+                76px;
+
+            height:
+                76px;
+
+            margin:
+                0 auto;
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            justify-content:
+                center;
+
+            border-radius:
+                21px;
+
+            color:
+                #07111f;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    var(--app-accent),
+                    var(--app-accent-light)
+                );
+
+            font-size:
+                1.7rem;
+
+            box-shadow:
+                0 15px 40px
+                rgba(245, 158, 11, 0.22);
+
+            animation:
+                pulse 3s infinite;
+        }
+
+
+        /* =====================================================
+           FORM LABEL
+        ====================================================== */
+
+        .login-card .form-label {
+
+            color:
+                rgba(229, 231, 235, 0.90);
+
+            font-size:
+                0.85rem;
+
+            font-weight:
+                600;
+        }
+
+
+        /* =====================================================
+           INPUT
+        ====================================================== */
+
+        .premium-input {
+
+            overflow:
+                hidden;
+
+            border-radius:
+                12px;
+        }
+
+
+        .login-card .input-group-text {
+
+            min-width:
+                52px;
+
+            justify-content:
+                center;
+
+            background:
+                rgba(255, 255, 255, 0.04);
+
+            border-color:
+                rgba(255, 255, 255, 0.12);
+
+            color:
+                var(--app-accent);
+        }
+
+
+        .login-card .form-control {
+
+            height:
+                52px;
+
+            background:
+                rgba(255, 255, 255, 0.04);
+
+            border-color:
+                rgba(255, 255, 255, 0.12);
+
+            color:
+                #ffffff;
+
+            font-size:
+                0.9rem;
+        }
+
+
+        .login-card .form-control:focus {
+
+            background:
+                rgba(255, 255, 255, 0.06);
+
+            border-color:
+                rgba(245, 158, 11, 0.55);
+
+            color:
+                #ffffff;
+
+            box-shadow:
+                0 0 0 0.2rem
+                rgba(245, 158, 11, 0.12);
+        }
+
+
+        .login-card .form-control::placeholder {
+
+            color:
+                rgba(148, 163, 184, 0.85);
+        }
+
+
+        /* =====================================================
+           PASSWORD TOGGLE
+        ====================================================== */
+
+        .password-toggle {
+
+            height:
+                52px;
+
+            min-width:
+                52px;
+
+            color:
+                #94a3b8;
+
+            background:
+                rgba(255, 255, 255, 0.04);
+
+            border-color:
+                rgba(255, 255, 255, 0.12);
+        }
+
+
+        .password-toggle:hover {
+
+            color:
+                #ffffff;
+
+            background:
+                rgba(255, 255, 255, 0.08);
+        }
+
+
+        /* =====================================================
+           FORGOT PASSWORD
+        ====================================================== */
+
+        .forgot-link {
+
+            color:
+                var(--app-accent);
+
+            text-decoration:
+                none;
+
+            font-weight:
+                500;
+
+            transition:
+                0.2s ease;
+        }
+
+
+        .forgot-link:hover {
+
+            color:
+                #fbbf24;
+        }
+
+
+        /* =====================================================
+           REMEMBER ME
+        ====================================================== */
+
+        .form-check-input {
+
+            background-color:
+                rgba(255, 255, 255, 0.08);
+
+            border-color:
+                rgba(255, 255, 255, 0.25);
+        }
+
+
+        .form-check-input:checked {
+
+            background-color:
+                var(--app-accent);
+
+            border-color:
+                var(--app-accent);
+        }
+
+
+        .form-check-label {
+
+            color:
+                #cbd5e1;
+
+            font-size:
+                0.84rem;
+        }
+
+
+        /* =====================================================
+           REGISTER LINK
+        ====================================================== */
+
+        .register-link {
+
+            color:
+                var(--app-accent);
+
+            text-decoration:
+                none;
+
+            font-weight:
+                700;
+
+            transition:
+                0.2s ease;
+        }
+
+
+        .register-link:hover {
+
+            color:
+                #fbbf24;
+        }
+
+
+        /* =====================================================
+           BACK LINK
+        ====================================================== */
+
+        .back-link {
+
+            color:
+                #94a3b8;
+
+            text-decoration:
+                none;
+
+            transition:
+                0.2s ease;
+        }
+
+
+        .back-link:hover {
+
+            color:
+                #ffffff;
+        }
+
+
+        /* =====================================================
+           LOGIN BUTTON
+        ====================================================== */
+
+        .login-submit {
+
+            min-height:
+                54px;
+
+            color:
+                #07111f !important;
+
+            border:
+                none;
+
+            border-radius:
+                12px;
+
+            font-weight:
+                700;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    var(--app-accent),
+                    var(--app-accent-light)
+                );
+
+            box-shadow:
+                0 14px 35px
+                rgba(245, 158, 11, 0.20);
+
+            transition:
+                all 0.25s ease;
+        }
+
+
+        .login-submit:hover {
+
+            transform:
+                translateY(-2px);
+
+            box-shadow:
+                0 20px 45px
+                rgba(245, 158, 11, 0.30);
+        }
+
+
+        .login-submit:active {
+
+            transform:
+                translateY(0);
+        }
+
+
+        .login-submit:disabled {
+
+            opacity:
+                0.7;
+
+            cursor:
+                not-allowed;
+
+            transform:
+                none;
+        }
+
+
+        /* =====================================================
+           ALERT
+        ====================================================== */
+
+        #loginAlert {
+
+            border-radius:
+                12px;
+
+            font-size:
+                0.84rem;
+        }
+
+
+        /* =====================================================
+           FOOTER
+        ====================================================== */
+
+        footer {
+
+            position:
+                relative;
+
+            z-index:
+                2;
+
+            background:
+                rgba(0, 0, 0, 0.12);
+
+            border-top:
+                1px solid
+                rgba(255, 255, 255, 0.08);
+        }
+
+
+        /* =====================================================
+           ANIMATIONS
+        ====================================================== */
+
+        @keyframes slideLeft {
+
+            from {
+
+                opacity:
+                    0;
+
+                transform:
+                    translateX(-35px);
+            }
+
+            to {
+
+                opacity:
+                    1;
+
+                transform:
+                    translateX(0);
+            }
+        }
+
+
+        @keyframes slideRight {
+
+            from {
+
+                opacity:
+                    0;
+
+                transform:
+                    translateX(35px);
+            }
+
+            to {
+
+                opacity:
+                    1;
+
+                transform:
+                    translateX(0);
+            }
+        }
+
+
+        @keyframes pulse {
+
+            0% {
+
+                box-shadow:
+                    0 15px 40px
+                    rgba(245, 158, 11, 0.22);
+            }
+
+            50% {
+
+                box-shadow:
+                    0 15px 55px
+                    rgba(245, 158, 11, 0.40);
+            }
+
+            100% {
+
+                box-shadow:
+                    0 15px 40px
+                    rgba(245, 158, 11, 0.22);
+            }
+        }
+
+
+        /* =====================================================
+           TABLET
+        ====================================================== */
+
+        @media (max-width: 991px) {
+
+            .page-shell {
+
+                padding:
+                    3rem 0;
+            }
+
+
+            .login-panel {
+
+                text-align:
+                    center;
+            }
+
+
+            .hero-description {
+
+                margin-left:
+                    auto;
+
+                margin-right:
+                    auto;
+            }
+
+
+            .hero-list {
+
+                margin-left:
+                    auto;
+
+                margin-right:
+                    auto;
+
+                text-align:
+                    left;
+            }
+
+
+            .security-note {
+
+                margin-left:
+                    auto;
+
+                margin-right:
+                    auto;
+
+                text-align:
+                    left;
+            }
+
+        }
+
+
+        /* =====================================================
+           MOBILE
+        ====================================================== */
+
+        @media (max-width: 576px) {
+
+            .navbar {
+
+                min-height:
+                    65px;
+            }
+
+
+            .page-shell {
+
+                min-height:
+                    auto;
+
+                padding:
+                    2rem 0
+                    3rem;
+            }
+
+
+            .login-card {
+
+                padding:
+                    1.5rem !important;
+
+                border-radius:
+                    18px !important;
+            }
+
+
+            .display-4 {
+
+                font-size:
+                    2.15rem;
+
+                line-height:
+                    1.15;
+            }
+
+
+            .brand-title {
+
+                font-size:
+                    0.92rem;
+            }
+
+
+            .brand-kicker {
+
+                font-size:
+                    0.48rem;
+
+                letter-spacing:
+                    0.12em;
+            }
+
+
+            .brand-logo {
+
+                width:
+                    40px;
+
+                height:
+                    40px;
+            }
+
+
+            .hero-list li {
+
+                padding:
+                    0.65rem 0;
+            }
+
+
+            .login-icon {
+
+                width:
+                    68px;
+
+                height:
+                    68px;
+            }
+
+
+            .security-note {
+
+                font-size:
+                    0.78rem;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- =========================================================
+     NAVIGATION
+========================================================= -->
+
+<nav class="navbar navbar-expand-lg navbar-dark">
+
+    <div class="container">
+
+
+        <!-- BRAND -->
+
+        <a
+            class="navbar-brand d-flex align-items-center"
+            href="index.html"
+        >
+
+            <div class="brand-logo me-2">
+
+                <i class="fa-solid fa-layer-group"></i>
+
+            </div>
+
+
+            <div>
+
+                <span class="brand-title">
+                    Bhanu Shree Tiles
+                </span>
+
+                <span class="brand-kicker">
+                    Tiles • Sanitary • Interiors
+                </span>
+
+            </div>
+
+        </a>
+
+
+        <!-- MOBILE MENU BUTTON -->
+
+        <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#mainNavbar"
+            aria-controls="mainNavbar"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+        >
+
+            <span class="navbar-toggler-icon"></span>
+
+        </button>
+
+
+        <!-- NAVIGATION LINKS -->
+
+        <div
+            class="collapse navbar-collapse"
+            id="mainNavbar"
+        >
+
+            <ul
+                class="navbar-nav ms-auto align-items-lg-center gap-lg-1"
+            >
+
+
+                <li class="nav-item">
+
+                    <a
+                        class="nav-link"
+                        href="index.html"
+                    >
+                        HOME
+                    </a>
+
+                </li>
+
+
+                <li class="nav-item">
+
+                    <a
+                        class="nav-link"
+                        href="about.html"
+                    >
+                        ABOUT US
+                    </a>
+
+                </li>
+
+
+                
+
+
+                
+
+
+                <li class="nav-item">
+
+                    <a
+                        class="nav-link"
+                        href="gallery.html"
+                    >
+                        GALLERY
+                    </a>
+
+                </li>
+
+
+                <li class="nav-item">
+
+                    <a
+                        class="nav-link active"
+                        href="login.html"
+                        aria-current="page"
+                    >
+                        LOGIN
+                    </a>
+
+                </li>
+
+
+                <li class="nav-item">
+
+                    <a
+                        class="nav-link"
+                        href="contact.html"
+                    >
+                        CONTACT
+                    </a>
+
+                </li>
+
+
+                <li class="nav-item ms-lg-2 mt-2 mt-lg-0">
+
+                    <a
+                        href="contact.html"
+                        class="btn btn-accent"
+                    >
+
+                        <i class="fa-solid fa-phone me-2"></i>
+
+                        Contact Us
+
+                    </a>
+
+                </li>
+
+            </ul>
+
+        </div>
+
+    </div>
+
+</nav>
+
+
+<!-- =========================================================
+     MAIN LOGIN AREA
+========================================================= -->
+
+<main class="page-shell">
+
+    <div class="container">
+
+        <div
+            class="row align-items-center justify-content-center g-5"
+        >
+
+
+            <!-- =================================================
+                 LEFT SIDE
+            ================================================== -->
+
+            <div class="col-lg-6">
+
+                <section class="login-panel">
+
+
+                    <!-- SECURITY BADGE -->
+
+                    <div
+                        class="d-inline-flex align-items-center gap-2 mb-3"
+                    >
+
+                        <span
+                            class="badge rounded-pill premium-badge"
+                        >
+
+                            <i
+                                class="fa-solid fa-shield-halved me-1"
+                            ></i>
+
+                            SECURE ERP PORTAL
+
+                        </span>
+
+                    </div>
+
+
+                    <!-- HEADING -->
+
+                    <h1
+                        class="display-4 fw-bold mb-3"
+                    >
+
+                        Welcome to
+
+                        <span class="gradient-text">
+                            Bhanu Shree Tiles
+                        </span>
+
+                    </h1>
+
+
+                    <!-- DESCRIPTION -->
+
+                    <p
+                        class="lead hero-description mb-4"
+                    >
+
+                        Manage your showroom, products,
+                        godowns, sales, purchases and inventory
+                        from one powerful ERP platform.
+
+                    </p>
+
+
+                    <!-- FEATURE LIST -->
+
+                    <ul class="hero-list">
+
+
+                        <!-- INVENTORY -->
+
+                        <li>
+
+                            <div class="hero-list-icon">
+
+                                <i
+                                    class="fa-solid fa-boxes-stacked"
+                                ></i>
+
+                            </div>
+
+
+                            <div>
+
+                                <strong>
+                                    Smart Inventory Management
+                                </strong>
+
+                                <small>
+                                    Track tiles, boxes and stock
+                                    movement across your godowns.
+                                </small>
+
+                            </div>
+
+                        </li>
+
+
+                        <!-- SALES -->
+
+                        <li>
+
+                            <div class="hero-list-icon">
+
+                                <i
+                                    class="fa-solid fa-chart-line"
+                                ></i>
+
+                            </div>
+
+
+                            <div>
+
+                                <strong>
+                                    Sales & Business Insights
+                                </strong>
+
+                                <small>
+                                    Monitor sales, revenue,
+                                    purchases and business
+                                    performance.
+                                </small>
+
+                            </div>
+
+                        </li>
+
+
+                        <!-- SECURITY -->
+
+                        <li>
+
+                            <div class="hero-list-icon">
+
+                                <i
+                                    class="fa-solid fa-shield-halved"
+                                ></i>
+
+                            </div>
+
+
+                            <div>
+
+                                <strong>
+                                    Role-Based Secure Access
+                                </strong>
+
+                                <small>
+                                    Every employee gets access
+                                    only to their permitted
+                                    ERP modules.
+                                </small>
+
+                            </div>
+
+                        </li>
+
+
+                        <!-- BILLING -->
+
+                        <li>
+
+                            <div class="hero-list-icon">
+
+                                <i
+                                    class="fa-solid fa-file-invoice"
+                                ></i>
+
+                            </div>
+
+
+                            <div>
+
+                                <strong>
+                                    Professional Billing
+                                </strong>
+
+                                <small>
+                                    Create invoices and manage
+                                    customer transactions.
+                                </small>
+
+                            </div>
+
+                        </li>
+
+                    </ul>
+
+
+                    <!-- SECURITY MESSAGE -->
+
+                    <div
+                        class="security-note mt-4"
+                    >
+
+                        <i
+                            class="fa-solid fa-lock"
+                        ></i>
+
+                        <span>
+                            Your account and business
+                            information are protected by
+                            secure authentication.
+                        </span>
+
+                    </div>
+
+                </section>
+
+            </div>
+
+
+            <!-- =================================================
+                 RIGHT LOGIN CARD
+            ================================================== -->
+
+            <div class="col-lg-5 col-xl-4">
+
+                <section
+                    class="login-card rounded-4 p-4 p-md-5"
+                >
+
+
+                    <!-- LOGIN HEADER -->
+
+                    <div
+                        class="text-center mb-4"
+                    >
+
+                        <div class="login-icon">
+
+                            <i
+                                class="fa-solid fa-building"
+                            ></i>
+
+                        </div>
+
+
+                        <h2
+                            class="fw-bold mt-3 mb-2"
+                        >
+                            Welcome Back
+                        </h2>
+
+
+                        <p
+                            class="text-secondary mb-0"
+                        >
+                            Sign in to your ERP account
+                        </p>
+
+                    </div>
+
+
+                    <!-- ALERT -->
+
+                    <div
+                        id="loginAlert"
+                        class="alert d-none"
+                        role="alert"
+                    ></div>
+
+
+                    <!-- =================================================
+                         LOGIN FORM
+                    ================================================== -->
+
+                    <form
+                        id="loginForm"
+                        novalidate
+                    >
+
+
+                        <!-- PHONE NUMBER -->
+
+                        <div class="mb-4">
+
+                            <label
+                                for="phone"
+                                class="form-label"
+                            >
+
+                                Phone Number
+
+                            </label>
+
+
+                            <div
+                                class="input-group premium-input"
+                            >
+
+                                <span
+                                    class="input-group-text"
+                                >
+
+                                    <i
+                                        class="fa-solid fa-phone"
+                                    ></i>
+
+                                </span>
+
+
+                                <input
+                                    type="tel"
+                                    id="phone"
+                                    name="phone"
+                                    class="form-control"
+                                    placeholder="Enter 10-digit phone number"
+                                    autocomplete="tel"
+                                    inputmode="numeric"
+                                    maxlength="10"
+                                    minlength="10"
+                                    pattern="[6-9][0-9]{9}"
+                                    required
+                                >
+
+                            </div>
+
+
+                            <div
+                                class="invalid-feedback"
+                            >
+
+                                Enter a valid 10-digit
+                                Indian mobile number.
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- PASSWORD -->
+
+                        <div class="mb-3">
+
+
+                            <div
+                                class="d-flex justify-content-between"
+                            >
+
+                                <label
+                                    for="password"
+                                    class="form-label"
+                                >
+
+                                    Password
+
+                                </label>
+
+
+                                <a
+                                    href="forgot-password.html"
+                                    class="small forgot-link"
+                                >
+
+                                    Forgot Password?
+
+                                </a>
+
+                            </div>
+
+
+                            <div
+                                class="input-group premium-input"
+                            >
+
+                                <span
+                                    class="input-group-text"
+                                >
+
+                                    <i
+                                        class="fa-solid fa-lock"
+                                    ></i>
+
+                                </span>
+
+
+                                <input
+                                    type="password"
+                                    id="password"
+                                    name="password"
+                                    class="form-control"
+                                    placeholder="Enter your password"
+                                    autocomplete="current-password"
+                                    required
+                                >
+
+
+                                <button
+                                    type="button"
+                                    class="btn password-toggle"
+                                    id="togglePassword"
+                                    aria-label="Show password"
+                                >
+
+                                    <i
+                                        class="fa-solid fa-eye"
+                                        id="passwordIcon"
+                                    ></i>
+
+                                </button>
+
+                            </div>
+
+
+                            <div
+                                class="invalid-feedback"
+                            >
+
+                                Password is required.
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- REMEMBER ME -->
+
+                        <div
+                            class="d-flex justify-content-between align-items-center mb-4"
+                        >
+
+                            <div class="form-check">
+
+                                <input
+                                    type="checkbox"
+                                    class="form-check-input"
+                                    id="rememberMe"
+                                >
+
+
+                                <label
+                                    class="form-check-label"
+                                    for="rememberMe"
+                                >
+
+                                    Remember me
+
+                                </label>
+
+                            </div>
+
+
+                            <span
+                                class="small text-secondary"
+                            >
+
+                                <i
+                                    class="fa-solid fa-lock me-1"
+                                ></i>
+
+                                Secure
+
+                            </span>
+
+                        </div>
+
+
+                        <!-- LOGIN BUTTON -->
+
+                        <button
+                            type="submit"
+                            id="loginButton"
+                            class="btn login-submit w-100 py-3"
+                        >
+
+                            <span
+                                id="loginButtonText"
+                            >
+
+                                <i
+                                    class="fa-solid fa-right-to-bracket me-2"
+                                ></i>
+
+                                Sign In
+
+                            </span>
+
+
+                            <span
+                                id="loginSpinner"
+                                class="d-none"
+                            >
+
+                                <span
+                                    class="spinner-border spinner-border-sm me-2"
+                                    role="status"
+                                    aria-hidden="true"
+                                ></span>
+
+                                Signing in...
+
+                            </span>
+
+                        </button>
+
+                    </form>
+
+
+                    <!-- REGISTER -->
+
+                    <div
+                        class="text-center mt-4"
+                    >
+
+                        <p
+                            class="text-secondary mb-2"
+                        >
+
+                            Don't have an account?
+
+                        </p>
+
+
+                        <a
+                            href="register.html"
+                            class="register-link"
+                        >
+
+                            Create an Account
+
+                            <i
+                                class="fa-solid fa-arrow-right ms-1"
+                            ></i>
+
+                        </a>
+
+                    </div>
+
+
+                    <!-- DIVIDER -->
+
+                    <div
+                        class="mt-4 pt-4"
+                        style="
+                            border-top:
+                            1px solid
+                            rgba(255,255,255,0.08);
+                        "
+                    >
+
+                        <div
+                            class="text-center"
+                        >
+
+                            <a
+                                href="index.html"
+                                class="back-link"
+                            >
+
+                                <i
+                                    class="fa-solid fa-arrow-left me-2"
+                                ></i>
+
+                                Back to Website
+
+                            </a>
+
+                        </div>
+
+                    </div>
+
+                </section>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</main>
+
+
+<!-- =========================================================
+     FOOTER
+========================================================= -->
+
+<footer class="py-4">
+
+    <div class="container">
+
+        <div
+            class="row align-items-center"
+        >
+
+
+            <div class="col-md-6">
+
+                <div
+                    class="small text-secondary"
+                >
+
+                    © 2026 Bhanu Shree Tiles.
+                    All Rights Reserved.
+
+                </div>
+
+            </div>
+
+
+            <div
+                class="col-md-6 text-md-end mt-2 mt-md-0"
+            >
+
+                <span
+                    class="small text-secondary me-3"
+                >
+
+                    <i
+                        class="fa-solid fa-shield-halved me-1"
+                    ></i>
+
+                    Secure ERP
+
+                </span>
+
+
+                <span
+                    class="small text-secondary"
+                >
+
+                    <i
+                        class="fa-solid fa-lock me-1"
+                    ></i>
+
+                    Protected Login
+
+                </span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</footer>
+
+
+<!-- =========================================================
+     BOOTSTRAP JAVASCRIPT
+========================================================= -->
+
+<script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+></script>
+
+
+<!-- =========================================================
+     LOGIN JAVASCRIPT
+========================================================= -->
+
+<script>
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function () {
+
+
+        /* =====================================================
+           ELEMENTS
+        ====================================================== */
+
+        const loginForm =
+            document.getElementById("loginForm");
+
+        const phone =
+            document.getElementById("phone");
+
+        const password =
+            document.getElementById("password");
+
+        const togglePassword =
+            document.getElementById("togglePassword");
+
+        const passwordIcon =
+            document.getElementById("passwordIcon");
+
+        const loginButton =
+            document.getElementById("loginButton");
+
+        const loginButtonText =
+            document.getElementById("loginButtonText");
+
+        const loginSpinner =
+            document.getElementById("loginSpinner");
+
+        const loginAlert =
+            document.getElementById("loginAlert");
+
+        const rememberMe =
+            document.getElementById("rememberMe");
+
+
+        /* =====================================================
+           REMEMBERED PHONE
+        ====================================================== */
+
+        const savedPhone =
+            localStorage.getItem(
+                "bhanuRememberedPhone"
+            );
+
+        if (savedPhone) {
+
+            phone.value =
+                savedPhone;
+
+            rememberMe.checked =
+                true;
+        }
+
+
+        /* =====================================================
+           PHONE NUMBER - ONLY NUMBERS
+        ====================================================== */
+
+        phone.addEventListener(
+            "input",
+            function () {
+
+                this.value =
+                    this.value.replace(
+                        /\D/g,
+                        ""
+                    );
+
+                if (
+                    this.value.length > 10
+                ) {
+
+                    this.value =
+                        this.value.substring(
+                            0,
+                            10
+                        );
+                }
+
+
+                if (
+                    /^[6-9][0-9]{9}$/.test(
+                        this.value
+                    )
+                ) {
+
+                    this.classList.remove(
+                        "is-invalid"
+                    );
+
+                    this.classList.add(
+                        "is-valid"
+                    );
+
+                } else {
+
+                    this.classList.remove(
+                        "is-valid"
+                    );
+                }
+
+            }
+        );
+
+
+        /* =====================================================
+           PASSWORD SHOW / HIDE
+        ====================================================== */
+
+        togglePassword.addEventListener(
+            "click",
+            function () {
+
+                if (
+                    password.type ===
+                    "password"
+                ) {
+
+                    password.type =
+                        "text";
+
+
+                    passwordIcon.classList.remove(
+                        "fa-eye"
+                    );
+
+
+                    passwordIcon.classList.add(
+                        "fa-eye-slash"
+                    );
+
+
+                    this.setAttribute(
+                        "aria-label",
+                        "Hide password"
+                    );
+
+                } else {
+
+                    password.type =
+                        "password";
+
+
+                    passwordIcon.classList.remove(
+                        "fa-eye-slash"
+                    );
+
+
+                    passwordIcon.classList.add(
+                        "fa-eye"
+                    );
+
+
+                    this.setAttribute(
+                        "aria-label",
+                        "Show password"
+                    );
+                }
+
+            }
+        );
+
+
+        /* =====================================================
+           ALERT FUNCTION
+        ====================================================== */
+
+        function showAlert(
+            message,
+            type = "danger"
+        ) {
+
+            loginAlert.className =
+                "alert alert-" +
+                type;
+
+            loginAlert.textContent =
+                message;
+
+            loginAlert.classList.remove(
+                "d-none"
+            );
+        }
+
+
+        /* =====================================================
+           HIDE ALERT
+        ====================================================== */
+
+        function hideAlert() {
+
+            loginAlert.classList.add(
+                "d-none"
+            );
+
+            loginAlert.textContent =
+                "";
+        }
+
+
+        /* =====================================================
+           LOADING STATE
+        ====================================================== */
+
+        function setLoading(
+            loading
+        ) {
+
+            loginButton.disabled =
+                loading;
+
+            if (loading) {
+
+                loginButtonText.classList.add(
+                    "d-none"
+                );
+
+                loginSpinner.classList.remove(
+                    "d-none"
+                );
+
+            } else {
+
+                loginButtonText.classList.remove(
+                    "d-none"
+                );
+
+                loginSpinner.classList.add(
+                    "d-none"
+                );
+            }
+
+        }
+
+
+        /* =====================================================
+           FORM SUBMIT
+        ====================================================== */
+
+        loginForm.addEventListener(
+            "submit",
+            async function (event) {
+
+                event.preventDefault();
+
+                hideAlert();
+
+
+                /* =============================================
+                   GET VALUES
+                ============================================== */
+
+                const phoneValue =
+                    phone.value.trim();
+
+                const passwordValue =
+                    password.value;
+
+
+                /* =============================================
+                   RESET VALIDATION
+                ============================================== */
+
+                phone.classList.remove(
+                    "is-invalid",
+                    "is-valid"
+                );
+
+                password.classList.remove(
+                    "is-invalid",
+                    "is-valid"
+                );
+
+
+                let valid =
+                    true;
+
+
+                /* =============================================
+                   PHONE VALIDATION
+                ============================================== */
+
+                if (
+                    !/^[6-9][0-9]{9}$/.test(
+                        phoneValue
+                    )
+                ) {
+
+                    phone.classList.add(
+                        "is-invalid"
+                    );
+
+                    valid =
+                        false;
+
+                } else {
+
+                    phone.classList.add(
+                        "is-valid"
+                    );
+                }
+
+
+                /* =============================================
+                   PASSWORD VALIDATION
+                ============================================== */
+
+                if (
+                    !passwordValue.trim()
+                ) {
+
+                    password.classList.add(
+                        "is-invalid"
+                    );
+
+                    valid =
+                        false;
+
+                } else {
+
+                    password.classList.add(
+                        "is-valid"
+                    );
+                }
+
+
+                if (!valid) {
+
+                    showAlert(
+                        "Please enter a valid phone number and password.",
+                        "warning"
+                    );
+
+                    return;
+                }
+
+
+                /* =============================================
+                   REMEMBER PHONE
+                ============================================== */
+
+                if (
+                    rememberMe.checked
+                ) {
+
+                    localStorage.setItem(
+                        "bhanuRememberedPhone",
+                        phoneValue
+                    );
+
+                } else {
+
+                    localStorage.removeItem(
+                        "bhanuRememberedPhone"
+                    );
+                }
+
+
+                /* =============================================
+                   LOADING
+                ============================================== */
+
+                setLoading(
+                    true
+                );
+
+
+                /* =============================================
+                   LOGIN REQUEST
+                ============================================== */
+
+                try {
+
+                    /*
+                     * IMPORTANT:
+                     *
+                     * Your backend should provide:
+                     *
+                     * POST /api/auth/login
+                     *
+                     * Request:
+                     *
+                     * {
+                     *     phone: "9876543210",
+                     *     password: "Password@123"
+                     * }
+                     */
+
+
+                    const response =
+                        await fetch(
+                            "http://localhost:5000/api/auth/login",
+                            {
+                                method:
+                                    "POST",
+
+                                headers: {
+                                    "Content-Type":
+                                        "application/json"
+                                },
+
+                                body:
+                                    JSON.stringify({
+                                        phone:
+                                            phoneValue,
+
+                                        password:
+                                            passwordValue
+                                    })
+                            }
+                        );
+
+
+                    const data =
+                        await response.json();
+
+
+                    /* =========================================
+                       LOGIN ERROR
+                    ========================================== */
+
+                    if (!response.ok) {
+
+                        throw new Error(
+                            data.message ||
+                            "Invalid phone number or password."
+                        );
+                    }
+
+
+                    /* =========================================
+                       LOGIN SUCCESS
+                    ========================================== */
+
+                    if (!data.success) {
+
+                        throw new Error(
+                            data.message ||
+                            "Login failed."
+                        );
+                    }
+
+
+                    /*
+                     * Save authentication token.
+                     *
+                     * For production, HttpOnly secure cookies
+                     * are preferred.
+                     *
+                     * This localStorage implementation is useful
+                     * for your current development setup.
+                     */
+
+                    if (data.token) {
+
+                        localStorage.setItem(
+                            "bhanuAuthToken",
+                            data.token
+                        );
+                    }
+
+
+                    /* =========================================
+                       SAVE USER
+                    ========================================== */
+
+                    if (data.user) {
+
+                        localStorage.setItem(
+                            "bhanuUser",
+                            JSON.stringify(
+                                data.user
+                            )
+                        );
+                    }
+
+
+                    showAlert(
+                        "Login successful. Redirecting...",
+                        "success"
+                    );
+
+
+                    /* =========================================
+                       ROLE-BASED REDIRECTION
+                    ========================================== */
+
+                    const role =
+                        data.user &&
+                        data.user.role
+                            ? data.user.role
+                            : null;
+
+
+                    setTimeout(
+                        function () {
+
+                            switch (role) {
+
+
+                                case "super_admin":
+
+                                    window.location.href =
+                                        "dashboard.html";
+
+                                    break;
+
+
+                                case "admin":
+
+                                    window.location.href =
+                                        "dashboard.html";
+
+                                    break;
+
+
+                                case "sales_manager":
+
+                                    window.location.href =
+                                        "dashboard.html";
+
+                                    break;
+
+
+                                case "billing_staff":
+
+                                    window.location.href =
+                                        "sales.html";
+
+                                    break;
+
+
+                                case "godown_manager":
+
+                                    window.location.href =
+                                        "godown.html";
+
+                                    break;
+
+
+                                case "purchase_manager":
+
+                                    window.location.href =
+                                        "purchases.html";
+
+                                    break;
+
+
+                                case "accountant":
+
+                                    window.location.href =
+                                        "reports.html";
+
+                                    break;
+
+
+                                case "sales_staff":
+
+                                    window.location.href =
+                                        "sales.html";
+
+                                    break;
+
+
+                                case "store_keeper":
+
+                                    window.location.href =
+                                        "stock.html";
+
+                                    break;
+
+
+                                default:
+
+                                    window.location.href =
+                                        "dashboard.html";
+
+                                    break;
+
+                            }
+
+                        },
+                        800
+                    );
+
+                } catch (error) {
+
+                    console.error(
+                        "Login Error:",
+                        error
+                    );
+
+
+                    showAlert(
+                        error.message ||
+                        "Unable to login. Please try again.",
+                        "danger"
+                    );
+
+                } finally {
+
+                    setLoading(
+                        false
+                    );
+                }
+
+            }
+        );
+
+    });
+
+</script>
+
+
+</body>
+
+</html>

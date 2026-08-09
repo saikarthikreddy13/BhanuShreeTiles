@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Bhanu Shree Tiles</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" rel="stylesheet">
+<link rel="stylesheet" href="css/app.css">
+<style>
+	body {
+		font-family: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+	}
+
+	.hero-home {
+		position: relative;
+		min-height: calc(100vh - 72px);
+		display: flex;
+		align-items: center;
+		overflow: hidden;
+	}
+
+	.hero-home::before,
+	.hero-home::after {
+		content: "";
+		position: absolute;
+		inset: auto;
+		border-radius: 999px;
+		filter: blur(20px);
+		opacity: 0.9;
+		pointer-events: none;
+	}
+
+	.hero-home::before {
+		width: 20rem;
+		height: 20rem;
+		top: -4rem;
+		right: -4rem;
+		background: rgba(245, 158, 11, 0.18);
+	}
+
+	.hero-home::after {
+		width: 18rem;
+		height: 18rem;
+		left: -4rem;
+		bottom: -4rem;
+		background: rgba(6, 182, 212, 0.16);
+	}
+
+	.section-title {
+		letter-spacing: 0.16em;
+		text-transform: uppercase;
+		font-size: 0.8rem;
+		color: var(--app-muted);
+	}
+
+	.premium-card {
+		transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
+	}
+
+	.premium-card:hover {
+		transform: translateY(-6px);
+		box-shadow: 0 20px 50px rgba(0, 0, 0, 0.22);
+		border-color: rgba(255, 255, 255, 0.2);
+	}
+
+	.navbar-brand {
+		letter-spacing: 0.02em;
+	}
+
+	.brand-kicker {
+		display: block;
+		font-size: 0.68rem;
+		letter-spacing: 0.18em;
+		text-transform: uppercase;
+		color: var(--app-muted);
+		margin-top: 0.15rem;
+	}
+
+	.navbar .nav-link {
+		color: rgba(229, 231, 235, 0.82);
+		font-weight: 500;
+	}
+
+	.navbar .nav-link:hover,
+	.navbar .nav-link:focus,
+	.navbar .nav-link.active {
+		color: #fff;
+	}
+
+	.navbar .nav-link.active::after {
+		content: "";
+		display: block;
+		height: 2px;
+		margin-top: 4px;
+		border-radius: 999px;
+		background: linear-gradient(90deg, var(--app-accent), var(--app-accent-2));
+	}
+
+	.navbar .btn-accent {
+		padding-inline: 1rem;
+	}
+
+	.hero-badge {
+		background: rgba(255, 255, 255, 0.08);
+		border: 1px solid rgba(255, 255, 255, 0.12);
+		color: #f8fafc;
+	}
+
+	.hero-image {
+		min-height: 22rem;
+		border-radius: 1.75rem;
+		background:
+			linear-gradient(180deg, rgba(2, 6, 23, 0.12), rgba(2, 6, 23, 0.58)),
+			url('https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=1600&q=80') center/cover;
+		border: 1px solid rgba(255, 255, 255, 0.12);
+		box-shadow: 0 24px 70px rgba(0, 0, 0, 0.35);
+	}
+
+	.icon-chip {
+		width: 3.25rem;
+		height: 3.25rem;
+		display: inline-grid;
+		place-items: center;
+		border-radius: 1rem;
+		background: rgba(255, 255, 255, 0.08);
+	}
+</style>
+</head>
+<body class="app-shell">
+
+<div class="py-2 d-none d-lg-block" style="background: rgba(255, 255, 255, 0.04); border-bottom: 1px solid rgba(255, 255, 255, 0.06);">
+<div class="container-fluid px-4 d-flex flex-wrap justify-content-between align-items-center gap-2 text-sm">
+<div class="muted-text small"><i class="fa-solid fa-location-dot me-2 text-warning"></i>Bhanu Shree Tiles &amp; Taps (Kajaria Studio) - Jadcherla Road, Jadcherla, TG</div>
+<div class="muted-text small"><i class="fa-solid fa-phone me-2 text-warning"></i>09177214787</div>
+<div class="muted-text small"><i class="fa-regular fa-clock me-2 text-warning"></i>Sun 9:00 AM - 2:00 PM | Mon-Sat 9:00 AM - 8:00 PM</div>
+</div>
+</div>
+
+<nav class="navbar navbar-expand-lg navbar-dark nav-frost sticky-top">
+<div class="container-fluid px-4">
+<a class="navbar-brand fw-bold lh-1" href="index.html">Bhanu Shree Tiles &amp; Taps<span class="brand-kicker">Tiles showroom</span></a>
+<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu" aria-controls="navMenu" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+<div class="collapse navbar-collapse" id="navMenu">
+<ul class="navbar-nav ms-auto align-items-lg-center gap-lg-2">
+<li class="nav-item"><a class="nav-link active" href="index.html">Home</a></li>
+<li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
+<li class="nav-item"><a class="nav-link" href="gallery.html">Gallery</a></li>
+<li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+<li class="nav-item"><a class="nav-link" href="https://maps.app.goo.gl/Xi1FzKWqeae2cKr18?g_st=ic" target="_blank" rel="noopener noreferrer" aria-label="Open showroom location in Google Maps"><i class="fa-solid fa-location-dot text-warning"></i><span class="visually-hidden">Map</span></a></li>
+<li class="nav-item"><a class="nav-link btn btn-sm btn-accent ms-lg-2" href="login.html">Admin Login</a></li>
+</ul>
+</div>
+</div>
+</nav>
+
+<section class="hero-home py-5 py-lg-0">
+<div class="container position-relative py-5">
+<div class="row align-items-center g-5">
+<div class="col-lg-6">
+<div class="d-inline-flex align-items-center gap-2 hero-badge rounded-pill px-3 py-2 mb-4">
+<i class="fa-solid fa-gem text-warning"></i>
+<span>Premium surface solutions for modern spaces</span>
+</div>
+<h1 class="display-3 fw-bold lh-1 mb-4">Design-led tiles that elevate every room.</h1>
+<p class="lead text-light-emphasis mb-4" style="max-width: 34rem;">Explore an elegant collection of floor, wall, bathroom, parking, and outdoor tiles curated for homes, showrooms, and commercial projects.</p>
+<div class="d-flex flex-wrap gap-3 mb-4">
+<a class="btn btn-accent btn-lg px-4" href="catalogues.html">Explore Collection</a>
+<a class="btn btn-outline-light btn-lg px-4" href="contact.html">Book a Visit</a>
+<a class="btn btn-outline-light btn-lg px-4" href="https://maps.app.goo.gl/Xi1FzKWqeae2cKr18?g_st=ic" target="_blank" rel="noopener noreferrer">Get Directions</a>
+</div>
+<div class="row g-3">
+<div class="col-sm-4">
+<div class="glass-card rounded-4 p-3 h-100">
+<div class="section-label">Collections</div>
+<div class="stat-value">250+</div>
+</div>
+</div>
+<div class="col-sm-4">
+<div class="glass-card rounded-4 p-3 h-100">
+<div class="section-label">Trusted Brands</div>
+<div class="stat-value">40+</div>
+</div>
+</div>
+<div class="col-sm-4">
+<div class="glass-card rounded-4 p-3 h-100">
+<div class="section-label">Support</div>
+<div class="stat-value">24/7</div>
+</div>
+</div>
+</div>
+</div>
+<div class="col-lg-6">
+<div class="hero-image p-4 p-md-5 d-flex flex-column justify-content-end">
+<div class="glass-card rounded-4 p-4 ms-lg-auto" style="max-width: 22rem;">
+<div class="section-label mb-2">Featured Experience</div>
+<h3 class="h4 fw-bold mb-2">Luxury textures, curated finishes</h3>
+<p class="muted-text mb-0">A showroom-style presentation built for instant confidence and faster selection.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<section class="py-5">
+<div class="container py-2">
+<div class="text-center mb-5">
+<div class="section-title mb-2">Shop by category</div>
+<h2 class="display-6 fw-bold mb-2">Built for every surface and style</h2>
+<p class="muted-text mb-0">Start with the area you are designing and narrow down to the exact finish you need.</p>
+</div>
+<div class="row g-4">
+<div class="col-md-6 col-xl-3"><div class="glass-card premium-card rounded-4 p-4 h-100 text-center"><div class="icon-chip mx-auto mb-3"><i class="fa-solid fa-border-all fa-lg text-warning"></i></div><h5 class="fw-semibold">Floor Tiles</h5><p class="muted-text mb-0">Durable, high-traffic collections with refined finishes.</p></div></div>
+<div class="col-md-6 col-xl-3"><div class="glass-card premium-card rounded-4 p-4 h-100 text-center"><div class="icon-chip mx-auto mb-3"><i class="fa-solid fa-table-cells-large fa-lg text-info"></i></div><h5 class="fw-semibold">Wall Tiles</h5><p class="muted-text mb-0">Decorative wall solutions with modern textures and tones.</p></div></div>
+<div class="col-md-6 col-xl-3"><div class="glass-card premium-card rounded-4 p-4 h-100 text-center"><div class="icon-chip mx-auto mb-3"><i class="fa-solid fa-bath fa-lg text-success"></i></div><h5 class="fw-semibold">Bathroom</h5><p class="muted-text mb-0">Safe, elegant, moisture-ready tile options for wet areas.</p></div></div>
+<div class="col-md-6 col-xl-3"><div class="glass-card premium-card rounded-4 p-4 h-100 text-center"><div class="icon-chip mx-auto mb-3"><i class="fa-solid fa-road fa-lg text-warning"></i></div><h5 class="fw-semibold">Parking</h5><p class="muted-text mb-0">Robust outdoor-grade tiles built to perform longer.</p></div></div>
+</div>
+</div>
+</section>
+
+<section class="py-5">
+<div class="container py-2">
+<div class="row g-4 align-items-stretch">
+<div class="col-lg-5">
+<div class="glass-card rounded-5 p-4 p-lg-5 h-100">
+<div class="section-label mb-2">Why choose us</div>
+<h2 class="display-6 fw-bold mb-3">A premium buying experience from shortlist to delivery.</h2>
+<p class="muted-text mb-4">Bhanu Shree Tiles blends curated product selection, trusted brands, and responsive support so customers can choose faster and with more confidence.</p>
+<a class="btn btn-accent px-4" href="about.html">Learn More</a>
+</div>
+</div>
+<div class="col-lg-7">
+<div class="row g-4 h-100">
+<div class="col-md-6"><div class="glass-card premium-card rounded-4 p-4 h-100"><div class="section-label mb-2">Quality</div><h5 class="fw-semibold">Premium finishing</h5><p class="muted-text mb-0">Carefully selected collections with a polished showroom presentation.</p></div></div>
+<div class="col-md-6"><div class="glass-card premium-card rounded-4 p-4 h-100"><div class="section-label mb-2">Trust</div><h5 class="fw-semibold">Known brands</h5><p class="muted-text mb-0">Top ceramic and vitrified tile brands with dependable supply options.</p></div></div>
+<div class="col-md-6"><div class="glass-card premium-card rounded-4 p-4 h-100"><div class="section-label mb-2">Speed</div><h5 class="fw-semibold">Quick dispatch</h5><p class="muted-text mb-0">Fast showroom and godown coordination for ongoing projects.</p></div></div>
+<div class="col-md-6"><div class="glass-card premium-card rounded-4 p-4 h-100"><div class="section-label mb-2">Support</div><h5 class="fw-semibold">Project guidance</h5><p class="muted-text mb-0">Practical help for matching finishes, formats, and room types.</p></div></div>
+</div>
+</div>
+</div>
+</section>
+
+<footer class="py-5 mt-4" style="background: rgba(2, 6, 23, 0.9); border-top: 1px solid rgba(255, 255, 255, 0.08);">
+<div class="container text-center">
+<div class="fw-bold mb-2">Bhanu Shree Tiles &amp; Taps</div>
+<p class="muted-text mb-2">Kajaria Studio | Jadcherla Road, Jadcherla, TG | Phone: 09177214787</p>
+<p class="muted-text mb-0">© 2026 Bhanu Shree Tiles. All Rights Reserved.</p>
+</div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

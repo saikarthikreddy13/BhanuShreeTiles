@@ -1,0 +1,75 @@
+:root {
+  --app-bg: #0f172a;
+  --app-surface: rgba(255, 255, 255, 0.08);
+  --app-border: rgba(255, 255, 255, 0.12);
+  --app-text: #e5e7eb;
+  --app-muted: #94a3b8;
+  --app-accent: #f59e0b;
+  --app-accent-2: #06b6d4;
+}
+
+body.app-shell {
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at top left, rgba(245, 158, 11, 0.18), transparent 35%),
+    radial-gradient(circle at bottom right, rgba(6, 182, 212, 0.16), transparent 30%),
+    linear-gradient(135deg, #020617 0%, #0f172a 45%, #111827 100%);
+  color: var(--app-text);
+}
+
+.glass-card {
+  background: var(--app-surface);
+  border: 1px solid var(--app-border);
+  backdrop-filter: blur(16px);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.24);
+}
+
+.muted-text {
+  color: var(--app-muted);
+}
+
+.stat-value {
+  font-size: 2rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.section-label {
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  color: var(--app-muted);
+}
+
+.nav-frost {
+  background: rgba(2, 6, 23, 0.72) !important;
+  backdrop-filter: blur(14px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.btn-accent {
+  background: linear-gradient(135deg, var(--app-accent), #fb7185);
+  border: none;
+  color: #111827;
+  font-weight: 700;
+}
+
+.btn-accent:hover {
+  color: #111827;
+  filter: brightness(1.02);
+}
+
+.metric-icon {
+  width: 3rem;
+  height: 3rem;
+  display: grid;
+  place-items: center;
+  border-radius: 1rem;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.table-darkish {
+  --bs-table-bg: transparent;
+  --bs-table-color: var(--app-text);
+  --bs-table-border-color: rgba(255, 255, 255, 0.08);
+}
