@@ -1,5 +1,6 @@
 import os
 from pathlib import Path
+from tempfile import gettempdir
 
 from dotenv import load_dotenv
 
@@ -21,6 +22,11 @@ ORIGINS = [
 ]
 
 FRONTEND_DIR = ROOT.parent / "frontend"
-UPLOAD_DIR = ROOT / "uploads"
-BACKUP_DIR = ROOT / "backups"
+# Vercel can only write to its temporary folder, and files there do not last.
+DATA_DIR = Path(gettempdir()) if os.environ.get("VERCEL") else ROOT
+UPLOAD_DIR = DATA_DIR / "uploads"
+BACKUP_DIR = DATA_DIR / "backups"
 UPLOAD_DIR.mkdir(exist_ok=True)
+
+# A hosted database's certificate, pasted in as text.
+DATABASE_CA = os.environ.get("DATABASE_CA", "").replace("\\n", "\n").strip()

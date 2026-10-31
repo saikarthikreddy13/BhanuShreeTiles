@@ -1,7 +1,9 @@
 """MySQL access: plain SQL through a small connection pool."""
 from contextlib import contextmanager
 from datetime import datetime, timezone
+from pathlib import Path
 from queue import Empty, LifoQueue
+from tempfile import gettempdir
 from threading import Lock
 from urllib.parse import unquote, urlsplit
 
@@ -9,7 +11,7 @@ import pymysql
 from pymysql.constants import CLIENT, FIELD_TYPE
 from pymysql.cursors import DictCursor
 
-from .config import DATABASE_URL
+from .config import DATABASE_CA, DATABASE_URL
 from .errors import not_found
 
 # ANSI_QUOTES lets "Table" and "column" keep their exact names. Times are stored as UTC.
@@ -26,9 +28,19 @@ class PoolTimeout(Exception):
     pass
 
 
+def certificate():
+    """Writes the certificate once, because the driver reads it from a file."""
+    path = Path(gettempdir()) / "erp-database-ca.pem"
+    if not path.exists():
+        path.write_text(DATABASE_CA + "\n", encoding="ascii")
+    return str(path)
+
+
 def connect():
     url = urlsplit(DATABASE_URL)
+    secure = {"ssl_ca": certificate()} if DATABASE_CA else {}
     return pymysql.connect(
+        **secure,
         host=url.hostname, port=url.port or 3306, user=unquote(url.username or ""), password=unquote(url.password or ""),
         database=url.path.lstrip("/"), charset="utf8mb4", autocommit=True, cursorclass=DictCursor, connect_timeout=5,
         # Updates report matching rows, not only rows whose values changed.
