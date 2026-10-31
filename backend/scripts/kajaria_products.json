@@ -1,0 +1,1296 @@
+[
+ {
+  "slug": "bianco-onduluto",
+  "name": "Bianco Onduluto",
+  "type": "Glazed Vitrified Tiles",
+  "use": "Wall Tile - Floor Tile",
+  "sizes": [
+   "1190x2800 mm, 5.5 mm thick"
+  ],
+  "finishes": [
+   "Beyond"
+  ],
+  "colours": [
+   "White"
+  ],
+  "rooms": [
+   "Bathroom"
+  ]
+ },
+ {
+  "slug": "lithico-beige",
+  "name": "Lithico Beige",
+  "type": "Glazed Vitrified Tiles",
+  "use": "Wall Tile - Floor Tile",
+  "sizes": [
+   "1190x2400 mm"
+  ],
+  "finishes": [
+   "Riverwash"
+  ],
+  "colours": [
+   "Beige"
+  ],
+  "rooms": [
+   "Bathroom"
+  ]
+ },
+ {
+  "slug": "calcuta-imperial-a",
+  "name": "Calcuta Imperial A",
+  "type": "Glazed Vitrified Tiles",
+  "use": "Wall Tile - Floor Tile",
+  "sizes": [
+   "1190x2400 mm"
+  ],
+  "finishes": [
+   "Riverwash"
+  ],
+  "colours": [
+   "White"
+  ],
+  "rooms": [
+   "Bathroom"
+  ]
+ },
+ {
+  "slug": "laburnum-marfil",
+  "name": "Laburnum Marfil",
+  "type": "Gres Tiles",
+  "use": "Wall Tile - Floor Tile",
+  "sizes": [
+   "600x1200 mm"
+  ],
+  "finishes": [
+   "HD Polished"
+  ],
+  "colours": [
+   "Cream"
+  ],
+  "rooms": [
+   "Bathroom"
+  ]
+ },
+ {
+  "slug": "pulpis-natural",
+  "name": "Pulpis Natural",
+  "type": "Gres Tiles",
+  "use": "Wall Tile - Floor Tile",
+  "sizes": [
+   "600x1200 mm"
+  ],
+  "finishes": [
+   "High Gloss"
+  ],
+  "colours": [
+   "Brown"
+  ],
+  "rooms": [
+   "Bathroom"
+  ]
+ },
+ {
+  "slug": "maestro-marfil-decor",
+  "name": "Maestro Marfil Decor",
+  "type": "Gres Tiles",
+  "use": "Wall Tile - Floor Tile",
+  "sizes": [
+   "600x1200 mm"
+  ],
+  "finishes": [
+   "Matt"
+  ],
+  "colours": [
+   "Beige",
+   "Cream"
+  ],
+  "rooms": [
+   "Bathroom"
+  ]
+ },
+ {
+  "slug": "aura-sand-decor",
+  "name": "Aura Sand Decor",
+  "type": "Gres Tiles",
+  "use": "Wall Tile - Floor Tile",
+  "sizes": [
+   "600x1200 mm"
+  ],
+  "finishes": [
+   "Spl. Effect Decor"
+  ],
+  "colours": [
+   "Beige",
+   "Cream"
+  ],
+  "rooms": [
+   "Bathroom"
+  ]
+ },
+ {
+  "slug": "k-12611",
+  "name": "K 12611",
+  "type": "Polished Vitrified Tiles",
+  "use": "Wall Tile - Floor Tile",
+  "sizes": [
+   "600x1200 mm"
+  ],
+  "finishes": [
+   "Super Glossy"
+  ],
+  "colours": [
+   "Cream"
+  ],
+  "rooms": [
+   "Bathroom"
+  ]
+ },
+ {
+  "slug": "gillespie-nero",
+  "name": "Gillespie Nero",
+  "type": "Gres Tiles",
+  "use": "Floor Tile",
+  "sizes": [
+   "400x400 mm"
+  ],
+  "finishes": [
+   "Matt"
+  ],
+  "colours": [
+   "Black"
+  ],
+  "rooms": [
+   "Bathroom"
+  ]
+ },
+ {
+  "slug": "rayon-ocre",
+  "name": "Rayon Ocre",
+  "type": "Gres Tiles",
+  "use": "Floor Tile",
+  "sizes": [
+   "400x400 mm"
+  ],
+  "finishes": [
+   "Matt"
+  ],
+  "colours": [
+   "Cream"
+  ],
+  "rooms": [
+   "Bathroom"
+  ]
+ },
+ {
+  "slug": "bonsai-dark",
+  "name": "Bonsai Dark",
+  "type": "Gres Tiles",
+  "use": "Floor Tile",
+  "sizes": [
+   "400x400 mm"
+  ],
+  "finishes": [
+   "Matt"
+  ],
+  "colours": [
+   "Cream"
+  ],
+  "rooms": [
+   "Bathroom"
+  ]
+ },
+ {
+  "slug": "aspira-dark",
+  "name": "Aspira Dark",
+  "type": "Gres Tiles",
+  "use": "Floor Tile",
+  "sizes": [
+   "400x400 mm"
+  ],
+  "finishes": [
+   "Matt"
+  ],
+  "colours": [
+   "Grey"
+  ],
+  "rooms": [
+   "Bathroom"
+  ]
+ },
+ {
+  "slug": "lapis-silver-marble",
+  "name": "Lapis Silver Marble",
+  "type": "Gres Tiles",
+  "use": "Wall Tile - Floor Tile",
+  "sizes": [
+   "600x1200 mm"
+  ],
+  "finishes": [
+   "HD Polished"
+  ],
+  "colours": [
+   "Silver"
+  ],
+  "rooms": [
+   "Kitchen"
+  ]
+ },
+ {
+  "slug": "royale-onyx",
+  "name": "Royale Onyx",
+  "type": "Gres Tiles",
+  "use": "Wall Tile - Floor Tile",
+  "sizes": [
+   "600x1200 mm"
+  ],
+  "finishes": [
+   "HD Polished"
+  ],
+  "colours": [
+   "White"
+  ],
+  "rooms": [
+   "Kitchen"
+  ]
+ },
+ {
+  "slug": "demoda-decor",
+  "name": "Demoda Decor",
+  "type": "Gres Tiles",
+  "use": "Wall Tile - Floor Tile",
+  "sizes": [
+   "600x1200 mm"
+  ],
+  "finishes": [
+   "Matt"
+  ],
+  "colours": [
+   "Multicolor"
+  ],
+  "rooms": [
+   "Kitchen",
+   "Bedroom"
+  ]
+ },
+ {
+  "slug": "azul-onice-a",
+  "name": "Azul Onice A",
+  "type": "Gres Tiles",
+  "use": "Floor Tile",
+  "sizes": [
+   "600x600 mm"
+  ],
+  "finishes": [
+   "HD Polished"
+  ],
+  "colours": [
+   "Grey",
+   "Silver"
+  ],
+  "rooms": [
+   "Kitchen"
+  ]
+ },
+ {
+  "slug": "cool-beige",
+  "name": "Cool Beige",
+  "type": "Glazed Vitrified Tiles",
+  "use": "Floor Tile",
+  "sizes": [
+   "600x600 mm"
+  ],
+  "finishes": [
+   "Matt"
+  ],
+  "colours": [
+   "Beige"
+  ],
+  "rooms": [
+   "Kitchen"
+  ]
+ },
+ {
+  "slug": "boat-wood",
+  "name": "Boat Wood",
+  "type": "Gres Tiles",
+  "use": "Floor Tile",
+  "sizes": [
+   "600x600 mm"
+  ],
+  "finishes": [
+   "Satin"
+  ],
+  "colours": [
+   "Multicolor"
+  ],
+  "rooms": [
+   "Kitchen"
+  ]
+ },
+ {
+  "slug": "k-6029",
+  "name": "K 6029",
+  "type": "Polished Vitrified Tiles",
+  "use": "Floor Tile",
+  "sizes": [
+   "600x600 mm"
+  ],
+  "finishes": [
+   "Super Glossy"
+  ],
+  "colours": [
+   "Cream"
+  ],
+  "rooms": [
+   "Kitchen"
+  ]
+ },
+ {
+  "slug": "tiger-wood-dark",
+  "name": "Tiger Wood Dark",
+  "type": "Gres Tiles",
+  "use": "Floor Tile",
+  "sizes": [
+   "400x400 mm"
+  ],
+  "finishes": [
+   "Matt"
+  ],
+  "colours": [
+   "Grey",
+   "Brown"
+  ],
+  "rooms": [
+   "Kitchen"
+  ]
+ },
+ {
+  "slug": "cantera-dark",
+  "name": "Cantera Dark",
+  "type": "Gres Tiles",
+  "use": "Floor Tile",
+  "sizes": [
+   "400x400 mm"
+  ],
+  "finishes": [
+   "Matt"
+  ],
+  "colours": [
+   "Grey"
+  ],
+  "rooms": [
+   "Kitchen"
+  ]
+ },
+ {
+  "slug": "matrix-gris",
+  "name": "Matrix Gris",
+  "type": "Glazed Vitrified Tiles",
+  "use": "Wall Tile - Floor Tile",
+  "sizes": [
+   "300x600 mm"
+  ],
+  "finishes": [
+   "Decor Matt"
+  ],
+  "colours": [
+   "Grey"
+  ],
+  "rooms": [
+   "Kitchen"
+  ]
+ },
+ {
+  "slug": "elantra",
+  "name": "Elantra",
+  "type": "Glazed Vitrified Tiles",
+  "use": "Wall Tile - Floor Tile",
+  "sizes": [
+   "300x600 mm"
+  ],
+  "finishes": [
+   "Decor Polish"
+  ],
+  "colours": [
+   "White",
+   "Grey"
+  ],
+  "rooms": [
+   "Kitchen"
+  ]
+ },
+ {
+  "slug": "evoque",
+  "name": "Evoque",
+  "type": "Glazed Vitrified Tiles",
+  "use": "Wall Tile - Floor Tile",
+  "sizes": [
+   "300x600 mm"
+  ],
+  "finishes": [
+   "Decor Polish"
+  ],
+  "colours": [
+   "Multicolor"
+  ],
+  "rooms": [
+   "Kitchen"
+  ]
+ },
+ {
+  "slug": "charcoal-nero",
+  "name": "Charcoal Nero",
+  "type": "Glazed Vitrified Tiles",
+  "use": "Wall Tile - Floor Tile",
+  "sizes": [
+   "1200x2400 mm"
+  ],
+  "finishes": [
+   "Premium Polish"
+  ],
+  "colours": [
+   "Black"
+  ],
+  "rooms": [
+   "Living room"
+  ]
+ },
+ {
+  "slug": "botticino-2",
+  "name": "Botticino",
+  "type": "Glazed Vitrified Tiles",
+  "use": "Wall Tile - Floor Tile",
+  "sizes": [
+   "1200x1800 mm"
+  ],
+  "finishes": [
+   "Polish"
+  ],
+  "colours": [
+   "White"
+  ],
+  "rooms": [
+   "Living room"
+  ]
+ },
+ {
+  "slug": "botticino-classico",
+  "name": "Botticino Classico",
+  "type": "Glazed Vitrified Tiles",
+  "use": "Wall Tile - Floor Tile",
+  "sizes": [
+   "1200x1200 mm"
+  ],
+  "finishes": [
+   "Polish"
+  ],
+  "colours": [
+   "White"
+  ],
+  "rooms": [
+   "Living room"
+  ]
+ },
+ {
+  "slug": "corsica-beige",
+  "name": "Corsica Beige",
+  "type": "Glazed Vitrified Tiles",
+  "use": "Wall Tile - Floor Tile",
+  "sizes": [
+   "1200x1200 mm"
+  ],
+  "finishes": [
+   "Polish"
+  ],
+  "colours": [
+   "Beige"
+  ],
+  "rooms": [
+   "Living room"
+  ]
+ },
+ {
+  "slug": "artek-nero",
+  "name": "Artek Nero",
+  "type": "Glazed Vitrified Tiles",
+  "use": "Wall Tile - Floor Tile",
+  "sizes": [
+   "1190x2800 mm, 5.5 mm thick"
+  ],
+  "finishes": [
+   "Beyond"
+  ],
+  "colours": [
+   "Brown",
+   "Black"
+  ],
+  "rooms": [
+   "Living room"
+  ]
+ },
+ {
+  "slug": "evoque-nero",
+  "name": "Evoque Nero",
+  "type": "Glazed Vitrified Tiles",
+  "use": "Wall Tile - Floor Tile",
+  "sizes": [
+   "1190x2800 mm, 5.5 mm thick"
+  ],
+  "finishes": [
+   "Riverwash"
+  ],
+  "colours": [
+   "Black"
+  ],
+  "rooms": [
+   "Living room"
+  ]
+ },
+ {
+  "slug": "rustico",
+  "name": "Rustico",
+  "type": "Glazed Vitrified Tiles",
+  "use": "Wall Tile - Floor Tile",
+  "sizes": [
+   "1190x2800 mm, 5.5 mm thick"
+  ],
+  "finishes": [
+   "Texura"
+  ],
+  "colours": [
+   "Brown"
+  ],
+  "rooms": [
+   "Living room"
+  ]
+ },
+ {
+  "slug": "caspian",
+  "name": "Caspian",
+  "type": "Glazed Vitrified Tiles",
+  "use": "Wall Tile - Floor Tile",
+  "sizes": [
+   "1190x2400 mm"
+  ],
+  "finishes": [
+   "Dry Granula Polish"
+  ],
+  "colours": [
+   "Black"
+  ],
+  "rooms": [
+   "Living room"
+  ]
+ },
+ {
+  "slug": "opera-verde",
+  "name": "Opera Verde",
+  "type": "Glazed Vitrified Tiles",
+  "use": "Wall Tile - Floor Tile",
+  "sizes": [
+   "1190x2400 mm"
+  ],
+  "finishes": [
+   "Riverwash"
+  ],
+  "colours": [
+   "Multicolor"
+  ],
+  "rooms": [
+   "Living room"
+  ]
+ },
+ {
+  "slug": "k-10109",
+  "name": "K 10109",
+  "type": "Polished Vitrified Tiles",
+  "use": "Wall Tile - Floor Tile",
+  "sizes": [
+   "1000x1000 mm"
+  ],
+  "finishes": [
+   "Super Glossy"
+  ],
+  "colours": [
+   "Beige"
+  ],
+  "rooms": [
+   "Living room"
+  ]
+ },
+ {
+  "slug": "k-10104",
+  "name": "K 10104",
+  "type": "Polished Vitrified Tiles",
+  "use": "Wall Tile - Floor Tile",
+  "sizes": [
+   "1000x1000 mm"
+  ],
+  "finishes": [
+   "Super Glossy"
+  ],
+  "colours": [
+   "Cream"
+  ],
+  "rooms": [
+   "Living room"
+  ]
+ },
+ {
+  "slug": "kashmir-marfil",
+  "name": "Kashmir Marfil",
+  "type": "Glazed Vitrified Tiles",
+  "use": "Floor Tile",
+  "sizes": [
+   "800x800 mm"
+  ],
+  "finishes": [
+   "Polish"
+  ],
+  "colours": [
+   "Beige",
+   "Cream"
+  ],
+  "rooms": [
+   "Bedroom"
+  ]
+ },
+ {
+  "slug": "native-olive-decor",
+  "name": "Native Olive Decor",
+  "type": "Gres Tiles",
+  "use": "Wall Tile - Floor Tile",
+  "sizes": [
+   "600x1200 mm"
+  ],
+  "finishes": [
+   "Matt"
+  ],
+  "colours": [
+   "Grey"
+  ],
+  "rooms": [
+   "Bedroom"
+  ]
+ },
+ {
+  "slug": "native-olive",
+  "name": "Native Olive",
+  "type": "Gres Tiles",
+  "use": "Wall Tile - Floor Tile",
+  "sizes": [
+   "600x1200 mm"
+  ],
+  "finishes": [
+   "Matt"
+  ],
+  "colours": [
+   "Grey"
+  ],
+  "rooms": [
+   "Bedroom"
+  ]
+ },
+ {
+  "slug": "empredor-gris",
+  "name": "Empredor Gris",
+  "type": "Glazed Vitrified Tiles",
+  "use": "Wall Tile - Floor Tile",
+  "sizes": [
+   "600x1200 mm"
+  ],
+  "finishes": [
+   "Premium Polish"
+  ],
+  "colours": [
+   "Grey"
+  ],
+  "rooms": [
+   "Bedroom"
+  ]
+ },
+ {
+  "slug": "kings-wood",
+  "name": "Kings Wood",
+  "type": "Gres Tiles",
+  "use": "Floor Tile",
+  "sizes": [
+   "600x600 mm"
+  ],
+  "finishes": [
+   "Matt"
+  ],
+  "colours": [
+   "Cream",
+   "Brown"
+  ],
+  "rooms": [
+   "Bedroom"
+  ]
+ },
+ {
+  "slug": "omega-crema",
+  "name": "Omega Crema",
+  "type": "Gres Tiles",
+  "use": "Floor Tile",
+  "sizes": [
+   "600x600 mm"
+  ],
+  "finishes": [
+   "Matt"
+  ],
+  "colours": [
+   "Cream"
+  ],
+  "rooms": [
+   "Bedroom"
+  ]
+ },
+ {
+  "slug": "k-6213",
+  "name": "K 6213",
+  "type": "Polished Vitrified Tiles",
+  "use": "Floor Tile",
+  "sizes": [
+   "600x600 mm"
+  ],
+  "finishes": [
+   "Super Glossy"
+  ],
+  "colours": [
+   "Beige"
+  ],
+  "rooms": [
+   "Bedroom"
+  ]
+ },
+ {
+  "slug": "k-6002",
+  "name": "K 6002",
+  "type": "Polished Vitrified Tiles",
+  "use": "Floor Tile",
+  "sizes": [
+   "600x600 mm"
+  ],
+  "finishes": [
+   "Super Glossy"
+  ],
+  "colours": [
+   "Cream"
+  ],
+  "rooms": [
+   "Bedroom"
+  ]
+ },
+ {
+  "slug": "k-6008",
+  "name": "K 6008",
+  "type": "Polished Vitrified Tiles",
+  "use": "Floor Tile",
+  "sizes": [
+   "600x600 mm"
+  ],
+  "finishes": [
+   "Super Glossy"
+  ],
+  "colours": [
+   "Cream"
+  ],
+  "rooms": [
+   "Bedroom"
+  ]
+ },
+ {
+  "slug": "k-6019",
+  "name": "K 6019",
+  "type": "Polished Vitrified Tiles",
+  "use": "Floor Tile",
+  "sizes": [
+   "600x600 mm"
+  ],
+  "finishes": [
+   "Super Glossy"
+  ],
+  "colours": [
+   "Cream"
+  ],
+  "rooms": [
+   "Bedroom"
+  ]
+ },
+ {
+  "slug": "k-6206",
+  "name": "K 6206",
+  "type": "Polished Vitrified Tiles",
+  "use": "Floor Tile",
+  "sizes": [
+   "600x600 mm"
+  ],
+  "finishes": [
+   "Super Glossy"
+  ],
+  "colours": [
+   "Cream"
+  ],
+  "rooms": [
+   "Bedroom"
+  ]
+ },
+ {
+  "slug": "lasa-bianco",
+  "name": "Lasa Bianco",
+  "type": "Glazed Vitrified Tiles",
+  "use": "Wall Tile - Floor Tile",
+  "sizes": [
+   "1190x2800 mm, 5.5 mm thick"
+  ],
+  "finishes": [
+   "Beyond"
+  ],
+  "colours": [
+   "White"
+  ],
+  "rooms": [
+   "Outdoor"
+  ]
+ },
+ {
+  "slug": "grigio-onduluto",
+  "name": "Grigio Onduluto",
+  "type": "Glazed Vitrified Tiles",
+  "use": "Wall Tile - Floor Tile",
+  "sizes": [
+   "1190x2800 mm, 5.5 mm thick"
+  ],
+  "finishes": [
+   "Beyond"
+  ],
+  "colours": [
+   "Cream"
+  ],
+  "rooms": [
+   "Outdoor"
+  ]
+ },
+ {
+  "slug": "urban-grey",
+  "name": "Urban Grey",
+  "type": "Glazed Vitrified Tiles",
+  "use": "Wall Tile - Floor Tile",
+  "sizes": [
+   "1190x2800 mm, 5.5 mm thick"
+  ],
+  "finishes": [
+   "Texura"
+  ],
+  "colours": [
+   "Grey"
+  ],
+  "rooms": [
+   "Outdoor"
+  ]
+ },
+ {
+  "slug": "urban-rust",
+  "name": "Urban Rust",
+  "type": "Glazed Vitrified Tiles",
+  "use": "Wall Tile - Floor Tile",
+  "sizes": [
+   "1190x2800 mm, 5.5 mm thick"
+  ],
+  "finishes": [
+   "Texura"
+  ],
+  "colours": [
+   "Brown"
+  ],
+  "rooms": [
+   "Outdoor"
+  ]
+ },
+ {
+  "slug": "k-12676",
+  "name": "K 12676",
+  "type": "Polished Vitrified Tiles",
+  "use": "Wall Tile - Floor Tile",
+  "sizes": [
+   "600x1200 mm"
+  ],
+  "finishes": [
+   "Matt",
+   "Polished"
+  ],
+  "colours": [
+   "Beige"
+  ],
+  "rooms": [
+   "Outdoor"
+  ]
+ },
+ {
+  "slug": "k-12671",
+  "name": "K 12671",
+  "type": "Polished Vitrified Tiles",
+  "use": "Wall Tile - Floor Tile",
+  "sizes": [
+   "600x1200 mm"
+  ],
+  "finishes": [
+   "Matt",
+   "Polished"
+  ],
+  "colours": [
+   "Cream"
+  ],
+  "rooms": [
+   "Outdoor"
+  ]
+ },
+ {
+  "slug": "timber-oak-2",
+  "name": "Timber Oak",
+  "type": "Glazed Vitrified Tiles",
+  "use": "Wall Tile - Floor Tile",
+  "sizes": [
+   "600x1200 mm"
+  ],
+  "finishes": [
+   "Matt"
+  ],
+  "colours": [
+   "Brown"
+  ],
+  "rooms": [
+   "Outdoor"
+  ]
+ },
+ {
+  "slug": "timber-rosewood",
+  "name": "Timber Rosewood",
+  "type": "Glazed Vitrified Tiles",
+  "use": "Wall Tile - Floor Tile",
+  "sizes": [
+   "600x1200 mm"
+  ],
+  "finishes": [
+   "Matt"
+  ],
+  "colours": [
+   "Brown"
+  ],
+  "rooms": [
+   "Outdoor"
+  ]
+ },
+ {
+  "slug": "sicilia-marfil",
+  "name": "Sicilia Marfil",
+  "type": "Glazed Vitrified Tiles",
+  "use": "Wall Tile - Floor Tile",
+  "sizes": [
+   "600x1200 mm"
+  ],
+  "finishes": [
+   "Polish"
+  ],
+  "colours": [
+   "Beige",
+   "Cream"
+  ],
+  "rooms": [
+   "Outdoor"
+  ]
+ },
+ {
+  "slug": "satuario",
+  "name": "Satuario",
+  "type": "Glazed Vitrified Tiles",
+  "use": "Wall Tile - Floor Tile",
+  "sizes": [
+   "600x1200 mm"
+  ],
+  "finishes": [
+   "Polish"
+  ],
+  "colours": [
+   "White",
+   "Silver"
+  ],
+  "rooms": [
+   "Outdoor"
+  ]
+ },
+ {
+  "slug": "tuscan-crema",
+  "name": "Tuscan Crema",
+  "type": "Glazed Vitrified Tiles",
+  "use": "Wall Tile - Floor Tile",
+  "sizes": [
+   "600x1200 mm"
+  ],
+  "finishes": [
+   "Punch",
+   "Stone"
+  ],
+  "colours": [
+   "Cream"
+  ],
+  "rooms": [
+   "Outdoor"
+  ]
+ },
+ {
+  "slug": "k-12604",
+  "name": "K 12604",
+  "type": "Polished Vitrified Tiles",
+  "use": "Wall Tile - Floor Tile",
+  "sizes": [
+   "600x1200 mm"
+  ],
+  "finishes": [
+   "Super Glossy"
+  ],
+  "colours": [
+   "Cream"
+  ],
+  "rooms": [
+   "Outdoor"
+  ]
+ },
+ {
+  "slug": "breccia-azure",
+  "name": "Breccia Azure",
+  "type": "Glazed Vitrified Tiles",
+  "use": "Wall Tile - Floor Tile",
+  "sizes": [
+   "1200x2400 mm"
+  ],
+  "finishes": [
+   "Polish"
+  ],
+  "colours": [
+   "Cream"
+  ],
+  "rooms": [
+   "Commercial"
+  ]
+ },
+ {
+  "slug": "emali-beige",
+  "name": "Emali Beige",
+  "type": "Glazed Vitrified Tiles",
+  "use": "Wall Tile - Floor Tile",
+  "sizes": [
+   "1200x1800 mm"
+  ],
+  "finishes": [
+   "Marbletech"
+  ],
+  "colours": [
+   "Beige"
+  ],
+  "rooms": [
+   "Commercial"
+  ]
+ },
+ {
+  "slug": "kashmir-marfil-5",
+  "name": "Kashmir Marfil",
+  "type": "Glazed Vitrified Tiles",
+  "use": "Wall Tile - Floor Tile",
+  "sizes": [
+   "1200x1800 mm"
+  ],
+  "finishes": [
+   "Polish"
+  ],
+  "colours": [
+   "Beige",
+   "Cream"
+  ],
+  "rooms": [
+   "Commercial"
+  ]
+ },
+ {
+  "slug": "crema-marble",
+  "name": "Crema Marble",
+  "type": "Glazed Vitrified Tiles",
+  "use": "Wall Tile - Floor Tile",
+  "sizes": [
+   "1200x1800 mm"
+  ],
+  "finishes": [
+   "Polish"
+  ],
+  "colours": [
+   "Cream"
+  ],
+  "rooms": [
+   "Commercial"
+  ]
+ },
+ {
+  "slug": "oslo-gris-matt",
+  "name": "Oslo Gris Matt",
+  "type": "Glazed Vitrified Tiles",
+  "use": "Wall Tile - Floor Tile",
+  "sizes": [
+   "1200x1800 mm"
+  ],
+  "finishes": [
+   "Premium Matt"
+  ],
+  "colours": [
+   "Grey"
+  ],
+  "rooms": [
+   "Commercial"
+  ]
+ },
+ {
+  "slug": "arizona-marfil-1",
+  "name": "Arizona Marfil",
+  "type": "Glazed Vitrified Tiles",
+  "use": "Wall Tile - Floor Tile",
+  "sizes": [
+   "1190x2800 mm, 5.5 mm thick"
+  ],
+  "finishes": [
+   "Beyond",
+   "Riverwash"
+  ],
+  "colours": [
+   "Beige",
+   "Cream"
+  ],
+  "rooms": [
+   "Commercial"
+  ]
+ },
+ {
+  "slug": "savoy-nero",
+  "name": "Savoy Nero",
+  "type": "Glazed Vitrified Tiles",
+  "use": "Wall Tile - Floor Tile",
+  "sizes": [
+   "1190x2800 mm, 5.5 mm thick"
+  ],
+  "finishes": [
+   "Beyond"
+  ],
+  "colours": [
+   "Grey",
+   "Black"
+  ],
+  "rooms": [
+   "Commercial"
+  ]
+ },
+ {
+  "slug": "pezzatto-rosso-1",
+  "name": "Pezzatto Rosso",
+  "type": "Glazed Vitrified Tiles",
+  "use": "Wall Tile - Floor Tile",
+  "sizes": [
+   "1190x2800 mm, 5.5 mm thick"
+  ],
+  "finishes": [
+   "Beyond"
+  ],
+  "colours": [
+   "White",
+   "Red"
+  ],
+  "rooms": [
+   "Commercial"
+  ]
+ },
+ {
+  "slug": "satuario-eterno-2",
+  "name": "Satuario Eterno",
+  "type": "Glazed Vitrified Tiles",
+  "use": "Wall Tile - Floor Tile",
+  "sizes": [
+   "1190x2800 mm, 5.5 mm thick"
+  ],
+  "finishes": [
+   "Beyond",
+   "Dry Granula Polish"
+  ],
+  "colours": [
+   "White"
+  ],
+  "rooms": [
+   "Commercial"
+  ]
+ },
+ {
+  "slug": "travos-veneto",
+  "name": "Travos Veneto",
+  "type": "Glazed Vitrified Tiles",
+  "use": "Wall Tile - Floor Tile",
+  "sizes": [
+   "1190x2800 mm, 5.5 mm thick"
+  ],
+  "finishes": [
+   "Bold"
+  ],
+  "colours": [
+   "Cream"
+  ],
+  "rooms": [
+   "Commercial"
+  ]
+ },
+ {
+  "slug": "collen-verde",
+  "name": "Collen Verde",
+  "type": "Glazed Vitrified Tiles",
+  "use": "Wall Tile - Floor Tile",
+  "sizes": [
+   "1190x2800 mm, 5.5 mm thick"
+  ],
+  "finishes": [
+   "Sculpted"
+  ],
+  "colours": [
+   "Green"
+  ],
+  "rooms": [
+   "Commercial"
+  ]
+ },
+ {
+  "slug": "urban-black",
+  "name": "Urban Black",
+  "type": "Glazed Vitrified Tiles",
+  "use": "Wall Tile - Floor Tile",
+  "sizes": [
+   "1190x2800 mm, 5.5 mm thick"
+  ],
+  "finishes": [
+   "Texura"
+  ],
+  "colours": [
+   "Black"
+  ],
+  "rooms": [
+   "Commercial"
+  ]
+ },
+ {
+  "slug": "k-10101",
+  "name": "K 10101",
+  "type": "Polished Vitrified Tiles",
+  "use": "",
+  "sizes": [
+   "1000x1000 mm"
+  ],
+  "finishes": [],
+  "colours": [],
+  "rooms": [
+   "Living room"
+  ]
+ }
+]

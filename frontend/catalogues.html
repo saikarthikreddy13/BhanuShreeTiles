@@ -1,52 +1,106 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Products | Bhanu Shree Tiles & Taps</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="css/app.css">
-  <script src="js/api.js" defer></script>
-  <script src="js/public-catalog.js" defer></script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tiles · Bhanu Shree Tiles</title>
+<meta name="description" content="Kajaria tiles by room, with photos and exact sizes.">
+<link rel="icon" href="images/logo.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/site.css">
+<script>document.documentElement.classList.add("js");</script>
 </head>
-<body class="app-shell">
-  <nav class="navbar navbar-dark nav-frost sticky-top">
-    <div class="container-fluid px-4">
-      <a class="navbar-brand fw-bold" href="index.html">Bhanu Shree Tiles & Taps</a>
-      <div class="d-flex gap-2 flex-wrap">
-        <a class="btn btn-sm btn-outline-light" href="index.html">Home</a>
-        <a class="btn btn-sm btn-outline-light" href="login.html">Admin Login</a>
+<body>
+<header class="site-head">
+  <div class="wrap">
+    <a class="brand" href="index.html"><img class="logo" src="images/logo-full.svg" alt="Bhanu Shree Tiles, Kajaria Studio"></a>
+    <nav class="site-nav" id="siteNav" aria-label="Main">
+      <a href="index.html#rooms">Rooms</a>
+      <a href="catalogues.html">Collection</a>
+      <a href="gallery.html">Gallery</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+    <form class="search" action="catalogues.html" role="search">
+      <input type="search" name="q" placeholder="Search" aria-label="Search tiles">
+      <button>Search</button>
+    </form>
+    <div class="account">
+      <button type="button" id="accountBtn" aria-label="Account" aria-haspopup="true" aria-expanded="false" aria-controls="accountMenu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c1-4.500 4-6.500 8-6.500s7 2 8 6.500"/></svg>
+      </button>
+      <div class="menu" id="accountMenu" hidden>
+        <a href="login.html">Log in</a>
+        <a href="register.html">Sign up</a>
       </div>
     </div>
-  </nav>
+    <button type="button" class="menu-toggle" id="menuToggle" aria-label="Menu" aria-expanded="false" aria-controls="siteNav">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M4 8h16M4 16h16"/></svg>
+    </button>
+  </div>
+</header>
 
-  <main class="container-fluid px-4 py-4">
-    <div class="glass-card rounded-4 p-4 mb-4 d-flex flex-wrap justify-content-between align-items-end gap-3">
+<main>
+  <section class="page-top">
+    <div class="wrap">
+      <p class="crumbs"><a href="index.html">Home</a> / <span id="crumb">All tiles</span></p>
+      <h1 id="heading">All tiles</h1>
+      <div class="chips" id="chips">
+        <a href="catalogues.html" data-q="">All tiles</a>
+        <a href="catalogues.html?q=Bathroom" data-q="Bathroom">Bathroom</a>
+        <a href="catalogues.html?q=Kitchen" data-q="Kitchen">Kitchen</a>
+        <a href="catalogues.html?q=Living" data-q="Living">Living room</a>
+        <a href="catalogues.html?q=Bedroom" data-q="Bedroom">Bedroom</a>
+        <a href="catalogues.html?q=Outdoor" data-q="Outdoor">Outdoor and parking</a>
+        <a href="catalogues.html?q=Commercial" data-q="Commercial">Commercial spaces</a>
+      </div>
+    </div>
+  </section>
+  <div class="wrap">
+    <div class="tools">
+      <b id="catalogStatus" role="status">Loading tiles</b>
+      <label>Size <select id="sizeFilter"><option value="">All sizes</option></select></label>
+    </div>
+    <div class="tiles" id="catalogGrid"></div>
+  </div>
+</main>
+
+<footer class="site-foot">
+  <div class="wrap">
+    <div class="cols">
       <div>
-        <div class="section-label">Public Catalog</div>
-        <h1 class="h2 mb-1">Products</h1>
-        <p class="muted-text mb-0">Browse the current product range, finishes, and stock-ready items.</p>
+        <h3>Bhanu Shree Tiles</h3>
+        <p>H.No. 5-39, Mahbubnagar Road, Jadcherla,<br>Mahbubnagar Dist, Telangana - 509302</p>
+        <p><a href="tel:+919177214787" style="display:inline">91772 14787</a></p>
       </div>
-      <div id="catalogStatus" class="muted-text">Loading</div>
+      <div>
+        <h3>Rooms</h3>
+        <a href="catalogues.html?q=Bathroom">Bathroom</a>
+        <a href="catalogues.html?q=Kitchen">Kitchen</a>
+        <a href="catalogues.html?q=Living">Living room</a>
+        <a href="catalogues.html?q=Bedroom">Bedroom</a>
+        <a href="catalogues.html?q=Outdoor">Outdoor and parking</a>
+      </div>
+      <div>
+        <h3>Company</h3>
+        <a href="about.html">About us</a>
+        <a href="gallery.html">Gallery</a>
+        <a href="contact.html">Contact us</a>
+      </div>
+      <div>
+        <h3>Quick links</h3>
+        <a href="catalogues.html">Collection</a>
+        <a href="index.html#visit">Where to find us</a>
+        <a href="login.html">Staff login</a>
+      </div>
     </div>
+    <p class="legal">© 2026 Bhanu Shree Tiles. All rights reserved.</p>
+  </div>
+</footer>
 
-    <div class="glass-card rounded-4 p-4">
-      <div class="d-flex flex-wrap gap-2 justify-content-between align-items-center mb-3">
-        <h2 class="h5 mb-0">Product List</h2>
-        <div class="d-flex gap-2 flex-wrap">
-          <input id="catalogSearch" class="form-control form-control-sm" placeholder="Search products, categories, or SKUs">
-          <button id="catalogSearchButton" class="btn btn-sm btn-outline-light" type="button">Search</button>
-        </div>
-      </div>
-      <div class="table-responsive">
-        <table class="table table-darkish align-middle">
-          <thead>
-            <tr><th>Name</th><th>Category</th><th>Brand</th><th>Size</th><th>Color</th><th>Price</th><th>Stock</th></tr>
-          </thead>
-          <tbody id="catalogTable"></tbody>
-        </table>
-      </div>
-    </div>
-  </main>
+<script src="js/site.js"></script>
+<script src="js/public-catalog.js"></script>
 </body>
 </html>
