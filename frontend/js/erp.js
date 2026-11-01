@@ -195,20 +195,24 @@ async function fillSource(root, f) {
 }
 
 // Line-item editor used by sales, purchases and stock documents.
+let pickerCount = 0;
 function linesEditor(box, f) {
   const cols = f.cols;
+  const listId = `products-${++pickerCount}`;
   let products = [];
+  const labels = new Map();
+  const labelFor = (p) => [p.name, p.size, p.sku].filter(Boolean).join(" · ");
   const onChange = () => f.onChange?.(readLines());
 
   const cell = (c) => {
     if (c.k === "productId") {
-      return `<select data-c="productId"><option value="">Select product</option>${products
-        .map((p) => `<option value="${p.id}">${esc(p.name)} (${esc(p.sku)})</option>`).join("")}</select>`;
+      return `<input data-pick list="${listId}" placeholder="Type tile name, size or code" autocomplete="off"><input type="hidden" data-c="productId">`;
     }
     return `<input type="number" step="any" min="0" data-c="${c.k}" value="${esc(c.def ?? "")}">`;
   };
 
   box.innerHTML = `<div class="table-wrap"><table class="lines"><thead><tr>${cols.map((c) => `<th>${esc(c.l)}</th>`).join("")}<th></th></tr></thead><tbody></tbody></table></div>
+    <datalist id="${listId}"></datalist>
     <button type="button" class="btn sm" data-add style="margin-top:8px">Add another product</button>`;
   const tbody = $("tbody", box);
 
@@ -227,21 +231,26 @@ function linesEditor(box, f) {
     }).filter((r) => r.productId);
   }
 
-  tbody.addEventListener("change", (event) => {
-    const tr = event.target.closest("tr");
-    if (event.target.dataset.c === "productId") {
-      const product = products.find((p) => String(p.id) === event.target.value);
-      if (product) {
-        for (const c of cols) {
-          if (!c.from) continue;
-          const input = $(`[data-c="${c.k}"]`, tr);
-          if (input) input.value = product[c.from] ?? "";
-        }
-      }
+  // Only an exact choice from the list counts, so a half-typed name never saves a wrong tile.
+  const pick = (input) => {
+    const tr = input.closest("tr");
+    const product = labels.get(input.value);
+    const hidden = $('[data-c="productId"]', tr);
+    if (String(product?.id ?? "") === hidden.value) return;
+    hidden.value = product?.id ?? "";
+    if (!product) return;
+    for (const c of cols) {
+      if (!c.from) continue;
+      const field = $(`[data-c="${c.k}"]`, tr);
+      if (field) field.value = product[c.from] ?? "";
     }
+  };
+  const edited = (event) => {
+    if (event.target.dataset.pick !== undefined) pick(event.target);
     onChange();
-  });
-  tbody.addEventListener("input", onChange);
+  };
+  tbody.addEventListener("change", edited);
+  tbody.addEventListener("input", edited);
   box.addEventListener("click", (event) => {
     if (event.target.dataset.add !== undefined) addRow();
     if (event.target.dataset.del !== undefined) {
@@ -250,9 +259,11 @@ function linesEditor(box, f) {
     }
   });
 
-  const ready = loadSource("/products?status=ACTIVE&limit=1000")
+  const ready = loadSource("/products/options")
     .then((rows) => {
       products = rows;
+      for (const p of rows) labels.set(labelFor(p), p);
+      $(`#${listId}`, box).innerHTML = rows.map((p) => `<option value="${esc(labelFor(p))}"></option>`).join("");
       addRow();
     })
     .catch((error) => toast(error.message, true));
@@ -268,6 +279,10 @@ function linesEditor(box, f) {
         for (const [k, v] of Object.entries(row)) {
           const el = $(`[data-c="${k}"]`, tr);
           if (el) el.value = v ?? "";
+          if (k === "productId") {
+            const product = products.find((p) => String(p.id) === String(v));
+            if (product) $("[data-pick]", tr).value = labelFor(product);
+          }
         }
       }
       onChange();

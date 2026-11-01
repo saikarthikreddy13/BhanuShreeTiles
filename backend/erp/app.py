@@ -3,6 +3,7 @@ import threading
 import time
 import traceback
 from collections import defaultdict
+from math import ceil
 
 import pymysql
 from flask import Flask, jsonify, request, send_from_directory
@@ -61,20 +62,48 @@ def health():
         return jsonify({"success": False, "message": "Backend running, database unavailable", "database": "disconnected"}), 503
 
 
+def int_arg(name, default):
+    value = request.args.get(name) or ""
+    return int(value) if value.isdecimal() and len(value) < 7 else default
+
+
 @route("/public/catalog")
 def public_catalog():
     """Website catalogue: public fields only, never cost prices or quantities."""
     q = (request.args.get("q") or "").strip()[:80]
+    brand = (request.args.get("brand") or "").strip()[:80]
+    size = (request.args.get("size") or "").strip()[:60]
+    limit = min(max(int_arg("limit", 24), 1), 60)
+    page = max(int_arg("page", 1), 1)
     fields = ["p.name", "p.sku", "p.size", "p.color", "p.finish", "p.description", "c.name"]
-    search = " OR ".join(f"POSITION(LOWER(%s) IN LOWER(COALESCE({f}, ''))) > 0" for f in fields)
+    tests = ["p.status = 'ACTIVE'"]
+    params = []
+    if re.fullmatch(r"\d+x\d+", q):
+        # A size search must match the whole size: 200x1200 is not 1200x1200.
+        tests.append("p.size LIKE %s")
+        params.append(f"{q} %")
+    elif q:
+        tests.append("(" + " OR ".join(f"POSITION(LOWER(%s) IN LOWER(COALESCE({f}, ''))) > 0" for f in fields) + ")")
+        params += [q] * len(fields)
+    if brand:
+        tests.append("b.name = %s")
+        params.append(brand)
+    tables = 'FROM "Product" p JOIN "Category" c ON c.id = p."categoryId" LEFT JOIN "Brand" b ON b.id = p."brandId"'
+    where = " AND ".join(tests)
+    sizes = [r["size"] for r in db.all(f"SELECT DISTINCT p.size {tables} WHERE {where} AND p.size IS NOT NULL", *params)]
+    sizes.sort(key=lambda s: [int(n) for n in re.findall(r"\d+", s)])
+    if size:
+        where += " AND p.size = %s"
+        params.append(size)
+    total = db.value(f"SELECT COUNT(*) AS n {tables} WHERE {where}", *params)
     rows = db.all(
         'SELECT p.name, p.size, p.color, p.finish, p."imageUrl", p."sellingPrice" AS price, c.name AS category, COALESCE(b.name, \'\') AS brand, '
         'EXISTS (SELECT 1 FROM "StockBalance" s WHERE s."productId" = p.id AND s.quantity > 0) AS "inStock" '
-        'FROM "Product" p JOIN "Category" c ON c.id = p."categoryId" LEFT JOIN "Brand" b ON b.id = p."brandId" '
-        f"WHERE p.status = 'ACTIVE' {'AND (' + search + ')' if q else ''} ORDER BY p.name ASC LIMIT 200",
-        *([q] * len(fields) if q else []),
+        f"{tables} WHERE {where} ORDER BY p.name ASC LIMIT %s OFFSET %s",
+        *params, limit, (page - 1) * limit,
     )
-    return reply(rows)
+    brands = [r["name"] for r in db.all('SELECT DISTINCT b.name FROM "Brand" b JOIN "Product" p ON p."brandId" = b.id WHERE p.status = \'ACTIVE\' ORDER BY b.name')]
+    return reply(rows, total=total, pages=max(ceil(total / limit), 1), sizes=sizes, brands=brands)
 
 
 def not_found_reply():

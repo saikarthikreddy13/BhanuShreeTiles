@@ -109,6 +109,16 @@ h1, h2, h3 { margin: 0; font-weight: 600; letter-spacing: -.03em; }
 .tile-room b { display: block; font-size: 28px; font-weight: 600; line-height: 1.1; letter-spacing: -.03em; }
 .tile-room small { font-size: 15px; letter-spacing: -.016em; opacity: .9; }
 
+/* Brands */
+.brands { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+.brand-card { position: relative; display: block; overflow: hidden; aspect-ratio: 4 / 3; background: var(--mist); border-radius: 28px; }
+.brand-card img { width: 100%; height: 100%; object-fit: cover; transition: transform 1.2s var(--ease); }
+.brand-card:hover img { transform: scale(1.04); }
+.brand-card::after { content: ""; position: absolute; inset: 45% 0 0; background: linear-gradient(transparent, rgba(0, 0, 0, .55)); }
+.brand-card span { position: absolute; left: 28px; bottom: 24px; right: 28px; z-index: 1; color: #fff; }
+.brand-card b { display: block; font-size: clamp(28px, 3.4vw, 40px); font-weight: 600; line-height: 1.1; letter-spacing: -.03em; }
+.brand-card small { font-size: 15px; opacity: .9; }
+
 /* Finish rail */
 .rail { display: flex; gap: 16px; overflow-x: auto; padding: 4px max(24px, calc((100vw - 1072px) / 2)) 22px; scroll-snap-type: x mandatory; scroll-padding-left: max(24px, calc((100vw - 1072px) / 2)); scrollbar-width: none; }
 .rail::-webkit-scrollbar { display: none; }
@@ -120,7 +130,7 @@ h1, h2, h3 { margin: 0; font-weight: 600; letter-spacing: -.03em; }
 .finish small { color: #a1a1a6; font-size: 15px; }
 
 /* Sizes and colours */
-.sizes { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1px; overflow: hidden; background: rgba(0, 0, 0, .08); border-radius: 24px; }
+.sizes { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 1px; overflow: hidden; background: rgba(0, 0, 0, .08); border-radius: 24px; }
 .sizes a { padding: 26px 24px; background: var(--paper); transition: background .2s; }
 .sizes a:hover { background: var(--mist); }
 .sizes b { display: block; font-size: clamp(20px, 2.2vw, 26px); font-weight: 600; letter-spacing: -.03em; font-variant-numeric: tabular-nums; }
@@ -164,10 +174,13 @@ body.leaving > * { opacity: 0; transform: translateX(-24px); transition: opacity
 .chips a:hover { background: #e8e8ed; }
 .chips a[aria-current=page] { color: #fff; background: var(--ink); }
 .tools { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px; padding: 40px 0 22px; }
+.filters { display: flex; flex-wrap: wrap; gap: 8px 16px; }
+.load-row { display: flex; justify-content: center; padding-bottom: 96px; }
+.load-row .pill[hidden] { display: none; }
 .tools b { font-size: 15px; font-weight: 500; color: var(--muted); }
 .tools label { display: flex; align-items: center; gap: 10px; font-size: 14px; color: var(--muted); }
 .tools select { height: 36px; padding: 0 30px 0 14px; font: inherit; font-size: 14px; color: var(--ink); background: var(--mist) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%236e6e73' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E") no-repeat right 11px center/12px; border: 0; border-radius: 980px; appearance: none; cursor: pointer; }
-.tiles { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 40px 20px; padding-bottom: 96px; }
+.tiles { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 40px 20px; padding-bottom: 48px; }
 .tile-card .pic { display: block; overflow: hidden; aspect-ratio: 4 / 3; background: var(--mist); border-radius: 20px; }
 .tile-card img { width: 100%; height: 100%; object-fit: cover; transition: transform 1s var(--ease); }
 .tile-card:hover img { transform: scale(1.04); }
@@ -236,7 +249,11 @@ body.leaving > * { opacity: 0; transform: translateX(-24px); transition: opacity
   .cols { grid-template-columns: 1fr 1fr; }
   .cols > :first-child { grid-column: 1 / -1; }
   .two { grid-template-columns: minmax(0, 1fr); }
-  .tiles { grid-template-columns: minmax(0, 1fr); gap: 32px; padding-bottom: 64px; }
+  .tiles { grid-template-columns: minmax(0, 1fr); gap: 32px; padding-bottom: 32px; }
+  .load-row { padding-bottom: 64px; }
+  .brands { grid-template-columns: minmax(0, 1fr); }
+  .brand-card { border-radius: 22px; }
+  .sizes a:last-child:nth-child(odd) { grid-column: 1 / -1; }
   .rooms { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 22px 12px; }
   .enquiry { grid-template-columns: minmax(0, 1fr); }
 }

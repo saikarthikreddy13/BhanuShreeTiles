@@ -90,6 +90,15 @@ def product_prepare(tx, data, mode, id):
     return data
 
 
+@route("/products/options", perm=("products", "read"))
+def product_options():
+    """Only what the product picker needs, because the full list is large."""
+    return reply(db.all(
+        'SELECT id, name, sku, size, "sellingPrice", "purchasePrice", "taxPercent" FROM "Product" '
+        "WHERE status = 'ACTIVE' ORDER BY name ASC"
+    ))
+
+
 @route("/products/<id>/image", "POST", perm=("products", "update"))
 def upload_image(id):
     product_id = int_param(id)

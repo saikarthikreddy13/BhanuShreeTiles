@@ -137,7 +137,7 @@ td.num, th.num { text-align: right; white-space: nowrap; font-variant-numeric: t
 .check { display: flex; gap: 8px; align-items: center; }
 .check label { margin: 0; color: var(--text); font-size: 14px; }
 .lines td { padding: 6px; } .lines input, .lines select { min-width: 74px; }
-.lines td:first-child select { min-width: 200px; }
+.lines td:first-child input { min-width: 300px; }
 .totals { margin: 14px 0 0 auto; max-width: 300px; }
 .totals div { display: flex; justify-content: space-between; padding: 3px 0; }
 .totals .grand { font-size: 19px; font-weight: 600; letter-spacing: -.02em; color: var(--text); border-top: 1px solid rgba(0,0,0,.1); margin-top: 6px; padding-top: 10px; }

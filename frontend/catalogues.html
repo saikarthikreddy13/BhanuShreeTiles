@@ -74,9 +74,13 @@
   <div class="wrap">
     <div class="tools">
       <b id="catalogStatus" role="status">Loading tiles</b>
-      <label>Size <select id="sizeFilter"><option value="">All sizes</option></select></label>
+      <div class="filters">
+        <label>Brand <select id="brandFilter"><option value="">All brands</option></select></label>
+        <label>Size <select id="sizeFilter"><option value="">All sizes</option></select></label>
+      </div>
     </div>
     <div class="tiles" id="catalogGrid"></div>
+    <div class="load-row"><button class="pill" id="loadMore" type="button" hidden>Load more</button></div>
   </div>
 </main>
 
