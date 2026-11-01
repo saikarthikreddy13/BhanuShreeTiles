@@ -1,8 +1,6 @@
 import os
 import secrets
-import smtplib
 from datetime import timedelta
-from email.message import EmailMessage
 
 import bcrypt
 from flask import g, jsonify, make_response, request
@@ -169,6 +167,9 @@ def deliver_reset(user, link):
         if not PRODUCTION:
             print(f"Password reset link for {user['username']}: {link}", flush=True)
         return
+    import smtplib
+    from email.message import EmailMessage
+
     message = EmailMessage()
     message["Subject"] = "Reset your ERP password"
     message["From"] = os.environ.get("SMTP_FROM") or os.environ.get("SMTP_USER")

@@ -1,4 +1,6 @@
 """MySQL access: plain SQL through a small connection pool."""
+import os
+import time
 from contextlib import contextmanager
 from datetime import datetime, timezone
 from pathlib import Path
@@ -20,7 +22,9 @@ SESSION = (
     "SET SESSION sql_mode = 'ANSI_QUOTES,STRICT_ALL_TABLES,NO_ZERO_DATE,NO_ZERO_IN_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION', "
     "time_zone = '+00:00', transaction_isolation = 'READ-COMMITTED'"
 )
-MAX_CONNECTIONS = 24
+# Vercel runs many small copies of the app and the database allows 46 connections in all.
+MAX_CONNECTIONS = 4 if os.environ.get("VERCEL") else 24
+CHECK_AFTER_SECONDS = 30
 POOL_WAIT_SECONDS = 15
 
 
@@ -42,7 +46,7 @@ def connect():
     return pymysql.connect(
         **secure,
         host=url.hostname, port=url.port or 3306, user=unquote(url.username or ""), password=unquote(url.password or ""),
-        database=url.path.lstrip("/"), charset="utf8mb4", autocommit=True, cursorclass=DictCursor, connect_timeout=5,
+        database=url.path.lstrip("/"), charset="utf8mb4", autocommit=True, cursorclass=DictCursor, connect_timeout=5, read_timeout=30, write_timeout=30,
         # Updates report matching rows, not only rows whose values changed.
         client_flag=CLIENT.FOUND_ROWS, init_command=SESSION,
     )
@@ -73,14 +77,17 @@ class Pool:
                 conn = self.idle.get(timeout=POOL_WAIT_SECONDS)
             except Empty:
                 raise PoolTimeout() from None
-        try:
-            conn.ping(reconnect=True)
-        except Exception:
-            self.drop(conn)
-            raise
+        # Checking a connection costs a trip to the database, so only do it after a quiet spell.
+        if time.time() - getattr(conn, "last_used", 0) > CHECK_AFTER_SECONDS:
+            try:
+                conn.ping(reconnect=True)
+            except Exception:
+                self.drop(conn)
+                raise
         return conn
 
     def give(self, conn):
+        conn.last_used = time.time()
         self.idle.put(conn)
 
     def drop(self, conn):

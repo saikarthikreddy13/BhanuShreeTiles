@@ -136,8 +136,17 @@ function confirmDialog(message, { title = "Please confirm", action = "Confirm", 
   });
 }
 
+// The full tile list is large, so it is kept between pages until it changes or goes stale.
 const sourceCache = new Map();
+const PRODUCT_LIST = "/products/options";
+const PRODUCT_LIST_MINUTES = 5;
+let productListTime = 0;
+function clearSources(keepProducts = true) {
+  const fresh = Date.now() - productListTime < PRODUCT_LIST_MINUTES * 60000;
+  for (const url of [...sourceCache.keys()]) if (url !== PRODUCT_LIST || !keepProducts || !fresh) sourceCache.delete(url);
+}
 async function loadSource(url) {
+  if (url === PRODUCT_LIST && !sourceCache.has(url)) productListTime = Date.now();
   if (!sourceCache.has(url)) sourceCache.set(url, api(url).then((r) => r.data));
   return sourceCache.get(url).catch((error) => {
     sourceCache.delete(url);
@@ -325,7 +334,7 @@ function buildForm(root, allFields, row = {}) {
       title: cfg.addLabel, fields: cfg.form, wide: cfg.wide,
       submit: (body) => api(cfg.api.split("?")[0], { method: "POST", body: cfg.toBody ? cfg.toBody(body) : body }),
       onDone: async (result) => {
-        sourceCache.clear();
+        clearSources();
         $(`select[name="${f.k}"]`, root).dataset.value = result.data.id;
         await fillSource(root, f);
         syncFields();
@@ -501,7 +510,7 @@ function listPage(root, cfg) {
     }
   }
 
-  const reload = () => { sourceCache.clear(); return load(); };
+  const reload = () => { clearSources(!cfg.api.startsWith("/products")); return load(); };
 
   const openEdit = (row) => openForm({
     title: `${row ? "Edit" : cfg.addLabel || "Add"} ${row ? cfg.title.replace(/s$/, "") : ""}`.trim(),
@@ -689,7 +698,7 @@ async function showPage(file) {
   $$(".overlay").forEach((el) => el.remove());
   $("#bellBox").innerHTML = "";
   $("#sidebar").classList.remove("open");
-  sourceCache.clear();
+  clearSources();
   const root = document.createElement("main");
   root.className = "content";
   root.id = "page";

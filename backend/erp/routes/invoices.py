@@ -1,11 +1,6 @@
 from io import BytesIO
 
 from flask import Response, g, request
-from reportlab.lib import colors
-from reportlab.lib.enums import TA_CENTER, TA_RIGHT
-from reportlab.lib.pagesizes import A4
-from reportlab.lib.styles import ParagraphStyle
-from reportlab.platypus import Paragraph, SimpleDocTemplate, Spacer, Table, TableStyle
 from xml.sax.saxutils import escape
 
 from ..db import Where, db, join_many, join_one, name_match, now
@@ -87,6 +82,13 @@ def short_date(value):
 
 @route("/invoices/<id>/pdf", perm=("invoices", "print"))
 def invoice_pdf(id):
+    # Loaded here because the PDF library is slow to import and only this route uses it.
+    from reportlab.lib import colors
+    from reportlab.lib.enums import TA_CENTER, TA_RIGHT
+    from reportlab.lib.pagesizes import A4
+    from reportlab.lib.styles import ParagraphStyle
+    from reportlab.platypus import Paragraph, SimpleDocTemplate, Spacer, Table, TableStyle
+
     invoice = load_invoice(id)
     company = get_settings() or {}
     base = ParagraphStyle("base", fontName="Helvetica", fontSize=9, leading=12)
