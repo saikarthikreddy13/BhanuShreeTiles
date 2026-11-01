@@ -153,6 +153,10 @@ def create_app():
         if request.path.startswith(("/api/", "/uploads/")):
             response.headers["Content-Security-Policy"] = "default-src 'none'; frame-ancestors 'none'"
             response.headers["Cross-Origin-Resource-Policy"] = "cross-origin"
+        elif response.status_code == 200:
+            # Vercel keeps public files until the next deploy, so they stop passing through the app.
+            browser = 86400 if request.path.startswith("/images/") else 0
+            response.headers["Cache-Control"] = f"public, max-age={browser}, s-maxage=31536000"
         return response
 
     @app.errorhandler(AppError)

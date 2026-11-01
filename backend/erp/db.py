@@ -24,7 +24,7 @@ SESSION = (
 )
 # Vercel runs many small copies of the app and the database allows 46 connections in all.
 MAX_CONNECTIONS = 4 if os.environ.get("VERCEL") else 24
-CHECK_AFTER_SECONDS = 30
+MAX_IDLE_SECONDS = 30
 POOL_WAIT_SECONDS = 15
 
 
@@ -77,13 +77,10 @@ class Pool:
                 conn = self.idle.get(timeout=POOL_WAIT_SECONDS)
             except Empty:
                 raise PoolTimeout() from None
-        # Checking a connection costs a trip to the database, so only do it after a quiet spell.
-        if time.time() - getattr(conn, "last_used", 0) > CHECK_AFTER_SECONDS:
-            try:
-                conn.ping(reconnect=True)
-            except Exception:
-                self.drop(conn)
-                raise
+        # A connection left quiet can be cut off silently, and using one would hang until the timeout.
+        if time.time() - conn.last_used > MAX_IDLE_SECONDS:
+            self.drop(conn)
+            return self.take()
         return conn
 
     def give(self, conn):
