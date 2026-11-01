@@ -69,7 +69,7 @@ def int_arg(name, default):
 
 @route("/public/catalog")
 def public_catalog():
-    """Website catalogue: public fields only, never cost prices or quantities."""
+    """Website catalogue: public fields and boxes available, never cost prices."""
     q = (request.args.get("q") or "").strip()[:80]
     brand = (request.args.get("brand") or "").strip()[:80]
     size = (request.args.get("size") or "").strip()[:60]
@@ -98,7 +98,7 @@ def public_catalog():
     total = db.value(f"SELECT COUNT(*) AS n {tables} WHERE {where}", *params)
     rows = db.all(
         'SELECT p.name, p.size, p.color, p.finish, p."imageUrl", p."sellingPrice" AS price, c.name AS category, COALESCE(b.name, \'\') AS brand, '
-        'EXISTS (SELECT 1 FROM "StockBalance" s WHERE s."productId" = p.id AND s.quantity > 0) AS "inStock" '
+        'CAST(COALESCE((SELECT SUM(s.quantity) FROM "StockBalance" s WHERE s."productId" = p.id AND s.quantity > 0), 0) AS DOUBLE) AS boxes '
         f"{tables} WHERE {where} ORDER BY p.name ASC LIMIT %s OFFSET %s",
         *params, limit, (page - 1) * limit,
     )

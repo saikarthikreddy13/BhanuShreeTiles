@@ -397,7 +397,7 @@ window.ERP_PAGES = {
     columns: [
       { k: "imageUrl", l: "Image", f: (r) => (r.imageUrl ? `<img src="${esc(API_BASE + r.imageUrl)}" alt="" style="width:38px;height:38px;object-fit:cover;border-radius:6px">` : ""), x: () => "" },
       { k: "sku", l: "SKU" }, { k: "name", l: "Name" }, { k: "category.name", l: "Category" }, { k: "brand.name", l: "Brand" }, { k: "size", l: "Size" },
-      { k: "stock", l: "Stock", t: "num", f: (r) => fmt.num(r.stockBalances.reduce((s, b) => s + Number(b.quantity), 0)), x: (r) => r.stockBalances.reduce((s, b) => s + Number(b.quantity), 0) },
+      { k: "stock", l: "Boxes available", t: "num", f: (r) => { const boxes = r.stockBalances.reduce((s, b) => s + Number(b.quantity), 0); return boxes > 0 ? fmt.num(boxes) : "Not available"; }, x: (r) => r.stockBalances.reduce((s, b) => s + Number(b.quantity), 0) },
       { k: "purchasePrice", l: "Cost", t: "money" }, { k: "sellingPrice", l: "Price", t: "money" }, { k: "taxPercent", l: "GST %", t: "num" }, { k: "status", l: "Status", t: "badge" },
     ],
     form: [

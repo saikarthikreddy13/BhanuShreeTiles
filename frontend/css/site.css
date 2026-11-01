@@ -189,6 +189,8 @@ body.leaving > * { opacity: 0; transform: translateX(-24px); transition: opacity
 .tile-card .size { margin: 0 0 4px; font-size: 15px; font-weight: 500; font-variant-numeric: tabular-nums; }
 .tile-card .more-info { margin: 0; font-size: 14px; line-height: 1.45; color: var(--muted); }
 .tile-card .ask { margin: 8px 0 0; font-size: 14px; color: var(--link); }
+.tile-card .stock { margin: 4px 0 0; font-size: 14px; font-weight: 500; color: #b3261e; }
+.tile-card .stock.yes { color: #1b7f3b; }
 .empty { grid-column: 1 / -1; padding: 72px 0; text-align: center; font-size: 19px; color: var(--muted); }
 .prose { padding-top: clamp(44px, 6vw, 72px); padding-bottom: clamp(72px, 9vw, 110px); }
 .prose h2 { margin: 0 0 14px; font-size: clamp(28px, 3.4vw, 40px); line-height: 1.1; }

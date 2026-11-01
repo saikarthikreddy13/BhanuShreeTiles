@@ -5,6 +5,8 @@ const ROOM_TITLES = { Bathroom: 'Bathroom tiles', Kitchen: 'Kitchen tiles', Livi
 function tileCard(product) {
   const details = [product.finish, product.color].filter(Boolean).map(safe).join(' · ');
   const price = Number(product.price) ? `₹${Number(product.price).toLocaleString('en-IN')}` : 'Ask for price';
+  const boxes = Number(product.boxes);
+  const stock = boxes > 0 ? `Stock available · ${boxes.toLocaleString('en-IN')} ${boxes === 1 ? 'box' : 'boxes'} available` : 'Not available';
   return `
     <article class="tile-card">
       <span class="pic">${product.imageUrl ? `<img src="${safe(product.imageUrl)}" alt="${safe(product.name)}" loading="lazy">` : ''}</span>
@@ -12,7 +14,8 @@ function tileCard(product) {
       <p class="type">${safe([product.brand, product.category].filter(Boolean).join(' · '))}</p>
       <p class="size">${safe(product.size)}</p>
       ${details ? `<p class="more-info">${details}</p>` : ''}
-      <p class="ask">${price}${product.inStock ? ' · In stock' : ''}</p>
+      <p class="ask">${price}</p>
+      <p class="stock${boxes > 0 ? ' yes' : ''}">${stock}</p>
     </article>`;
 }
 
