@@ -6,6 +6,7 @@ from collections import defaultdict
 from math import ceil
 
 import pymysql
+from PIL import Image, UnidentifiedImageError
 from flask import Flask, jsonify, request, send_from_directory
 from werkzeug.exceptions import HTTPException
 from werkzeug.middleware.proxy_fix import ProxyFix
@@ -15,11 +16,13 @@ from .backup import create_backup
 from .config import API_RATE_LIMIT, AUTH_RATE_LIMIT, FRONTEND_DIR, ORIGINS, TRUST_PROXY, UPLOAD_DIR
 from .db import PoolTimeout, db
 from .errors import AppError
+from .imagesearch import describe, index as photo_index
 from .services import get_settings
 from .web import ErpJson, api, authenticate, reply, route
 
 PUBLIC = {
     "/health", "/auth/login", "/auth/forgot-password", "/auth/reset-password", "/auth/logout", "/auth/session", "/public/catalog",
+    "/public/image-search",
 }
 PASSWORD_CHANGE_ALLOWED = {"/auth/me", "/auth/change-password"}
 AUTH_LIMITED = {"/auth/login", "/auth/forgot-password", "/auth/reset-password"}
@@ -67,6 +70,39 @@ def int_arg(name, default):
     return int(value) if value.isdecimal() and len(value) < 7 else default
 
 
+# What the website may show about a tile: never cost prices.
+PUBLIC_FIELDS = (
+    'SELECT p.name, p.size, p.color, p.finish, p."imageUrl", p."sellingPrice" AS price, c.name AS category, COALESCE(b.name, \'\') AS brand, '
+    'CAST(COALESCE((SELECT SUM(s.quantity) FROM "StockBalance" s WHERE s."productId" = p.id AND s.quantity > 0), 0) AS DOUBLE) AS boxes'
+)
+PUBLIC_TABLES = 'FROM "Product" p JOIN "Category" c ON c.id = p."categoryId" LEFT JOIN "Brand" b ON b.id = p."brandId"'
+
+
+@route("/public/image-search", methods="POST")
+def public_image_search():
+    """Tiles that look most like the customer's photo."""
+    file = request.files.get("image")
+    if not file:
+        raise AppError(400, "Choose a photo to search with")
+    try:
+        photo = Image.open(file.stream)
+        if photo.format not in {"JPEG", "PNG", "WEBP", "GIF", "BMP"}:
+            raise AppError(400, "Use a JPG, PNG or WebP photo")
+        wanted = describe(photo)
+    except (UnidentifiedImageError, Image.DecompressionBombError, OSError, ValueError):
+        raise AppError(400, "This photo could not be read. Try another one") from None
+    known, vectors = photo_index()
+    brand = (request.form.get("brand") or "").strip()[:80]
+    tests, params = ["p.status = 'ACTIVE'", 'p."imageUrl" IS NOT NULL'], []
+    if brand:
+        tests.append("b.name = %s")
+        params.append(brand)
+    rows = [r for r in db.all(f"{PUBLIC_FIELDS} {PUBLIC_TABLES} WHERE {' AND '.join(tests)}", *params) if r["imageUrl"] in known]
+    likeness = vectors @ wanted   # both are unit length, so this is cosine similarity
+    rows.sort(key=lambda r: -likeness[known[r["imageUrl"]]])
+    return reply(rows[:24], total=min(len(rows), 24))
+
+
 @route("/public/catalog")
 def public_catalog():
     """Website catalogue: public fields and boxes available, never cost prices."""
@@ -91,7 +127,7 @@ def public_catalog():
     if brand:
         tests.append("b.name = %s")
         params.append(brand)
-    tables = 'FROM "Product" p JOIN "Category" c ON c.id = p."categoryId" LEFT JOIN "Brand" b ON b.id = p."brandId"'
+    tables = PUBLIC_TABLES
     where = " AND ".join(tests)
     sizes = [r["size"] for r in db.all(f"SELECT DISTINCT p.size {tables} WHERE {where} AND p.size IS NOT NULL", *params)]
     sizes.sort(key=lambda s: [int(n) for n in re.findall(r"\d+", s)])
@@ -105,9 +141,7 @@ def public_catalog():
         order = "CASE WHEN LOWER(p.name) = LOWER(%s) THEN 0 WHEN LOWER(p.name) LIKE CONCAT(LOWER(%s), '%%') THEN 1 ELSE 2 END, p.name ASC"
         order_params = [q, q.replace("%", "").replace("_", "")]
     rows = db.all(
-        'SELECT p.name, p.size, p.color, p.finish, p."imageUrl", p."sellingPrice" AS price, c.name AS category, COALESCE(b.name, \'\') AS brand, '
-        'CAST(COALESCE((SELECT SUM(s.quantity) FROM "StockBalance" s WHERE s."productId" = p.id AND s.quantity > 0), 0) AS DOUBLE) AS boxes '
-        f"{tables} WHERE {where} ORDER BY {order} LIMIT %s OFFSET %s",
+        f"{PUBLIC_FIELDS} {tables} WHERE {where} ORDER BY {order} LIMIT %s OFFSET %s",
         *params, *order_params, limit, (page - 1) * limit,
     )
     brands = [r["name"] for r in db.all('SELECT DISTINCT b.name FROM "Brand" b JOIN "Product" p ON p."brandId" = b.id WHERE p.status = \'ACTIVE\' ORDER BY b.name')]

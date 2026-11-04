@@ -1,6 +1,7 @@
 """Add the Letina range from letina_products.txt. Safe to run repeatedly: a product whose SKU
 already exists is skipped, so nothing entered in the ERP is overwritten. Letina publishes no
-prices, so prices start at 0 and stock is left untouched. Photos load from letina.in itself.
+prices, so prices start at 0 and stock is left untouched. Run fetch_letina_images.py first: photos
+are served from frontend/images/letina, and rows that still point at letina.in are moved there.
 
     python backend\\scripts\\seed_letina.py            add the products
     python backend\\scripts\\seed_letina.py --check    only parse the list and print counts"""
@@ -13,6 +14,7 @@ from urllib.parse import quote
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 IMAGE_BASE = "https://www.letina.in/includes/img/products/"
+LOCAL_DIR = Path(__file__).resolve().parents[2] / "frontend" / "images" / "letina"
 WORD_NAME = re.compile(r"[A-Za-z]+(?:-+[A-Za-z]+)*(?:-\d)?")
 
 
@@ -27,6 +29,17 @@ def display_name(label):
 def sku_for(folder, label):
     code = re.sub(r"[^A-Z0-9]+", "-", label.upper()).strip("-")[:32]
     return f"LT-{code}-{hashlib.sha1((folder + label).encode()).hexdigest()[:8]}"
+
+
+def image_file(p):
+    """Local file name for a photo, unique because it is built from the Letina folder too."""
+    slug = re.sub(r"[^a-z0-9]+", "-", f"{p['folder']}{p['label']}".lower()).strip("-")
+    return slug[:110] + ".jpg"
+
+
+def image_url(p):
+    name = image_file(p)
+    return f"/images/letina/{name}" if (LOCAL_DIR / name).exists() else IMAGE_BASE + quote(f"{p['folder']}{p['label']}.jpg", safe="/-_.")
 
 
 def read_products():
@@ -66,18 +79,21 @@ def main():
 
     brand = find_or_add("Brand", "Letina", "Letina Vitrified (letina.in)")
     categories = {name: find_or_add("Category", name, None) for name in {p["category"] for p in products}}
-    have = {r["sku"] for r in db.all('SELECT sku FROM "Product" WHERE sku LIKE %s', "LT-%")}
+    have = {r["sku"]: r for r in db.all('SELECT id, sku, "imageUrl" FROM "Product" WHERE sku LIKE %s', "LT-%")}
     stamp = now()
-    rows = []
+    rows, moved = [], []
     for p in products:
         sku = sku_for(p["folder"], p["label"])
         if sku in have:
+            old, new = have[sku]["imageUrl"] or "", image_url(p)
+            if old.startswith(IMAGE_BASE) and new.startswith("/images/"):
+                moved.append((new, stamp, have[sku]["id"]))
             continue
-        have.add(sku)
+        have[sku] = None
         rows.append((
             sku, p["name"], f"Rooms: {p['rooms']}. {p['category']}, {p['finish']} series.",
             categories[p["category"]], brand, p["size"], None, p["finish"],
-            IMAGE_BASE + quote(f"{p['folder']}{p['label']}.jpg", safe="/-_."), 0, 0, stamp,
+            image_url(p), 0, 0, stamp,
         ))
     with transaction() as tx:
         with tx.conn.cursor() as cur:
@@ -86,7 +102,8 @@ def main():
                 '"purchasePrice", "sellingPrice", "updatedAt") VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)',
                 rows,
             )
-    print(f"Added {len(rows)} products, skipped {len(products) - len(rows)} already present")
+            cur.executemany('UPDATE "Product" SET "imageUrl" = %s, "updatedAt" = %s WHERE id = %s', moved)
+    print(f"Added {len(rows)} products, skipped {len(products) - len(rows)} already present, moved {len(moved)} photos to this site")
 
 
 if __name__ == "__main__":

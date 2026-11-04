@@ -72,9 +72,20 @@
     </div>
   </section>
   <div class="wrap">
-    <div class="find">
+    <div class="find" id="find">
       <input id="tileSearch" type="search" placeholder="Search tiles by name, colour, size or brand" aria-label="Search tiles" autocomplete="off" enterkeyhint="search">
       <button id="clearSearch" type="button" aria-label="Clear search" hidden>&times;</button>
+      <label class="camera" title="Search with a photo">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg>
+        <span class="sr">Search with a photo</span>
+        <input id="photoSearch" type="file" accept="image/*">
+      </label>
+    </div>
+    <p class="find-hint">Have a photo of a tile you like? Tap the camera to find tiles that look like it.</p>
+    <div class="photo-query" id="photoQuery" hidden>
+      <img id="photoThumb" alt="Your photo">
+      <span><b>Tiles that look like your photo</b><small>Closest colour and pattern first</small></span>
+      <button class="pill quiet" id="photoClear" type="button">Clear photo</button>
     </div>
     <div class="tools">
       <b id="catalogStatus" role="status">Loading tiles</b>
@@ -87,6 +98,27 @@
     <div class="load-row"><button class="pill" id="loadMore" type="button" hidden>Load more</button></div>
   </div>
 </main>
+
+<dialog class="room-view" id="roomView" aria-labelledby="roomTitle">
+  <div class="room-head">
+    <div>
+      <h2 id="roomTitle">360° room view</h2>
+      <p id="roomInfo"></p>
+    </div>
+    <button class="room-close" id="roomClose" type="button" aria-label="Close room view">&times;</button>
+  </div>
+  <div class="room-stage" id="roomStage">
+    <p class="room-msg" id="roomMsg">Setting up the room…</p>
+  </div>
+  <div class="room-foot">
+    <div class="room-place" role="group" aria-label="Where to lay the tile">
+      <button type="button" data-place="floor">Floor</button>
+      <button type="button" data-place="wall">Walls</button>
+      <button type="button" data-place="both">Both</button>
+    </div>
+    <p>Drag to look around 360° · pinch or scroll to zoom</p>
+  </div>
+</dialog>
 
 <footer class="site-foot">
   <div class="wrap">
