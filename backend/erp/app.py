@@ -83,8 +83,11 @@ def public_catalog():
         tests.append("p.size LIKE %s")
         params.append(f"{q} %")
     elif q:
-        tests.append("(" + " OR ".join(f"POSITION(LOWER(%s) IN LOWER(COALESCE({f}, ''))) > 0" for f in fields) + ")")
-        params += [q] * len(fields)
+        # Every word typed must appear somewhere, so "black cadbury" finds Cadbury Black.
+        fields.append("b.name")
+        for word in q.split()[:6]:
+            tests.append("(" + " OR ".join(f"POSITION(LOWER(%s) IN LOWER(COALESCE({f}, ''))) > 0" for f in fields) + ")")
+            params += [word] * len(fields)
     if brand:
         tests.append("b.name = %s")
         params.append(brand)
@@ -96,11 +99,16 @@ def public_catalog():
         where += " AND p.size = %s"
         params.append(size)
     total = db.value(f"SELECT COUNT(*) AS n {tables} WHERE {where}", *params)
+    # A tile whose name is what was typed comes first, then names starting with it.
+    order, order_params = "p.name ASC", []
+    if q and not re.fullmatch(r"\d+x\d+", q):
+        order = "CASE WHEN LOWER(p.name) = LOWER(%s) THEN 0 WHEN LOWER(p.name) LIKE CONCAT(LOWER(%s), '%%') THEN 1 ELSE 2 END, p.name ASC"
+        order_params = [q, q.replace("%", "").replace("_", "")]
     rows = db.all(
         'SELECT p.name, p.size, p.color, p.finish, p."imageUrl", p."sellingPrice" AS price, c.name AS category, COALESCE(b.name, \'\') AS brand, '
         'CAST(COALESCE((SELECT SUM(s.quantity) FROM "StockBalance" s WHERE s."productId" = p.id AND s.quantity > 0), 0) AS DOUBLE) AS boxes '
-        f"{tables} WHERE {where} ORDER BY p.name ASC LIMIT %s OFFSET %s",
-        *params, limit, (page - 1) * limit,
+        f"{tables} WHERE {where} ORDER BY {order} LIMIT %s OFFSET %s",
+        *params, *order_params, limit, (page - 1) * limit,
     )
     brands = [r["name"] for r in db.all('SELECT DISTINCT b.name FROM "Brand" b JOIN "Product" p ON p."brandId" = b.id WHERE p.status = \'ACTIVE\' ORDER BY b.name')]
     return reply(rows, total=total, pages=max(ceil(total / limit), 1), sizes=sizes, brands=brands)

@@ -21,7 +21,7 @@ function tileCard(product) {
 
 async function loadCatalog() {
   const params = new URLSearchParams(location.search);
-  const query = (params.get('q') || '').trim();
+  let query = (params.get('q') || '').trim().slice(0, 80);
   const brandFilter = $('brandFilter');
   const sizeFilter = $('sizeFilter');
   const grid = $('catalogGrid');
@@ -29,6 +29,7 @@ async function loadCatalog() {
   const more = $('loadMore');
   let page = 1;
   let pages = 1;
+  let asked = 0;
 
   const heading = () => {
     const room = ROOM_TITLES[query];
@@ -47,6 +48,7 @@ async function loadCatalog() {
 
   async function load(reset) {
     if (reset) page = 1;
+    const mine = ++asked;
     more.hidden = true;
     const url = new URLSearchParams({ page });
     if (query) url.set('q', query);
@@ -59,6 +61,8 @@ async function loadCatalog() {
       status.textContent = 'The catalogue is unavailable right now. Please try again shortly.';
       return;
     }
+    // A slower reply for an older search must not replace the newer one.
+    if (mine !== asked) return;
     pages = reply.pages;
     fill(sizeFilter, reply.sizes, 'All sizes');
     status.textContent = `${reply.total.toLocaleString('en-IN')} ${reply.total === 1 ? 'tile' : 'tiles'}`;
@@ -82,9 +86,48 @@ async function loadCatalog() {
     load(true);
   };
 
-  document.querySelectorAll('#chips a').forEach((chip) => { if (chip.dataset.q === query) chip.setAttribute('aria-current', 'page'); });
-  const searchBox = document.querySelector('.search input');
-  if (searchBox && !ROOM_TITLES[query]) searchBox.value = query;
+  const markChips = () => document.querySelectorAll('#chips a').forEach((chip) => {
+    if (chip.dataset.q === query) chip.setAttribute('aria-current', 'page');
+    else chip.removeAttribute('aria-current');
+  });
+  markChips();
+  const headerBox = document.querySelector('.search input');
+  const tileSearch = $('tileSearch');
+  const clearSearch = $('clearSearch');
+  const typed = ROOM_TITLES[query] ? '' : query;
+  if (headerBox) headerBox.value = typed;
+  tileSearch.value = typed;
+  clearSearch.hidden = !typed;
+
+  // Results update as the customer types, a moment after the last key.
+  let wait;
+  const search = (text) => {
+    clearTimeout(wait);
+    clearSearch.hidden = !text;
+    wait = setTimeout(() => {
+      const next = text.trim().slice(0, 80);
+      if (next === query) return;
+      query = next;
+      const url = new URL(location.href);
+      if (query) url.searchParams.set('q', query);
+      else url.searchParams.delete('q');
+      history.replaceState(null, '', url);
+      if (headerBox) headerBox.value = query;
+      markChips();
+      sizeFilter.value = '';
+      load(true);
+    }, 250);
+  };
+  tileSearch.addEventListener('input', () => search(tileSearch.value));
+  tileSearch.addEventListener('keydown', (e) => { if (e.key === 'Escape') { tileSearch.value = ''; search(''); } });
+  clearSearch.addEventListener('click', () => { tileSearch.value = ''; search(''); tileSearch.focus(); });
+  // On this page the header search filters in place instead of reloading.
+  headerBox?.form?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    tileSearch.value = headerBox.value;
+    search(headerBox.value);
+    tileSearch.scrollIntoView({ block: 'center', behavior: 'smooth' });
+  });
 
   // The brand list comes first, so a link such as ?brand=Italica can select its option.
   try {

@@ -1,0 +1,342 @@
+# Letina Vitrified tiles, read from https://www.letina.in/ on 2026-11-04.
+# A line starting with "@" opens a group:  @ size | category | finish | rooms | image folder
+# The lines after it are the image file names (without .jpg) in that folder, as published.
+# Rooms are suggested by tile type (Letina's pages do not list them). Letina publishes no prices.
+
+@ 300x300 mm | Digital Wall Tiles | Moroccan | Bathroom, Kitchen | wall/300x300/moroccan/401/
+401-1 401-2 401-3 401-4 401-5 401-6 401-7 401-8 401-9
+@ 300x300 mm | Digital Wall Tiles | Moroccan | Bathroom, Kitchen | wall/300x300/moroccan/552/
+552-HL01-1 552-HL01-2 552-HL01-3 552-HL01-4 552-HL01-5 552-HL01-6 552-HL01-7 552-HL01-8 552-LT01 552-LT02 552-LT03 552-LT04
+@ 300x300 mm | Digital Wall Tiles | Moroccan | Bathroom, Kitchen | wall/300x300/moroccan/555/
+555-DK-1 555-DK-2 555-DK-3 555-DK-4 555-DK-5 555-DK-6 555-HL01-1 555-HL01-2 555-HL01-3 555-HL01-4 555-HL01-5 555-HL01-6
+@ 300x300 mm | Digital Wall Tiles | Moroccan | Bathroom, Kitchen | wall/300x300/moroccan/556/
+556-DK-1 556-DK-2 556-DK-3 556-DK-4 556-DK-5 556-DK-6 556-DK-7 556-DK-8 556-DK-9 556-HL01-1 556-HL01-2 556-HL01-3 556-HL01-4 556-HL01-5 556-HL01-6 556-HL01-7
+@ 300x300 mm | Digital Wall Tiles | Moroccan | Bathroom, Kitchen | wall/300x300/moroccan/557/
+557-HL01-1 557-HL01-2 557-HL01-3 557-HL01-4 557-HL01-5 557-HL01-6 557-HL01-7 557-HL01-8 557-HL01-9 557-HL01-10 557-HL01-11 557-HL01-12 557-HL02-1 557-HL02-2 557-HL02-3 557-HL02-4 557-HL02-5 557-HL02-6 557-HL02-7 557-HL02-8 557-HL02-9 557-HL02-10 557-HL02-11 557-HL02-12 557-LT-1 557-LT-2 557-LT-3 557-LT-4
+@ 300x300 mm | Digital Wall Tiles | Moroccan | Bathroom, Kitchen | wall/300x300/moroccan/other/
+468 582 586 596 600
+@ 300x300 mm | Digital Wall Tiles | Moroccan Granulla | Bathroom, Kitchen | wall/300x300/moroccan-granulla/421-GR/
+421-GR-1 421-GR-2
+@ 300x300 mm | Digital Wall Tiles | Moroccan Granulla | Bathroom, Kitchen | wall/300x300/moroccan-granulla/422-GR/
+422-GR-1 422-GR-2 422-GR-3 422-GR-4 422-GR-5 422-GR-6 422-GR-7 422-GR-8
+@ 300x300 mm | Digital Wall Tiles | Moroccan Granulla | Bathroom, Kitchen | wall/300x300/moroccan-granulla/427-GR/
+427-GR-1 427-GR-2 427-GR-3 427-GR-4
+@ 300x300 mm | Digital Wall Tiles | Moroccan Granulla | Bathroom, Kitchen | wall/300x300/moroccan-granulla/429-GR/
+429-GR-1 429-GR-2 429-GR-3 429-GR-4
+@ 300x300 mm | Digital Wall Tiles | Moroccan Granulla | Bathroom, Kitchen | wall/300x300/moroccan-granulla/464-GR/
+464-GR-1 464-GR-2 464-GR-3 464-GR-4 464-GR-5 464-GR-6
+@ 300x300 mm | Digital Wall Tiles | Moroccan Granulla | Bathroom, Kitchen | wall/300x300/moroccan-granulla/467/
+467-DK-1 467-DK-2 467-DK-3 467-DK-4 467-GR-HL01-1 467-GR-HL01-2 467-GR-HL01-3 467-GR-HL01-4 467-GR-HL01-5 467-GR-HL01-6 467-GR-HL01-7 467-GR-HL01-8 467-GR-HL01-9 467-LT-1 467-LT-2 467-LT-3 467-LT-4
+@ 300x300 mm | Digital Wall Tiles | Moroccan Granulla | Bathroom, Kitchen | wall/300x300/moroccan-granulla/other/
+413-GR 414-GR 445-GR 447-GR
+@ 300x300 mm | Digital Wall Tiles | Moroccan Luster | Bathroom, Kitchen | wall/300x300/moroccan-luster/438-LR/
+438-LR-1 438-LR-2 438-LR-3 438-LR-4 438-LR-5 438-LR-6
+@ 300x300 mm | Digital Wall Tiles | Moroccan Luster | Bathroom, Kitchen | wall/300x300/moroccan-luster/440-LR/
+440-LR-1 440-LR-2
+@ 300x300 mm | Digital Wall Tiles | Moroccan Luster | Bathroom, Kitchen | wall/300x300/moroccan-luster/442-LR/
+442-LR-1 442-LR-2 442-LR-3 442-LR-4
+@ 300x300 mm | Digital Wall Tiles | Moroccan Luster | Bathroom, Kitchen | wall/300x300/moroccan-luster/other/
+449-LR 450-LR 451-LR 452-LR 454-LR 460-LR 461-LR
+
+@ 300x450 mm | Elevation Tiles | Glossy | Outdoor, Commercial | wall/300x450/elevation/glossy/
+3185-HL-(1074) 3244-HL-(plain) 3246-HL-(plain) 627-HL-(BUMP) 794-HL 797-HL-(BRICKS) 886-HL-(1081) EL-2016-(STONE) EL-2023-(ETU) EL-2027 EL-2046-(PLAIN) EL-2051_01-(1148) EL-2061-(1152) EL-2062-01-(1147) EL-2063-01-(1147)
+@ 300x450 mm | Elevation Tiles | Matt | Outdoor, Commercial | wall/300x450/elevation/matt/
+EL-1076-(1090) EL-1090-(1118) EL-1102-(1146) EL-1112-01-(1018) EL-1120-(1147) EL-1124_01 EL-1130_01 EL-1136_01 EL-1137_01 EL-1138-01-(1162) EL-1140-01-(1162) EL-1144-(1178) EL-1156-(PLAIN) EL-1161--01-(1180) EL-1163-(PLAIN)
+@ 300x450 mm | Digital Wall Tiles | Exclusive Colour | Bathroom, Kitchen | wall/300x450/exclusive-color/
+ALPINE-BLUE BLACK BURGUNDY FANTA-ORANGE MAGENTA MINT-GREEN PACIFIC-BLUE RED YELLOW
+@ 300x450 mm | Digital Wall Tiles | Glossy | Bathroom, Kitchen | wall/300x450/glossy/3060/
+3060-DK_01 3060-HL-(SHANKU-24-SQ) 3060-LT_01
+@ 300x450 mm | Digital Wall Tiles | Glossy | Bathroom, Kitchen | wall/300x450/glossy/3061/
+3061-DK_01 3061-HL-(SHANKU-24-SQ) 3061-LT_01
+@ 300x450 mm | Digital Wall Tiles | Glossy | Bathroom, Kitchen | wall/300x450/glossy/3129/
+3129-DK-(PLAIN) 3129-HL01-(1138) 3129-HL02-(1137) 3129-HL03-(1129) 3129-LT-(PLAIN)
+@ 300x450 mm | Digital Wall Tiles | Glossy | Bathroom, Kitchen | wall/300x450/glossy/3181/
+3181-DK-(PLAIN) 3181-HL-A-(PLAIN) 3181-HL-B-(PLAIN) 3181-LT-(PLAIN)
+@ 300x450 mm | Digital Wall Tiles | Glossy | Bathroom, Kitchen | wall/300x450/glossy/3218/
+3218-DK-1 3218-HL-(1177) 3218-HL-02-(1158) 3218-LT-1
+@ 300x450 mm | Digital Wall Tiles | Glossy | Bathroom, Kitchen | wall/300x450/glossy/3228/
+3228-DK-01 3228-HL-01-(1171) 3228-HL-02-(1167) 3228-LT-01
+@ 300x450 mm | Digital Wall Tiles | Glossy | Bathroom, Kitchen | wall/300x450/glossy/3229/
+3229-HL-01-(1175) 3229-HL-02-(1176) 3229-LT-01
+@ 300x450 mm | Digital Wall Tiles | Glossy | Bathroom, Kitchen | wall/300x450/glossy/3234/
+3234-DK-01 3234-HL-01-(1175) 3234-HL-02-(1170) 3234-LT-01
+@ 300x450 mm | Digital Wall Tiles | Glossy | Bathroom, Kitchen | wall/300x450/glossy/3239/
+3239-DK-1 3239-HL01-(1176) 3239-HL02-(1172) 3239-LT-1
+@ 300x450 mm | Digital Wall Tiles | Glossy | Bathroom, Kitchen | wall/300x450/glossy/3263/
+3263-DK-(1004) 3263-HL-01-(1004) 3263-HL-02-(1170) 3263-LT-(1004)
+@ 300x450 mm | Digital Wall Tiles | Glossy | Bathroom, Kitchen | wall/300x450/glossy/3267/
+3267-DK-(PLAIN) 3267-HL01-(1144) 3267-LT-(PLAIN)
+@ 300x450 mm | Digital Wall Tiles | Glossy | Bathroom, Kitchen | wall/300x450/glossy/3280/
+3280-DK01-(PLAIN) 3280-HL01-(1182) 3280-HL02-(1189) 3280-LT01-(PLAIN)
+@ 300x450 mm | Digital Wall Tiles | Glossy | Bathroom, Kitchen | wall/300x450/glossy/3283/
+3283-DK01-(PLAIN) 3283-HL01-(1183) 3283-HL02-(1188) 3283-LT01-(PLAIN)
+@ 300x450 mm | Digital Wall Tiles | Glossy | Bathroom, Kitchen | wall/300x450/glossy/3287/
+3287-DK01-(PLAIN) 3287-HL01-(1181) 3287-HL02-(1182) 3287-LT01-(PLAIN)
+@ 300x450 mm | Digital Wall Tiles | Glossy | Bathroom, Kitchen | wall/300x450/glossy/3300/
+3300-DK01-(PLAIN) 3300-HL01-(1181) 3300-HL02-(1184) 3300-LT01-(PLAIN)
+@ 300x450 mm | Digital Wall Tiles | Glossy | Bathroom, Kitchen | wall/300x450/glossy/3321/
+3321-DK_1-(PLAIN) 3321-HL01-(1200) 3321-HL02-(1191) 3321-LT_1-(PLAIN)
+@ 300x450 mm | Digital Wall Tiles | Glossy | Bathroom, Kitchen | wall/300x450/glossy/3327/
+3327-DK_1-(PLAIN) 3327-HL01-(1200) 3327-HL02-(1194) 3327-LT_1-(PLAIN)
+@ 300x450 mm | Digital Wall Tiles | Glossy | Bathroom, Kitchen | wall/300x450/glossy/3333/
+3333-DK_1-(PLAIN) 3333-HL01-(1192) 3333-HL02-(1198) 3333-LT_1-(PLAIN)
+@ 300x450 mm | Digital Wall Tiles | Glossy | Bathroom, Kitchen | wall/300x450/glossy/3343/
+3343-HL01-(1197) 3343-HL02-(1193) 3343-LT_1-(PLAIN)
+@ 300x450 mm | Digital Wall Tiles | Glossy | Bathroom, Kitchen | wall/300x450/glossy/3345/
+3345-DK_1-(PLAIN) 3345-HL01-(1200) 3345-HL02-(1192) 3345-LT_1-(PLAIN)
+@ 300x450 mm | Digital Wall Tiles | Glossy | Bathroom, Kitchen | wall/300x450/glossy/Dolphin/3080/
+3080-DK-(PLAIN) 3080-HLA-(PLAIN) 3080-HLB-(PLAIN) 3080-LT-(PLAIN)
+@ 300x450 mm | Digital Wall Tiles | Glossy | Bathroom, Kitchen | wall/300x450/glossy/Dolphin/3154/
+3154-DK-(PLAIN) 3154-HL_A-(PLAIN) 3154-HL_B-(PLAIN) 3154-LT-(PLAIN)
+@ 300x450 mm | Digital Wall Tiles | Glossy | Bathroom, Kitchen | wall/300x450/glossy/Dolphin/3165/
+3165-DK 3165-HL_A 3165-HL_B 3165-LT
+@ 300x450 mm | Digital Wall Tiles | Glossy | Bathroom, Kitchen | wall/300x450/glossy/Dolphin/3177/
+3177-DK-(PLAIN) 3177-HL_A-(PLAIN) 3177-HL_B-(PLAIN) 3177-LT-(PLAIN)
+@ 300x450 mm | Digital Wall Tiles | Glossy | Bathroom, Kitchen | wall/300x450/glossy/Dolphin/3275/
+3275-DK-(PLAIN) 3275-HL-A-(PLAIN) 3275-HL-B-(PLAIN)
+@ 300x450 mm | Digital Wall Tiles | Kitchen | Kitchen | wall/300x450/kitchen/828/
+828-DK-(1106) 828-HL03-(1106) 828-HL04-(1106) 828-HL05-(1106) 828-LT-(1106)
+@ 300x450 mm | Digital Wall Tiles | Kitchen | Kitchen | wall/300x450/kitchen/3026/
+3026-DK-(24-SQ) 3026-HL02-(24-SQ) 3026-HL03-(24-SQ) 3026-HL04-(24-SQ) 3026-LT-(24-SQ)
+@ 300x450 mm | Digital Wall Tiles | Kitchen | Kitchen | wall/300x450/kitchen/3213/
+3213-HL-01-(PLAIN) 3213-HL-02-(PLAIN) 3213-HL-03-(PLAIN) 3213-HL-04-(PLAIN) 3213-LT-1 3213-LT-2 3213-LT-3 3213-LT-4
+@ 300x450 mm | Digital Wall Tiles | Kitchen | Kitchen | wall/300x450/kitchen/3305/
+3305-DK-(PLAIN) 3305-HL01-(PLAIN) 3305-HL02-(PLAIN) 3305-LT-(PLAIN)
+@ 300x450 mm | Digital Wall Tiles | Kitchen | Kitchen | wall/300x450/kitchen/3307/
+3307-HL01-(PLAIN) 3307-HL02-(PLAIN) 3307-HL03-(PLAIN) 3307-HL04-(PLAIN) 3307-LT-(PLAIN)
+@ 300x450 mm | Digital Wall Tiles | Kitchen | Kitchen | wall/300x450/kitchen/3308/
+3308-DK-(PLAIN) 3308-HL01-(PLAIN) 3308-HL02-(PLAIN) 3308-LT-(PLAIN)
+@ 300x450 mm | Digital Wall Tiles | Kitchen | Kitchen | wall/300x450/kitchen/3335/
+3335-HL03-(PLAIN) 3335-HL04-(PLAIN) 3335-LT_1-(PLAIN) 3335-LT_2-(PLAIN) 3335-LT_3-(PLAIN) 3335-LT_4-(PLAIN) 3335-LT_5-(PLAIN)
+@ 300x450 mm | Digital Wall Tiles | Kitchen | Kitchen | wall/300x450/kitchen/3350/
+3350-HL01-(1004) 3350-HL02-(1004) 3350-LT-(1004)
+@ 300x450 mm | Digital Wall Tiles | Kitchen | Kitchen | wall/300x450/kitchen/3352/
+3352-DK-(1085) 3352-HL01-(1085) 3352-HL02-(1085) 3352-LT-(1085)
+@ 300x450 mm | Digital Wall Tiles | Kitchen | Kitchen | wall/300x450/kitchen/3353/
+3353-HL01-(1156) 3353-HL02-(1156) 3353-LT-(PLAIN)
+@ 300x450 mm | Digital Wall Tiles | Kitchen | Kitchen | wall/300x450/kitchen/3358/
+3358-HL01-(1164) 3358-HL02-(1164) 3358-LT-(1164)
+@ 300x450 mm | Digital Wall Tiles | Kitchen | Kitchen | wall/300x450/kitchen/3359/
+3359-HL01-(PLAIN) 3359-HL02-(PLAIN) 3359-LT-(PLAIN)
+@ 300x450 mm | Digital Wall Tiles | Kitchen | Kitchen | wall/300x450/kitchen/3361/
+3361-HL01-(PLAIN) 3361-HL02-(PLAIN) 3361-HL03-(PLAIN) 3361-HL04-(PLAIN) 3361-LT-(PLAIN)
+@ 300x450 mm | Digital Wall Tiles | Kitchen | Kitchen | wall/300x450/kitchen/3363/
+3363-DK-(PLAIN) 3363-HL01-(PLAIN) 3363-HL02-(PLAIN) 3363-LT-(PLAIN)
+@ 300x450 mm | Digital Wall Tiles | Luster | Kitchen | wall/300x450/kitchen/Luster/3136/
+3136-LR-HL01-(PLAIN) 3136-LR-HL02-(PLAIN) 3136-LR-HL03-(PLAIN) 3136-LR-HL04-(PLAIN) 3136-LR-LT-(PLAIN)
+@ 300x450 mm | Digital Wall Tiles | Luster | Kitchen | wall/300x450/kitchen/Luster/3137/
+3137-LR-HL01-(PLAIN) 3137-LR-HL02-(PLAIN) 3137-LR-HL03-(PLAIN) 3137-LR-HL04-(PLAIN) 3137-LR-LT-(PLAIN)
+@ 300x450 mm | Digital Wall Tiles | Luster | Kitchen | wall/300x450/kitchen/Luster/3142/
+3142-LR-HL01-1-(1122) 3142-LR-HL01-2-(1122) 3142-LR-LT-(1122)-2
+@ 300x450 mm | Digital Wall Tiles | Luster | Kitchen | wall/300x450/kitchen/Luster/3147/
+3147-LR-HL01 3147-LR-HL02 3147-LR-HL03 3147-LR-LT
+@ 300x450 mm | Digital Wall Tiles | Luster | Kitchen | wall/300x450/kitchen/Luster/3148/
+3148-LR-HL01-(PLAIN) 3148-LR-HL02-(PLAIN) 3148-LR-LT-(PLAIN)
+@ 300x450 mm | Digital Wall Tiles | Luster | Kitchen | wall/300x450/kitchen/Luster/3149/
+3149-LR-HL01-(PLAIN) 3149-LR-HL02-(PLAIN) 3149-LR-LT-(PLAIN)
+@ 300x450 mm | Digital Wall Tiles | Luster | Kitchen | wall/300x450/kitchen/Luster/3150/
+3150-LR-HL01-(PLAIN) 3150-LR-HL02-(PLAIN) 3150-LR-LT-(PLAIN)
+@ 300x450 mm | Digital Wall Tiles | Luster | Kitchen | wall/300x450/kitchen/Luster/3184/
+3184-LR-HL01-(1122) 3184-LR-HL02-(1122) 3184-LR-LT-(1122)
+@ 300x450 mm | Digital Wall Tiles | Luster | Kitchen | wall/300x450/kitchen/Luster/3212/
+3212-LR-HL01-(PLAIN) 3212-LR-HL02-(PLAIN) 3212-LT-(PLAIN)
+@ 300x450 mm | Digital Wall Tiles | Matt | Bathroom, Kitchen | wall/300x450/matt/916/
+916-DK-(PLAIN) 916-HL-(TAPAKI-SQ) 916-HL02-(1096) 916-HL03-(1114) 916-HL04-(1144) 916-LT-(PLAIN)
+@ 300x450 mm | Digital Wall Tiles | Matt | Bathroom, Kitchen | wall/300x450/matt/932/
+932-DK-(PLAIN) 932-HL-(1096) 932-LT-(PLAIN) A-932-HL02-(1104) A-932-HL03-(1174) A-932-HL04-(1102)
+@ 300x450 mm | Digital Wall Tiles | Matt | Bathroom, Kitchen | wall/300x450/matt/934/
+934-DK-(PLAIN) 934-HL01-(1080-FRAME-SQ) 934-HL02-(1096-SHANKU-SQ) 934-LT-(PLAIN) A-934-HL03-(1137)
+@ 300x450 mm | Digital Wall Tiles | Matt | Bathroom, Kitchen | wall/300x450/matt/949/
+949-DK_01 949-DK_02 949-DK_03 949-DK_04 949-LT_01 949-LT_02 949-LT_03 949-LT_04
+@ 300x450 mm | Digital Wall Tiles | Matt | Bathroom, Kitchen | wall/300x450/matt/950/
+950-DK_01 950-DK_02 950-DK_03 950-DK_04 950-LT_01 950-LT_02 950-LT_03 950-LT_04
+@ 300x450 mm | Digital Wall Tiles | Matt | Bathroom, Kitchen | wall/300x450/matt/953/
+953-LT-WOOD-WENGE-01-Wood-Punch 953-LT-WOOD-WENGE-02-Wood-Punch 953-LT-WOOD-WENGE-03-Wood-Punch 953-LT-WOOD-WENGE-04-Wood-Punch 953-WOOD-WENGE-01-Wood-Punch 953-WOOD-WENGE-02-Wood-Punch 953-WOOD-WENGE-03-Wood-Punch 953-WOOD-WENGE-04-Wood-Punch
+@ 300x450 mm | Digital Wall Tiles | Matt | Bathroom, Kitchen | wall/300x450/matt/961/
+961-DK-(PLAIN) 961-HL-(1003) 961-LT-(PLAIN) A-961-HL02-(1145) A-961-HL03-(1102)
+@ 300x450 mm | Digital Wall Tiles | Matt | Bathroom, Kitchen | wall/300x450/matt/985/
+985-DK-(PLAIN) 985-HL-(1003) 985-LT-(PLAIN)
+@ 300x450 mm | Digital Wall Tiles | Matt | Bathroom, Kitchen | wall/300x450/matt/987/
+A-987-DK-(1002) A-987-HL01-(1174) A-987-HL02-(1167) A-987-LT-(1002)
+@ 300x450 mm | Digital Wall Tiles | Matt | Bathroom, Kitchen | wall/300x450/matt/988/
+A-988-DK-(1002) A-988-HL1-(1096) A-988-HL2-(1166) A-988-HL3-(1113) A-988-LT-(1002)
+@ 300x450 mm | Digital Wall Tiles | Matt | Bathroom, Kitchen | wall/300x450/matt/990/
+A-990-DK-01-(PLAIN) A-990-HL01-(1144) A-990-HL02-(1158) A-990-LT-01-(PLAIN)
+@ 300x450 mm | Digital Wall Tiles | Matt | Bathroom, Kitchen | wall/300x450/matt/999/
+999-DK-(1001) 999-HL01-1-(1101) 999-HL01-2-(1101) 999-LT-(1001)
+@ 300x450 mm | Digital Wall Tiles | Matt GR | Bathroom, Kitchen | wall/300x450/matt-gr/301/
+301-GR-HL_1-(1135-KAMAL) 301-HL_2-(1141-LEATHER-CHOKDA) 301-HL_3-(1142-LEATHER-TRIKON) 301-LT 301-LT2
+@ 300x450 mm | Digital Wall Tiles | Matt GR | Bathroom, Kitchen | wall/300x450/matt-gr/302/
+302-GR-HL-1-(1142-LEATHER-TRIKON) 302-HL-2-(1141-LEATHER-CHOKDA) 302-HL-3-(1142-LEATHER-TRIKON) 302-LT 302-LT2
+@ 300x450 mm | Digital Wall Tiles | Matt GR | Bathroom, Kitchen | wall/300x450/matt-gr/304/
+304-DK 304-DK2 304-GR-HL-1-(1141-LEATHER-CHOKDA) 304-HL-2-(1141-LEATHER-CHOKDA) 304-HL-3-(1142-LEATHER-TRIKON)
+@ 300x450 mm | Digital Wall Tiles | Matt GR | Bathroom, Kitchen | wall/300x450/matt-gr/306/
+306-DK 306-DK2 306-GR-HL-1-(1142-LEATHER-TRIKON) 306-HL-2-(1141-LEATHER-CHOKDA) 306-HL-3-(1142-LEATHER-TRIKON)
+@ 300x450 mm | Digital Wall Tiles | Matt GR | Bathroom, Kitchen | wall/300x450/matt-gr/308/
+308-DK 308-DK2 308-GR-HL-1-(1138-TRIKON-CHORAS) 308-HL-2-(1141-LEATHER-CHOKDA) 308-HL-3-(1142-LEATHER-TRIKON)
+@ 300x450 mm | Digital Wall Tiles | Matt GR | Bathroom, Kitchen | wall/300x450/matt-gr/310/
+310-DK 310-DK2 310-GR-HL-1-(1142-LEATHER-TRIKON) 310-HL-2-(1141-LEATHER-CHOKDA) 310-HL-3-(1142-LEATHER-TRIKON)
+@ 300x450 mm | Digital Wall Tiles | Matt GR | Bathroom, Kitchen | wall/300x450/matt-gr/312/
+312-DK 312-DK2 312-GR-HL-1-(1138-TRIKON-CHORAS) 312-HL-2-(1141-LEATHER-CHOKDA) 312-HL-3-(1142-LEATHER-TRIKON)
+@ 300x450 mm | Digital Wall Tiles | Matt GR | Bathroom, Kitchen | wall/300x450/matt-gr/313/
+313-DK 313-DK2 313-GR-HL-1-(1135-KAMAL) 313-GR-HL-2-(1144-CHORAS-FUL)
+@ 300x450 mm | Digital Wall Tiles | Matt GR | Bathroom, Kitchen | wall/300x450/matt-gr/316/
+303-LT 303-LT2 316-DK 316-DK2 316-GR-HL-1-(1141-LEATHER-CHOKDA) 316-GR-HL-2-(1139-PLUS-CHOKDI)
+@ 300x450 mm | Digital Wall Tiles | Matt GR | Bathroom, Kitchen | wall/300x450/matt-gr/318/
+318-DK 318-DK2 318-GR-HL-1-(1142-LEATHER-TRIKON) 318-GR-HL-2-(1144-CHORAS-FUL)
+@ 300x450 mm | Digital Wall Tiles | Matt GR | Bathroom, Kitchen | wall/300x450/matt-gr/319/
+319-DK 319-DK2 319-GR-HL-1-(1143-NEW-PYRAMID) 319-GR-HL-2-(1139-PLUS-CHOKDI)
+@ 300x450 mm | Digital Wall Tiles | Matt GR | Bathroom, Kitchen | wall/300x450/matt-gr/321/
+321-DK 321-DK2 321-GR-HL-1-(1141-LEATHER-CHOKDA) 321-GR-HL-2-(1138-TRIKON-CHORAS)
+@ 300x450 mm | Digital Wall Tiles | Matt GR | Bathroom, Kitchen | wall/300x450/matt-gr/323/
+323-GR-HL01(1096) M-1096-WHITE
+@ 300x450 mm | Digital Wall Tiles | Sugar | Bathroom, Kitchen | wall/300x450/sugar/1101/
+1101-DK01-(PLAIN) 1101-HL01-(PLAIN) 1101-HL02-(1184) 1101-LT01-(PLAIN)
+@ 300x450 mm | Digital Wall Tiles | Sugar | Bathroom, Kitchen | wall/300x450/sugar/1102/
+1102-DK01-(PLAIN) 1102-HL01_1-(1156) 1102-HL02-(1187)
+@ 300x450 mm | Digital Wall Tiles | Sugar | Bathroom, Kitchen | wall/300x450/sugar/1104/
+1104-DK01-(PLAIN) 1104-HL01-(1158) 1104-HL02-(1163) 1104-LT01-(PLAIN)
+@ 300x450 mm | Digital Wall Tiles | Sugar | Bathroom, Kitchen | wall/300x450/sugar/1107/
+1107-DK01-(PLAIN) 1107-HL01-(1165) 1107-HL02-(1172) 1107-LT-(PLAIN)
+@ 300x450 mm | Digital Wall Tiles | Sugar | Bathroom, Kitchen | wall/300x450/sugar/1108/
+1108-DK01-(PLAIN) 1108-HL01_1-(1156) 1108-HL02-(1172)
+@ 300x450 mm | Digital Wall Tiles | Sugar | Bathroom, Kitchen | wall/300x450/sugar/1109/
+1109-DK01-(PLAIN) 1109-HL01-(1172) 1109-HL02-(1181)
+@ 300x450 mm | Digital Wall Tiles | Sugar | Bathroom, Kitchen | wall/300x450/sugar/1110/
+1110-DK01-(PLAIN) 1110-HL01-(1187) 1110-HL02-(1170) 1110-LT01-(PLAIN)
+@ 300x450 mm | Digital Wall Tiles | Sugar | Bathroom, Kitchen | wall/300x450/sugar/1112/
+1112-DK01-(PLAIN) 1112-HL01-(1182) 1112-HL02-(1184) 1112-LT01-(PLAIN)
+@ 300x450 mm | Digital Wall Tiles | Sugar | Bathroom, Kitchen | wall/300x450/sugar/1113/
+1113-DK01-(PLAIN) 1113-HL01_1-(1156) 1113-HL02-(1137) 1113-LT01-(PLAIN)
+@ 300x450 mm | Digital Wall Tiles | Sugar | Bathroom, Kitchen | wall/300x450/sugar/1117/
+1117-DK01-(PLAIN) 1117-HL01-(1165) 1117-HL02-(1170) 1117-LT01-(PLAIN)
+@ 300x450 mm | Digital Wall Tiles | Sugar | Bathroom, Kitchen | wall/300x450/sugar/1119/
+1119-DK01-(PLAIN) 1119-HL01-(1187) 1119-HL02-(1176) 1119-LT01-(PLAIN)
+@ 300x450 mm | Digital Wall Tiles | Sugar | Bathroom, Kitchen | wall/300x450/sugar/1121/
+1121-DK01-(PLAIN) 1121-HL01-(1137) 1121-HL02-(1176) 1121-LT01-(PLAIN)
+@ 300x450 mm | Digital Wall Tiles | Sugar | Bathroom, Kitchen | wall/300x450/sugar/1122/
+1122-DK01-(PLAIN) 1122-HL01-(1158) 1122-HL02-(1155) 1122-LT01-(PLAIN)
+@ 300x450 mm | Digital Wall Tiles | Sugar | Bathroom, Kitchen | wall/300x450/sugar/1124/
+1124-DK01-(PLAIN) 1124-HL01-(1189) 1124-HL02-(1176) 1124-LT01-(PLAIN)
+@ 300x450 mm | Digital Wall Tiles | Sugar | Bathroom, Kitchen | wall/300x450/sugar/1125/
+1125-HL01-(1165) 1125-HL02-(1184) 1125-HL03-(1187)
+@ 300x450 mm | Digital Wall Tiles | Super White | Bathroom, Kitchen | wall/300x450/super-white/823/
+823-HL-(24-SQ--1022) 823-LT-01-(PLAIN)
+@ 300x450 mm | Digital Wall Tiles | Super White | Bathroom, Kitchen | wall/300x450/super-white/829/
+829-HL-(CHANDLA) 829-LT_01-(1006)
+@ 300x450 mm | Digital Wall Tiles | Super White | Bathroom, Kitchen | wall/300x450/super-white/839/
+839-HL01-(1056) 839-HL02-(1056) 839-LT-(1056)
+@ 300x450 mm | Digital Wall Tiles | Super White | Bathroom, Kitchen | wall/300x450/super-white/847/
+847-HL01-(1080-FREM-SQ) 847-HL02-(1080-FREM-SQ) 847-LT-(1080-FREM-SQ)
+@ 300x450 mm | Digital Wall Tiles | Super White | Bathroom, Kitchen | wall/300x450/super-white/855/
+855-HL01-(PEPSI) 855-HL02-(PEPSI) 855-LT02-(PEPSI)
+@ 300x450 mm | Digital Wall Tiles | Super White | Bathroom, Kitchen | wall/300x450/super-white/3066/
+3066-HL02-(1126) 3066-HL03-(1126) 3066-HL04-(1126) 3066-LT-(1126)
+@ 300x450 mm | Digital Wall Tiles | Super White | Bathroom, Kitchen | wall/300x450/super-white/3107/
+3107-HL-01-(1101) 3107-HL-02-(1101) 3107-LT-02-(PLAIN)
+@ 300x450 mm | Digital Wall Tiles | Super White | Bathroom, Kitchen | wall/300x450/super-white/3145/
+3145-HL-(1096) 3145-LT
+@ 300x450 mm | Digital Wall Tiles | Sathvario Grey | Bathroom, Kitchen | wall/300x450/super-white/SATHVARIO-GREY_01/
+K_126-(PHOTO) K_131-(PLAIN) K_135-(PLAIN) K_137-(PLAIN) SATVARIO-GREY-01_1
+@ 300x450 mm | Digital Wall Tiles | Sathvario Grey | Bathroom, Kitchen | wall/300x450/super-white/SATHVARIO-GREY_02/
+K_101 K_105 K_119-(24-SQUA) K_127-(24-SQ) K_129-(24-SQ) K_130-(24-SQ) SATHVARIO-GREY-02_1 k_110 k_111
+
+@ 300x600 mm | Digital Wall Tiles | Cadbury | Bathroom, Kitchen | wall/300X600/cadbury/001/
+CADBURY-BLACK CADBURY-COAL CADBURY-DECOR-1 CANDY-BLACK
+@ 300x600 mm | Digital Wall Tiles | Cadbury | Bathroom, Kitchen | wall/300X600/cadbury/002/
+CADBURY-DECOR-1 CADBURY-GREY CADBURY-SLATE CADBURY-STEEL
+@ 300x600 mm | Digital Wall Tiles | Cadbury | Bathroom, Kitchen | wall/300X600/cadbury/003/
+CADBURY-BERRY CADBURY-BLUE CADBURY-DECOR-4 CADBURY-GREEN CADBURY-STEEL
+@ 300x600 mm | Digital Wall Tiles | Cadbury | Bathroom, Kitchen | wall/300X600/cadbury/004/
+CADBURY-ALPINE CADBURY-DECOR-3 CADBURY-MINT CADBURY-PINK CADBURY-STEEL
+@ 300x600 mm | Digital Wall Tiles | Cadbury | Bathroom, Kitchen | wall/300X600/cadbury/005/
+CADBURY-CHERRY CADBURY-DECOR-2 CADBURY-IVORY CADBURY-MANGO CADBURY-PEACH
+@ 300x600 mm | Digital Wall Tiles | Candy | Bathroom, Kitchen | wall/300X600/candy/001/
+CANDY-BLACK CANDY-COAL CANDY-DECOR-1
+@ 300x600 mm | Digital Wall Tiles | Candy | Bathroom, Kitchen | wall/300X600/candy/002/
+CANDY-DECOR-1 CANDY-GREY CANDY-SLATE CANDY-STEEL
+@ 300x600 mm | Digital Wall Tiles | Candy | Bathroom, Kitchen | wall/300X600/candy/003/
+CANDY-BERRY CANDY-BLUE CANDY-DECOR-4 CANDY-GREEN CANDY-STEEL
+@ 300x600 mm | Digital Wall Tiles | Candy | Bathroom, Kitchen | wall/300X600/candy/004/
+CANDY-ALPINE CANDY-DECOR-3 CANDY-MINT CANDY-PINK CANDY-STEEL
+@ 300x600 mm | Digital Wall Tiles | Candy | Bathroom, Kitchen | wall/300X600/candy/005/
+CANDY-CHERRY CANDY-DECOR-2 CANDY-IVORY CANDY-MANGO
+@ 300x600 mm | Digital Wall Tiles | Candy | Bathroom, Kitchen | wall/300X600/candy/006/
+CANDY-DECOR-5 CANDY-IVORY CANDY-PEACH
+@ 300x600 mm | Digital Wall Tiles | Cube | Bathroom, Kitchen | wall/300X600/cube/001/
+CUBE-BLACK CUBE-COAL CUBE-DECOR-1
+@ 300x600 mm | Digital Wall Tiles | Cube | Bathroom, Kitchen | wall/300X600/cube/002/
+CUBE-DECOR-1 CUBE-GREY CUBE-SLATE CUBE-STEEL
+@ 300x600 mm | Digital Wall Tiles | Cube | Bathroom, Kitchen | wall/300X600/cube/003/
+CUBE-BERRY CUBE-BLUE CUBE-DECOR-4 CUBE-GREEN CUBE-STEEL
+@ 300x600 mm | Digital Wall Tiles | Cube | Bathroom, Kitchen | wall/300X600/cube/004/
+CUBE-ALPINE CUBE-DECOR-3 CUBE-MINT CUBE-PINK CUBE-STEEL
+@ 300x600 mm | Digital Wall Tiles | Cube | Bathroom, Kitchen | wall/300X600/cube/005/
+CUBE-CHERRY CUBE-DECOR-2 CUBE-IVORY CUBE-MANGO CUBE-PEACH
+@ 300x600 mm | Digital Wall Tiles | Dynamic | Bathroom, Kitchen | wall/300X600/dynamic/001/
+DYNAMIC-BLACK DYNAMIC-COAL DYNAMIC-DECOR-1
+@ 300x600 mm | Digital Wall Tiles | Dynamic | Bathroom, Kitchen | wall/300X600/dynamic/002/
+DYNAMIC-GREY DYNAMIC-SLATE DYNAMIC-STEEL
+@ 300x600 mm | Digital Wall Tiles | Dynamic | Bathroom, Kitchen | wall/300X600/dynamic/003/
+DYNAMIC-BERRY DYNAMIC-BLUE DYNAMIC-DECOR-4 DYNAMIC-GREEN DYNAMIC-STEEL
+@ 300x600 mm | Digital Wall Tiles | Dynamic | Bathroom, Kitchen | wall/300X600/dynamic/004/
+DYNAMIC-ALPINE DYNAMIC-DECOR-3 DYNAMIC-MINT DYNAMIC-PINK DYNAMIC-STEEL
+@ 300x600 mm | Digital Wall Tiles | Dynamic | Bathroom, Kitchen | wall/300X600/dynamic/005/
+DYNAMIC-CHERRY DYNAMIC-IVORY DYNAMIC-MANGO DYNAMIC-PEACH
+@ 300x600 mm | Digital Wall Tiles | Perk | Bathroom, Kitchen | wall/300X600/perk/001/
+PERK-BLACK PERK-COAL PERK-DECOR-1
+@ 300x600 mm | Digital Wall Tiles | Perk | Bathroom, Kitchen | wall/300X600/perk/002/
+PERK-DECOR-1 PERK-GREY PERK-SLATE PERK-STEEL
+@ 300x600 mm | Digital Wall Tiles | Perk | Bathroom, Kitchen | wall/300X600/perk/003/
+PERK-BERRY PERK-BLUE PERK-DECOR-4 PERK-GREEN PERK-STEEL
+@ 300x600 mm | Digital Wall Tiles | Perk | Bathroom, Kitchen | wall/300X600/perk/004/
+PERK-ALPINE PERK-DECOR-3 PERK-MINT PERK-PINK PERK-STEEL
+@ 300x600 mm | Digital Wall Tiles | Perk | Bathroom, Kitchen | wall/300X600/perk/005/
+PERK-CHERRY PERK-DECOR-2 PERK-IVORY PERK-MANGO PERK-PEACH
+@ 300x600 mm | Digital Wall Tiles | Prisma | Bathroom, Kitchen | wall/300X600/prisma/001/
+PRISMA-BLACK PRISMA-COAL
+@ 300x600 mm | Digital Wall Tiles | Prisma | Bathroom, Kitchen | wall/300X600/prisma/002/
+PRISMA-GREY PRISMA-SLATE PRISMA-STEEL
+@ 300x600 mm | Digital Wall Tiles | Prisma | Bathroom, Kitchen | wall/300X600/prisma/003/
+PRISMA-BERRY PRISMA-BLUE PRISMA-DECOR-4 PRISMA-GREEN PRISMA-STEEL
+@ 300x600 mm | Digital Wall Tiles | Prisma | Bathroom, Kitchen | wall/300X600/prisma/004/
+PRISMA-ALPINE PRISMA-DECOR-3 PRISMA-MINT PRISMA-PINK PRISMA-STEEL
+@ 300x600 mm | Digital Wall Tiles | Prisma | Bathroom, Kitchen | wall/300X600/prisma/005/
+PRISMA-CHERRY PRISMA-DECOR-2 PRISMA-IVORY PRISMA-MANGO PRISMA-PEACH
+
+@ 600x600 mm | Double Charge Vitrified Tiles | Double Charge | Living room, Bedroom, Commercial | double-charge/600x600/
+AZA-BLACK AZA-BROWN AZA-CARBON AZA-CREMA AZA-GREY AZA-NERO AZA-SLATE AZA-WHITE AZA-WOODEN CRYSTAL-BLACK CRYSTAL-BROWN CRYSTAL-CREMA CRYSTAL-GREY CRYSTAL-WHITE MERCURY-ALMOND MERCURY-BLUE MERCURY-CREMA MERCURY-GALAXY MERCURY-GOLD MERCURY-GREEN MERCURY-MELODY MERCURY-MILKY-WHITE MERCURY-MUSHROOM MERCURY-NEW-CHOCO MERCURY-PEARL-BLACK MERCURY-PINK MERCURY-ROSA MERCURY-SLATE MERCURY-WHITE PRIME-PLUS SUPER-WHITE
+
+@ 600x600 mm, 9 mm thick | Full Body Vitrified Tiles | Polished | Living room, Bedroom, Commercial | fullbody/600x600/polished/
+KOTA ROCK--COPPER ROCK-BLACK ROCK-BROWN ROCK-CREAMA ROCK-GREY ROCK-SILVER ROCK-VERDE ROCK-WHITE STEEL-GREY SUPER-WHITE
+@ 600x600 mm, 9 mm thick | Full Body Vitrified Tiles | Satin | Living room, Bedroom, Commercial | fullbody/600x600/satin/
+KOTA ROCK--COPPER ROCK-BLACK ROCK-BROWN ROCK-CREAMA ROCK-GREY ROCK-SILVER ROCK-VERDE ROCK-WHITE STEEL-GREY SUPER-WHITE
+@ 600x600 mm, 20 mm thick | Full Body Vitrified Tiles | 20 mm Outdoor | Outdoor, Commercial | fullbody/600x600/20mm/
+CEPPO-CHARCOAL-1 CEPPO-CHARCOAL-2 CEPPO-CHARCOAL-3 CEPPO-CHARCOAL-4 DOREX-ASH-1 DOREX-ASH-2 DOREX-ASH-3 DOREX-ASH-4 GREDOS-CLOUD-1 GREDOS-CLOUD-2 GREDOS-CLOUD-3 GREDOS-CLOUD-4 ROCK-ABALONE-1 ROCK-ABALONE-2 ROCK-ABALONE-3 ROCK-ABALONE-4 VALONIA-GREY-1 VALONIA-GREY-2 VALONIA-GREY-3 VALONIA-GREY-4
+@ 600x1200 mm, 9 mm thick | Full Body Vitrified Tiles | Polished | Living room, Bedroom, Commercial | fullbody/600x1200/polished/
+DYNAMIC-ALMOND DYNAMIC-BLACK DYNAMIC-CREAM DYNAMIC-CREAMA DYNAMIC-DOVE DYNAMIC-IRIS DYNAMIC-JET-BLACK DYNAMIC-KOTA DYNAMIC-NERO DYNAMIC-QUARTZ DYNAMIC-STEEL-GREY DYNAMIC-SUPER-WHITE DYNAMIC-WHITE
+@ 600x1200 mm, 9 mm thick | Full Body Vitrified Tiles | Satin | Living room, Bedroom, Commercial | fullbody/600x1200/satin/
+ROCK-ALMOND ROCK-BLACK ROCK-CREAMA ROCK-DOVE ROCK-NERO ROCK-QUARTZ ROCK-WHITE ROYAL-CREAM ROYAL-IRIS ROYAL-JET-BLACK ROYAL-KOTA ROYAL-STEEL-GREY ROYAL-SUPER-WHITE
+
+@ 600x1200 mm | Glazed Vitrified Tiles | Book Match | Living room, Bedroom, Commercial | gvt-pgvt/600x1200/book-match/
+DYNA-BEIGE MEDRID-BLUE MIAMI-CLASSIC TROPICAL-WHITE VIVANTA-BLUE
+@ 600x1200 mm | Glazed Vitrified Tiles | Carving | Living room, Bedroom, Commercial | gvt-pgvt/600x1200/carving/
+ANIMA-SHADOW CICILIA-CREMA MAGIC-CHOCO MALTA-BROWN MARMO-CALACATTA-GRANDE RIVER-LATTE SPIDER-CREMA
+@ 600x1200 mm | Glazed Vitrified Tiles | DC | Living room, Bedroom, Commercial | gvt-pgvt/600x1200/dc/
+MURFEY-BLUE ONIRA-CREMA TULUM-NERO
+@ 600x1200 mm | Glazed Vitrified Tiles | End Match | Living room, Bedroom, Commercial | gvt-pgvt/600x1200/end-match/
+BRECCIA-BLUE CALACATTA-GRAND MARMARA-WHITE PENDORA-CHOCO RENOIR-WHITE SARAN-COLIN-GREY TIGER-ONYX-AZUL
+@ 600x1200 mm | Glazed Vitrified Tiles | Glossy | Living room, Bedroom, Commercial | gvt-pgvt/600x1200/glossy/
+ANTYSKY-ICE ARMANI-MINK AVORIO-BEIGE BOTTOCHINO-BEIGE BRECCIA-GOLD BRECCIA-TROPICAL CARRARA-ULTRA-COPPER CLOUDY-ONYX-SILVER FLORIDA-GREY KASHMIR-CREMA LAVANYA NEBULA-CHARCOL ONYX-RIVER-BEIGE ROYAL-STATUARIO SENDO-SEPIA STATUARIO-ALASKA TRAVERTINO-BEIGE WONDER-WHITE
+@ 600x1200 mm | Glazed Vitrified Tiles | High Gloss | Living room, Bedroom, Commercial | gvt-pgvt/600x1200/high-gloss/
+AMAZON-CHARCOL BELATRIX-AZUL DIAMANTE-NERO FLUID-BLACK GLACIER-GREEN METRIX-MULTI MIZARO-MULTI ONICE-PINK PARSIANO-AMBER VIBRANIUM-BLACK
+@ 600x1200 mm | Glazed Vitrified Tiles | Leather Wood | Living room, Bedroom | gvt-pgvt/600x1200/leather-wood/
+ASPEN-BAMBU COIN-NATURAL ORLEANS-NUT VALMONT-OAK
+@ 600x1200 mm | Glazed Vitrified Tiles | Metallic | Living room, Bedroom, Commercial | gvt-pgvt/600x1200/metalic/
+ALIDA-COPPER GRUNGY-GREY NOORD-AQUA UMBER-AZUL VINTAGE-AZUL
+@ 600x1200 mm | Glazed Vitrified Tiles | Rustic | Living room, Bedroom, Commercial | gvt-pgvt/600x1200/rustic/
+ALPAS-GREY ARMANI-BROWN DESERT-SAND-CHOCO MACAU-BROWN SIGNATURE-CLASSIC THUNDER-BROWN
+@ 600x1200 mm | Glazed Vitrified Tiles | Sugar (Lapatto) | Living room, Bedroom, Commercial | gvt-pgvt/600x1200/sugar/
+ELITE-GREY LUMINA-STATUARIO MIAMI-CREMA MONALITH-GREY
+@ 600x1200 mm | Glazed Vitrified Tiles | Wood | Living room, Bedroom | gvt-pgvt/600x1200/wood/
+AISH-WOOD-CLASSIC ALPINE-BEIGE DOUGLAS-BROWN LINER-WOOD-BROWN PINEWOOD-CREMA SANDEL-WOOD-BROWN

@@ -173,6 +173,13 @@ body.leaving > * { opacity: 0; transform: translateX(-24px); transition: opacity
 .chips a { padding: 8px 16px; font-size: 14px; background: var(--mist); border-radius: 980px; transition: background .2s, color .2s; }
 .chips a:hover { background: #e8e8ed; }
 .chips a[aria-current=page] { color: #fff; background: var(--ink); }
+.find { position: relative; max-width: 640px; margin: 40px auto 0; }
+.find input { box-sizing: border-box; width: 100%; height: 48px; padding: 0 48px 0 46px; font: inherit; font-size: 17px; color: var(--ink); background: var(--mist) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%236e6e73' stroke-width='2' stroke-linecap='round'%3E%3Ccircle cx='11' cy='11' r='7'/%3E%3Cpath d='M20 20l-4-4'/%3E%3C/svg%3E") no-repeat 16px center/18px; border: 1px solid transparent; border-radius: 980px; transition: border-color .2s, background-color .2s; }
+.find input:focus { outline: 0; background-color: var(--paper); border-color: var(--blue); }
+.find input::-webkit-search-cancel-button { display: none; }
+.find button { position: absolute; top: 50%; right: 10px; width: 30px; height: 30px; padding: 0; font-size: 20px; line-height: 1; color: var(--muted); background: rgba(0, 0, 0, .06); border: 0; border-radius: 50%; cursor: pointer; transform: translateY(-50%); }
+.find button[hidden] { display: none; }
+.find + .tools { padding-top: 24px; }
 .tools { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px; padding: 40px 0 22px; }
 .filters { display: flex; flex-wrap: wrap; gap: 8px 16px; }
 .load-row { display: flex; justify-content: center; padding-bottom: 96px; }
