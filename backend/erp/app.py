@@ -7,7 +7,7 @@ from math import ceil
 
 import pymysql
 from PIL import Image, UnidentifiedImageError
-from flask import Flask, jsonify, request, send_from_directory
+from flask import Flask, Response as app_response, jsonify, request, send_from_directory
 from werkzeug.exceptions import HTTPException
 from werkzeug.middleware.proxy_fix import ProxyFix
 
@@ -17,12 +17,13 @@ from .config import API_RATE_LIMIT, AUTH_RATE_LIMIT, FRONTEND_DIR, ORIGINS, TRUS
 from .db import PoolTimeout, db
 from .errors import AppError
 from .imagesearch import describe, index as photo_index
+from .tilemodel import build_glb
 from .services import get_settings
 from .web import ErpJson, api, authenticate, reply, route
 
 PUBLIC = {
     "/health", "/auth/login", "/auth/forgot-password", "/auth/reset-password", "/auth/logout", "/auth/session", "/public/catalog",
-    "/public/image-search",
+    "/public/image-search", "/public/tile.glb",
 }
 PASSWORD_CHANGE_ALLOWED = {"/auth/me", "/auth/change-password"}
 AUTH_LIMITED = {"/auth/login", "/auth/forgot-password", "/auth/reset-password"}
@@ -76,6 +77,25 @@ PUBLIC_FIELDS = (
     'CAST(COALESCE((SELECT SUM(s.quantity) FROM "StockBalance" s WHERE s."productId" = p.id AND s.quantity > 0), 0) AS DOUBLE) AS boxes'
 )
 PUBLIC_TABLES = 'FROM "Product" p JOIN "Category" c ON c.id = p."categoryId" LEFT JOIN "Brand" b ON b.id = p."brandId"'
+
+
+IMAGES_DIR = (FRONTEND_DIR / "images").resolve()
+
+
+@route("/public/tile.glb")
+def public_tile_model():
+    """3D tile patch for "Try in your room" (AR on phones, 3D preview elsewhere)."""
+    image = (request.args.get("image") or "")[:300]
+    place = "wall" if request.args.get("place") == "wall" else "floor"
+    path = (IMAGES_DIR / image.removeprefix("/images/")).resolve() if image.startswith("/images/") else None
+    if not path or not path.is_relative_to(IMAGES_DIR) or path.suffix.lower() not in {".jpg", ".jpeg", ".png", ".webp"} or not path.is_file():
+        raise AppError(404, "Tile photo not found")
+    with Image.open(path) as photo:
+        glb, _ = build_glb(photo, (request.args.get("size") or "")[:60], (request.args.get("finish") or "")[:60], place)
+    response = app_response(glb, mimetype="model/gltf-binary")
+    # The same address always gives the same model, so phones and Vercel can keep it.
+    response.headers["Cache-Control"] = "public, max-age=604800, s-maxage=31536000, immutable"
+    return response
 
 
 @route("/public/image-search", methods="POST")

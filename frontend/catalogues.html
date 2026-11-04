@@ -99,24 +99,31 @@
   </div>
 </main>
 
-<dialog class="room-view" id="roomView" aria-labelledby="roomTitle">
-  <div class="room-head">
+<dialog class="try-view" id="tryView" aria-labelledby="tryTitle">
+  <div class="try-head">
     <div>
-      <h2 id="roomTitle">360° room view</h2>
-      <p id="roomInfo"></p>
+      <h2 id="tryTitle">Try in your room</h2>
+      <p id="tryInfo"></p>
     </div>
-    <button class="room-close" id="roomClose" type="button" aria-label="Close room view">&times;</button>
+    <button class="try-close" id="tryClose" type="button" aria-label="Close">&times;</button>
   </div>
-  <div class="room-stage" id="roomStage">
-    <p class="room-msg" id="roomMsg">Setting up the room…</p>
-  </div>
-  <div class="room-foot">
-    <div class="room-place" role="group" aria-label="Where to lay the tile">
-      <button type="button" data-place="floor">Floor</button>
-      <button type="button" data-place="wall">Walls</button>
-      <button type="button" data-place="both">Both</button>
+  <div class="try-body">
+    <div class="try-stage" id="tryStage">
+      <p class="try-msg" id="tryMsg">Preparing the 3D tiles…</p>
     </div>
-    <p>Drag to look around 360° · pinch or scroll to zoom</p>
+    <div class="try-side">
+      <div class="try-place" role="group" aria-label="Where to try the tile">
+        <button type="button" data-place="floor">On floor</button>
+        <button type="button" data-place="wall">On wall</button>
+      </div>
+      <p class="try-facts" id="tryFacts"></p>
+      <div class="try-qr-box">
+        <h3>See it on your own floor</h3>
+        <p>Scan with your phone camera. The tiles appear on your floor or wall at their real size.</p>
+        <div class="try-qr" id="tryQr"></div>
+      </div>
+      <p id="tryHint">Drag to turn the tiles, pinch or scroll to zoom.</p>
+    </div>
   </div>
 </dialog>
 

@@ -2,15 +2,16 @@ const safe = (value) => String(value ?? '').replace(/[&<>"']/g, (c) => ({ '&': '
 
 const ROOM_TITLES = { Bathroom: 'Bathroom tiles', Kitchen: 'Kitchen tiles', Living: 'Living room tiles', Bedroom: 'Bedroom tiles', Outdoor: 'Outdoor and parking tiles', Commercial: 'Commercial space tiles' };
 
-// Only photos served by this site can be laid in the room view (browsers block reading others).
-const ownPhoto = (url) => typeof url === 'string' && url.startsWith('/');
+// Only photos stored on this site can become 3D tiles.
+const ownPhoto = (url) => typeof url === 'string' && url.startsWith('/images/');
+const AR_ICON = '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l8 4.5v9L12 21l-8-4.5v-9z"/><path d="M12 12l8-4.5M12 12v9M12 12L4 7.5"/></svg>';
 
 function tileCard(product, i) {
   const details = [product.finish, product.color].filter(Boolean).map(safe).join(' · ');
   const price = Number(product.price) ? `₹${Number(product.price).toLocaleString('en-IN')}` : 'Ask for price';
   const boxes = Number(product.boxes);
   const stock = boxes > 0 ? `Stock available · ${boxes.toLocaleString('en-IN')} ${boxes === 1 ? 'box' : 'boxes'} available` : 'Not available';
-  const spin = ownPhoto(product.imageUrl) ? `<button class="view360" type="button" data-i="${i}" aria-label="360° room view of ${safe(product.name)}">360° view</button>` : '';
+  const spin = ownPhoto(product.imageUrl) ? `<button class="try-btn" type="button" data-i="${i}" aria-label="Try ${safe(product.name)} in your room">${AR_ICON}Try in room</button>` : '';
   return `
     <article class="tile-card">
       <span class="pic">${product.imageUrl ? `<img src="${safe(product.imageUrl)}" alt="${safe(product.name)}" loading="lazy">` : ''}${spin}</span>
@@ -218,43 +219,127 @@ async function loadCatalog() {
     if (file) { e.preventDefault(); usePhoto(file); }
   });
 
-  // 360° room view, loaded the first time someone asks for it.
-  const dialog = $('roomView');
-  const stage = $('roomStage');
-  const roomMsg = $('roomMsg');
+  // Try in your room: real-size 3D tiles. Phones place them on the real floor or wall with AR
+  // (Android Scene Viewer or WebXR, iPhone AR Quick Look); computers get a 3D preview and a QR
+  // code that opens the same tile on a phone. The viewer script loads the first time it is used.
+  const dialog = $('tryView');
+  const stage = $('tryStage');
+  const tryMsg = $('tryMsg');
   const placeButtons = [...dialog.querySelectorAll('[data-place]')];
-  let viewer = null;
-  let opening = 0;
-  const pressPlace = (where) => placeButtons.forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.place === where)));
-  async function openRoom(product) {
-    const mine = ++opening;
-    $('roomTitle').textContent = `${product.name} · 360° room view`;
-    $('roomInfo').textContent = [product.brand, product.size, product.finish].filter(Boolean).join(' · ');
-    roomMsg.textContent = 'Setting up the room…';
-    roomMsg.hidden = false;
-    dialog.showModal();
-    try {
-      const room = await import('./room-view.js');
-      if (mine !== opening || !dialog.open) return;
-      const where = room.defaultPlace(product);
-      pressPlace(where);
-      const made = await room.openRoomView(stage, product, where);
-      if (mine !== opening || !dialog.open) { made.close(); return; }
-      viewer = made;
-      roomMsg.hidden = true;
-      stage.querySelector('canvas')?.focus({ preventScroll: true });
-    } catch {
-      if (mine === opening) roomMsg.textContent = 'The room view needs a browser with 3D graphics (WebGL). Please try another browser or device.';
-    }
-  }
-  dialog.addEventListener('close', () => { opening += 1; viewer?.close(); viewer = null; });
-  $('roomClose').addEventListener('click', () => dialog.close());
-  dialog.addEventListener('click', (e) => { if (e.target === dialog) dialog.close(); });
-  placeButtons.forEach((b) => b.addEventListener('click', () => { pressPlace(b.dataset.place); viewer?.setPlace(b.dataset.place); }));
-  grid.addEventListener('click', (e) => {
-    const button = e.target.closest('.view360');
-    if (button && shown[button.dataset.i]) openRoom(shown[button.dataset.i]);
+  const loadScript = (src, module) => new Promise((resolve, reject) => {
+    const tag = document.createElement('script');
+    if (module) tag.type = 'module';
+    tag.src = src;
+    tag.onload = resolve;
+    tag.onerror = reject;
+    document.head.append(tag);
   });
+  let viewerReady = null;
+  let qrReady = null;
+  let viewer = null;
+  let trying = null;
+  const getViewer = () => (viewerReady ||= loadScript('https://cdn.jsdelivr.net/npm/@google/model-viewer@3.5.0/dist/model-viewer.min.js', true)
+    .then(() => customElements.whenDefined('model-viewer')));
+  const getQr = () => (qrReady ||= loadScript('https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js'));
+  const placeFor = (product) => (/wall|elevation/i.test(`${product.category} ${product.finish}`) ? 'wall' : 'floor');
+  const modelUrl = (product, place) => {
+    const q = new URLSearchParams({ image: product.imageUrl, size: product.size || '', finish: product.finish || '', place });
+    return new URL(`${API}/public/tile.glb?${q}`, location.href).href;
+  };
+  const shareUrl = (product, place) => {
+    const url = new URL(location.pathname, location.origin);
+    const fields = { try: product.imageUrl, n: product.name, s: product.size, f: product.finish, b: product.brand, c: product.category, place };
+    Object.entries(fields).forEach(([k, v]) => { if (v) url.searchParams.set(k, String(v).slice(0, 120)); });
+    return url.href;
+  };
+
+  function makeViewer() {
+    const mv = document.createElement('model-viewer');
+    const attrs = {
+      ar: '', 'ar-modes': 'webxr scene-viewer quick-look', 'ar-scale': 'fixed', 'camera-controls': '', 'touch-action': 'pan-y',
+      'shadow-intensity': '1', 'shadow-softness': '0.9', 'environment-image': 'neutral', exposure: '1.05', 'tone-mapping': 'commerce',
+      'interaction-prompt': 'auto', 'max-camera-orbit': 'auto 88deg auto',
+    };
+    Object.entries(attrs).forEach(([k, v]) => mv.setAttribute(k, v));
+    const button = document.createElement('button');
+    button.slot = 'ar-button';
+    button.className = 'try-ar';
+    button.type = 'button';
+    mv.append(button);
+    mv.addEventListener('load', () => {
+      tryMsg.hidden = true;
+      dialog.dataset.ar = mv.canActivateAR ? 'yes' : 'no';
+      const phone = matchMedia('(pointer: coarse)').matches;
+      $('tryHint').textContent = mv.canActivateAR
+        ? 'Tap the blue button, then point your camera at the floor or wall and move it slowly.'
+        : phone
+          ? 'This phone or browser cannot show tiles in your room. Use Chrome on an Android phone with Google Play Services for AR, or Safari on an iPhone. You can still turn the 3D tiles here.'
+          : 'Drag to turn the tiles, pinch or scroll to zoom.';
+    });
+    mv.addEventListener('error', () => { tryMsg.hidden = false; tryMsg.textContent = 'These 3D tiles could not be loaded. Please try again.'; });
+    mv.addEventListener('ar-status', (e) => {
+      if (e.detail.status === 'failed') {
+        tryMsg.hidden = false;
+        tryMsg.textContent = 'AR could not start on this phone. It needs Chrome on an ARCore Android phone, or Safari on an iPhone or iPad.';
+      }
+    });
+    stage.append(mv);
+    return mv;
+  }
+
+  async function showTry(product, place) {
+    trying = { product, place };
+    placeButtons.forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.place === place)));
+    $('tryTitle').textContent = `Try ${product.name} in your room`;
+    $('tryInfo').textContent = [product.brand, product.size, product.finish].filter(Boolean).join(' · ');
+    $('tryFacts').innerHTML = `<span>Tile size <b>${safe(product.size || 'not given')}</b></span><span>Shown at true size, with grout lines</span>`;
+    tryMsg.hidden = false;
+    tryMsg.textContent = 'Preparing the 3D tiles…';
+    try {
+      await getViewer();
+    } catch {
+      tryMsg.textContent = 'The 3D viewer could not load. Check the internet connection and try again.';
+      return;
+    }
+    if (trying?.product !== product || trying.place !== place) return;
+    viewer ||= makeViewer();
+    viewer.querySelector('.try-ar').innerHTML = `${AR_ICON} View on your ${place}`;
+    viewer.setAttribute('ar-placement', place);
+    viewer.setAttribute('camera-orbit', place === 'wall' ? '0deg 82deg auto' : '25deg 58deg auto');
+    viewer.setAttribute('alt', `${product.name} tiles, ${product.size || ''}`);
+    viewer.setAttribute('src', modelUrl(product, place));
+    // The QR code only matters where this device cannot do AR itself.
+    getQr().then(() => {
+      if (trying?.product !== product) return;
+      const box = $('tryQr');
+      const canvas = document.createElement('canvas');
+      new window.QRious({ element: canvas, value: shareUrl(product, place), size: 320, level: 'M', padding: 0 });
+      canvas.setAttribute('role', 'img');
+      canvas.setAttribute('aria-label', 'QR code to open this tile on a phone');
+      box.replaceChildren(canvas);
+    }).catch(() => { $('tryQr').textContent = 'QR code unavailable'; });
+  }
+
+  function openTry(product, place = placeFor(product)) {
+    dialog.dataset.ar = 'no';
+    if (!dialog.open) dialog.showModal();
+    showTry(product, place);
+  }
+  dialog.addEventListener('close', () => { trying = null; });
+  $('tryClose').addEventListener('click', () => dialog.close());
+  dialog.addEventListener('click', (e) => { if (e.target === dialog) dialog.close(); });
+  placeButtons.forEach((b) => b.addEventListener('click', () => {
+    if (trying && trying.place !== b.dataset.place) showTry(trying.product, b.dataset.place);
+  }));
+  grid.addEventListener('click', (e) => {
+    const button = e.target.closest('.try-btn');
+    if (button && shown[button.dataset.i]) openTry(shown[button.dataset.i]);
+  });
+  // Opened from the QR code on another device.
+  if (ownPhoto(params.get('try'))) {
+    const p = (k) => params.get(k) || '';
+    openTry({ imageUrl: p('try'), name: p('n') || 'This tile', size: p('s'), finish: p('f'), brand: p('b'), category: p('c') }, p('place') === 'wall' ? 'wall' : 'floor');
+  }
   tileSearch.addEventListener('input', () => search(tileSearch.value));
   tileSearch.addEventListener('keydown', (e) => { if (e.key === 'Escape') { tileSearch.value = ''; search(''); } });
   clearSearch.addEventListener('click', () => { tileSearch.value = ''; search(''); tileSearch.focus(); });
