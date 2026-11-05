@@ -4,7 +4,7 @@ const ROOM_TITLES = { Bathroom: 'Bathroom tiles', Kitchen: 'Kitchen tiles', Livi
 
 // Only photos stored on this site can become 3D tiles.
 const ownPhoto = (url) => typeof url === 'string' && url.startsWith('/images/');
-const MODEL_VERSION = '2';
+const MODEL_VERSION = '3';
 const AR_ICON = '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l8 4.5v9L12 21l-8-4.5v-9z"/><path d="M12 12l8-4.5M12 12v9M12 12L4 7.5"/></svg>';
 
 function tileCard(product, i) {

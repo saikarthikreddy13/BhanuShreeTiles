@@ -5,6 +5,7 @@ import io
 import json
 import re
 import struct
+from math import ceil
 
 import numpy as np
 from PIL import Image, ImageDraw, ImageOps
@@ -16,7 +17,7 @@ JOINT = 0.003    # grout joint, metres
 BEVEL = 0.0012   # rounded-off glaze edge, metres
 # Metres across and deep (or high). Kept small: in AR it sits at true size close to the customer, and a
 # bigger patch filled the whole phone screen.
-PATCH = {"floor": (1.2, 1.2), "wall": (1.2, 0.9)}
+PATCH = {"floor": (0.9, 0.9), "wall": (0.9, 0.9)}
 MAX_TILES = 16
 
 
@@ -56,10 +57,12 @@ def build_glb(photo, size_text, finish, place="floor"):
     if place == "wall":
         # Tilers usually lay wall tiles with the long side across.
         across, deep = max(across, deep), min(across, deep)
-    want_w, want_d = PATCH[place]
-    cols = max(1, min(MAX_TILES, round(want_w / across)))
-    rows = max(1, min(MAX_TILES, round(want_d / deep)))
-    width, depth = cols * across, rows * deep
+    # A fixed-size patch laid like a tiler would: whole tiles from one corner, cut tiles at the far
+    # edges. Every tile stays its true size; only the patch is trimmed.
+    width, depth = PATCH[place]
+    cols = min(MAX_TILES, ceil(width / across - 1e-6))
+    rows = min(MAX_TILES, ceil(depth / deep - 1e-6))
+    width, depth = min(width, cols * across), min(depth, rows * deep)
 
     # Built lying on the floor (Y up, centred on the spot the customer picks); a wall patch is the
     # same slab stood up to face +Z, which model-viewer places with its back against the wall.
@@ -78,21 +81,25 @@ def build_glb(photo, size_text, finish, place="floor"):
 
     for r in range(rows):
         for c in range(cols):
+            # How much of this tile fits; the last column and row may be cut.
+            cut_x = min(across, width - c * across)
+            cut_z = min(deep, depth - r * deep)
             x0 = c * across - width / 2 + gap
-            x1 = (c + 1) * across - width / 2 - gap
+            x1 = c * across + cut_x - width / 2 - gap
             z0 = r * deep - depth / 2 + gap
-            z1 = (r + 1) * deep - depth / 2 - gap
+            z1 = r * deep + cut_z - depth / 2 - gap
+            u1, v1 = cut_x / across, cut_z / deep
             top, low = THICK, THICK - bevel
             ix0, ix1, iz0, iz1 = x0 + bevel, x1 - bevel, z0 + bevel, z1 - bevel
-            # The glazed face, with the photo.
+            # The glazed face, with the photo (only the part of it that remains on a cut tile).
             quad(face, [(ix0, top, iz0), (ix1, top, iz0), (ix1, top, iz1), (ix0, top, iz1)], (0, 1, 0),
-                 [(0, 0), (1, 0), (1, 1), (0, 1)])
+                 [(0, 0), (u1, 0), (u1, v1), (0, v1)])
             # Rounded-off edges (one flat chamfer each), glazed like the face so they catch the light.
             s2 = 0.7071
             quad(face, [(x0, low, z0), (x1, low, z0), (ix1, top, iz0), (ix0, top, iz0)], (0, s2, -s2), [(0, 0)] * 4)
-            quad(face, [(ix0, top, iz1), (ix1, top, iz1), (x1, low, z1), (x0, low, z1)], (0, s2, s2), [(0, 1)] * 4)
+            quad(face, [(ix0, top, iz1), (ix1, top, iz1), (x1, low, z1), (x0, low, z1)], (0, s2, s2), [(0, v1)] * 4)
             quad(face, [(x0, low, z1), (x0, low, z0), (ix0, top, iz0), (ix0, top, iz1)], (-s2, s2, 0), [(0, 0)] * 4)
-            quad(face, [(ix1, top, iz1), (ix1, top, iz0), (x1, low, z0), (x1, low, z1)], (s2, s2, 0), [(1, 0)] * 4)
+            quad(face, [(ix1, top, iz1), (ix1, top, iz0), (x1, low, z0), (x1, low, z1)], (s2, s2, 0), [(u1, 0)] * 4)
             # The tile body, seen in the joints and round the outside.
             quad(body, [(x0, 0, z0), (x1, 0, z0), (x1, low, z0), (x0, low, z0)], (0, 0, -1))
             quad(body, [(x0, low, z1), (x1, low, z1), (x1, 0, z1), (x0, 0, z1)], (0, 0, 1))
