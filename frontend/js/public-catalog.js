@@ -4,6 +4,7 @@ const ROOM_TITLES = { Bathroom: 'Bathroom tiles', Kitchen: 'Kitchen tiles', Livi
 
 // Only photos stored on this site can become 3D tiles.
 const ownPhoto = (url) => typeof url === 'string' && url.startsWith('/images/');
+const MODEL_VERSION = '2';
 const AR_ICON = '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l8 4.5v9L12 21l-8-4.5v-9z"/><path d="M12 12l8-4.5M12 12v9M12 12L4 7.5"/></svg>';
 
 function tileCard(product, i) {
@@ -101,6 +102,10 @@ async function loadCatalog() {
     }
     // A slower reply for an older search must not replace the newer one.
     if (mine !== asked) return;
+    if (!reply.success) {
+      status.textContent = 'The catalogue is unavailable right now. Please try again shortly.';
+      return;
+    }
     pages = reply.pages;
     fill(sizeFilter, reply.sizes, 'All sizes');
     status.textContent = `${reply.total.toLocaleString('en-IN')} ${reply.total === 1 ? 'tile' : 'tiles'}`;
@@ -243,7 +248,8 @@ async function loadCatalog() {
   const getQr = () => (qrReady ||= loadScript('https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js'));
   const placeFor = (product) => (/wall|elevation/i.test(`${product.category} ${product.finish}`) ? 'wall' : 'floor');
   const modelUrl = (product, place) => {
-    const q = new URLSearchParams({ image: product.imageUrl, size: product.size || '', finish: product.finish || '', place });
+    // v changes whenever the model changes, because phones and Vercel keep each model address for a long time.
+    const q = new URLSearchParams({ image: product.imageUrl, size: product.size || '', finish: product.finish || '', place, v: MODEL_VERSION });
     return new URL(`${API}/public/tile.glb?${q}`, location.href).href;
   };
   const shareUrl = (product, place) => {
@@ -305,7 +311,8 @@ async function loadCatalog() {
     viewer ||= makeViewer();
     viewer.querySelector('.try-ar').innerHTML = `${AR_ICON} View on your ${place}`;
     viewer.setAttribute('ar-placement', place);
-    viewer.setAttribute('camera-orbit', place === 'wall' ? '0deg 82deg auto' : '25deg 58deg auto');
+    // A little room round the tiles, so they never fill the screen edge to edge.
+    viewer.setAttribute('camera-orbit', place === 'wall' ? '0deg 82deg 140%' : '25deg 58deg 140%');
     viewer.setAttribute('alt', `${product.name} tiles, ${product.size || ''}`);
     viewer.setAttribute('src', modelUrl(product, place));
     // The QR code only matters where this device cannot do AR itself.

@@ -14,7 +14,9 @@ BODY = [0.80, 0.77, 0.72, 1.0]   # unglazed tile body and grout, warm grey (line
 THICK = 0.009    # tile thickness, metres
 JOINT = 0.003    # grout joint, metres
 BEVEL = 0.0012   # rounded-off glaze edge, metres
-PATCH = {"floor": (2.4, 2.4), "wall": (1.8, 1.8)}   # metres across and deep (or high)
+# Metres across and deep (or high). Kept small: in AR it sits at true size close to the customer, and a
+# bigger patch filled the whole phone screen.
+PATCH = {"floor": (1.2, 1.2), "wall": (1.2, 0.9)}
 MAX_TILES = 16
 
 
