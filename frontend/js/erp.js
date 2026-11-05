@@ -622,7 +622,7 @@ function renderShell() {
   const initials = currentUser.name.split(/\s+/).map((w) => w[0]).slice(0, 2).join("").toUpperCase();
 
   document.body.innerHTML = `<div class="app">
-    <aside class="sidebar" id="sidebar"><div class="brand"><img class="brand-full" src="images/logo-full.svg" alt="Bhanu Shree Tiles, Kajaria Studio"></div><nav aria-label="Main">${groups}</nav></aside>
+    <aside class="sidebar" id="sidebar"><div class="brand"><img class="brand-full" src="images/logo-full.svg" alt="Bhanu Shree Tiles, Kajaria Studio"></div><nav aria-label="Main">${groups}</nav><p class="made-by">Designed &amp; developed by <span class="dev">Sai Karthik Reddy</span></p></aside>
     <div class="main">
       <header class="topbar">
         <button class="icon-btn menu-btn" id="menuBtn" aria-label="Open menu">${svg('<path d="M4 7h16M4 12h16M4 17h16"/>', 20)}</button>
