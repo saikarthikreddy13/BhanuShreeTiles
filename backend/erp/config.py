@@ -12,7 +12,8 @@ DATABASE_URL = (os.environ.get("DATABASE_URL") or "").split("?")[0].strip('"').r
 PORT = int(os.environ.get("PORT") or 5001)
 FRONTEND_PORT = int(os.environ.get("FRONTEND_PORT") or 3000)
 HOST = os.environ.get("HOST") or "localhost"
-PRODUCTION = os.environ.get("APP_ENV") == "production"
+# Vercel always counts as production, so the login cookie is HTTPS-only even if APP_ENV is not set there.
+PRODUCTION = os.environ.get("APP_ENV") == "production" or bool(os.environ.get("VERCEL"))
 TRUST_PROXY = int(os.environ.get("TRUST_PROXY") or 0)
 API_RATE_LIMIT = int(os.environ.get("API_RATE_LIMIT") or 600)
 AUTH_RATE_LIMIT = int(os.environ.get("AUTH_RATE_LIMIT") or 30)

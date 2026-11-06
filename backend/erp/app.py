@@ -13,7 +13,7 @@ from werkzeug.middleware.proxy_fix import ProxyFix
 
 from . import routes  # noqa: F401
 from .backup import create_backup
-from .config import API_RATE_LIMIT, AUTH_RATE_LIMIT, FRONTEND_DIR, ORIGINS, TRUST_PROXY, UPLOAD_DIR
+from .config import API_RATE_LIMIT, AUTH_RATE_LIMIT, FRONTEND_DIR, ORIGINS, PORT, PRODUCTION, TRUST_PROXY, UPLOAD_DIR
 from .db import PoolTimeout, db
 from .errors import AppError
 from .imagesearch import describe, index as photo_index
@@ -168,6 +168,32 @@ def public_catalog():
     return reply(rows, total=total, pages=max(ceil(total / limit), 1), sizes=sizes, brands=brands)
 
 
+def page_policy():
+    """Content-Security-Policy for the website and ERP pages: the browser may only run scripts and
+    load data from this site and the libraries it uses, so injected code cannot run or send data
+    elsewhere. Keep this list in step with what the pages load."""
+    api = "" if PRODUCTION else f" {request.scheme}://{request.host.split(':')[0]}:{PORT}"
+    rules = {
+        "default-src": "'self'",
+        # Inline is needed for the small scripts and onclick handlers already in the pages.
+        "script-src": "'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com",
+        "style-src": "'self' 'unsafe-inline' https://fonts.googleapis.com",
+        "font-src": "'self' data: https://fonts.gstatic.com",
+        "img-src": "'self' data: blob:",
+        "media-src": "'self' blob:",
+        # model-viewer fetches the 3D tiles here, and its optional decoders from Google's gstatic.
+        "connect-src": f"'self' blob: data: https://cdn.jsdelivr.net https://www.gstatic.com{api}",
+        "worker-src": "'self' blob:",
+        "frame-src": "https://www.openstreetmap.org",
+        "frame-ancestors": "'self'",
+        "object-src": "'none'",
+        "base-uri": "'self'",
+        "form-action": "'self'",
+    }
+    policy = "; ".join(f"{k} {v}" for k, v in rules.items())
+    return policy + ("; upgrade-insecure-requests" if PRODUCTION else "")
+
+
 def not_found_reply():
     if request.path.startswith("/api/"):
         return jsonify({"success": False, "message": "API route not found"}), 404
@@ -215,7 +241,10 @@ def create_app():
         if request.path.startswith(("/api/", "/uploads/")):
             response.headers["Content-Security-Policy"] = "default-src 'none'; frame-ancestors 'none'"
             response.headers["Cross-Origin-Resource-Policy"] = "cross-origin"
-        elif response.status_code == 200:
+        elif response.mimetype == "text/html":
+            response.headers["Content-Security-Policy"] = page_policy()
+            response.headers["Permissions-Policy"] = "camera=(self), microphone=(), geolocation=(), payment=(), usb=()"
+        if not request.path.startswith(("/api/", "/uploads/")) and response.status_code == 200:
             # Vercel keeps public files until the next deploy, so they stop passing through the app.
             browser = 86400 if request.path.startswith("/images/") else 0
             response.headers["Cache-Control"] = f"public, max-age={browser}, s-maxage=31536000"
